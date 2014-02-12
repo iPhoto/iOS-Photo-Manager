@@ -22,6 +22,12 @@
 		A4A291DE18AB65930083B8E9 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4A291C218AB65930083B8E9 /* CoreData.framework */; };
 		A4A291E618AB65930083B8E9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A4A291E418AB65930083B8E9 /* InfoPlist.strings */; };
 		A4A291E818AB65930083B8E9 /* Photo_ManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A291E718AB65930083B8E9 /* Photo_ManagerTests.m */; };
+		A4A291FD18AB66480083B8E9 /* Photo+BasicOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A291F718AB66480083B8E9 /* Photo+BasicOperations.m */; };
+		A4A291FE18AB66480083B8E9 /* Album+BasicOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A291F918AB66480083B8E9 /* Album+BasicOperations.m */; };
+		A4A2920318AB66750083B8E9 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4A2920018AB66750083B8E9 /* Storyboard.storyboard */; };
+		A4A2920418AB66750083B8E9 /* WSAlbumTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A2920218AB66750083B8E9 /* WSAlbumTVC.m */; };
+		A4A2920818AB6C960083B8E9 /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A2920718AB6C960083B8E9 /* Album.m */; };
+		A4A2920B18AB6C970083B8E9 /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A2920A18AB6C970083B8E9 /* Photo.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +59,17 @@
 		A4A291E318AB65930083B8E9 /* Photo ManagerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Photo ManagerTests-Info.plist"; sourceTree = "<group>"; };
 		A4A291E518AB65930083B8E9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A4A291E718AB65930083B8E9 /* Photo_ManagerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Photo_ManagerTests.m; sourceTree = "<group>"; };
+		A4A291F618AB66480083B8E9 /* Photo+BasicOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Photo+BasicOperations.h"; sourceTree = "<group>"; };
+		A4A291F718AB66480083B8E9 /* Photo+BasicOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Photo+BasicOperations.m"; sourceTree = "<group>"; };
+		A4A291F818AB66480083B8E9 /* Album+BasicOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Album+BasicOperations.h"; sourceTree = "<group>"; };
+		A4A291F918AB66480083B8E9 /* Album+BasicOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Album+BasicOperations.m"; sourceTree = "<group>"; };
+		A4A2920018AB66750083B8E9 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
+		A4A2920118AB66750083B8E9 /* WSAlbumTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSAlbumTVC.h; sourceTree = "<group>"; };
+		A4A2920218AB66750083B8E9 /* WSAlbumTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSAlbumTVC.m; sourceTree = "<group>"; };
+		A4A2920618AB6C960083B8E9 /* Album.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Album.h; sourceTree = "<group>"; };
+		A4A2920718AB6C960083B8E9 /* Album.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Album.m; sourceTree = "<group>"; };
+		A4A2920918AB6C970083B8E9 /* Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Photo.h; sourceTree = "<group>"; };
+		A4A2920A18AB6C970083B8E9 /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photo.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,10 +132,11 @@
 		A4A291C418AB65930083B8E9 /* Photo Manager */ = {
 			isa = PBXGroup;
 			children = (
+				A4A2920518AB667B0083B8E9 /* Test */,
+				A4A291FF18AB66600083B8E9 /* Model */,
 				A4A291CD18AB65930083B8E9 /* WSAppDelegate.h */,
 				A4A291CE18AB65930083B8E9 /* WSAppDelegate.m */,
 				A4A291D318AB65930083B8E9 /* Images.xcassets */,
-				A4A291D018AB65930083B8E9 /* Photo_Manager.xcdatamodeld */,
 				A4A291C518AB65930083B8E9 /* Supporting Files */,
 			);
 			path = "Photo Manager";
@@ -151,6 +169,32 @@
 				A4A291E418AB65930083B8E9 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A4A291FF18AB66600083B8E9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A4A291D018AB65930083B8E9 /* Photo_Manager.xcdatamodeld */,
+				A4A2920918AB6C970083B8E9 /* Photo.h */,
+				A4A2920A18AB6C970083B8E9 /* Photo.m */,
+				A4A2920618AB6C960083B8E9 /* Album.h */,
+				A4A2920718AB6C960083B8E9 /* Album.m */,
+				A4A291F618AB66480083B8E9 /* Photo+BasicOperations.h */,
+				A4A291F718AB66480083B8E9 /* Photo+BasicOperations.m */,
+				A4A291F818AB66480083B8E9 /* Album+BasicOperations.h */,
+				A4A291F918AB66480083B8E9 /* Album+BasicOperations.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		A4A2920518AB667B0083B8E9 /* Test */ = {
+			isa = PBXGroup;
+			children = (
+				A4A2920018AB66750083B8E9 /* Storyboard.storyboard */,
+				A4A2920118AB66750083B8E9 /* WSAlbumTVC.h */,
+				A4A2920218AB66750083B8E9 /* WSAlbumTVC.m */,
+			);
+			name = Test;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -231,6 +275,7 @@
 			files = (
 				A4A291C918AB65930083B8E9 /* InfoPlist.strings in Resources */,
 				A4A291D418AB65930083B8E9 /* Images.xcassets in Resources */,
+				A4A2920318AB66750083B8E9 /* Storyboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,6 +296,11 @@
 			files = (
 				A4A291CF18AB65930083B8E9 /* WSAppDelegate.m in Sources */,
 				A4A291CB18AB65930083B8E9 /* main.m in Sources */,
+				A4A291FE18AB66480083B8E9 /* Album+BasicOperations.m in Sources */,
+				A4A2920818AB6C960083B8E9 /* Album.m in Sources */,
+				A4A2920B18AB6C970083B8E9 /* Photo.m in Sources */,
+				A4A2920418AB66750083B8E9 /* WSAlbumTVC.m in Sources */,
+				A4A291FD18AB66480083B8E9 /* Photo+BasicOperations.m in Sources */,
 				A4A291D218AB65930083B8E9 /* Photo_Manager.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
