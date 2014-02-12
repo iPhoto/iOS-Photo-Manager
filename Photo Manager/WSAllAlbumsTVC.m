@@ -1,30 +1,18 @@
 //
-//  WSAlbumTVC.m
-//  PhotoManager
+//  WSAllAlbumsTVC.m
+//  Photo Manager
 //
-//  Created by Tony Song on 14-2-12.
+//  Created by Song Xintong on 14-2-12.
 //  Copyright (c) 2014年 WeeSteps. All rights reserved.
 //
 
-#import "WSAlbumTVC.h"
-#import "WSAppDelegate.h"
-#import "Photo.h"
-#import "Photo+BasicOperations.h"
-#import <AssetsLibrary/AssetsLibrary.h>
+#import "WSAllAlbumsTVC.h"
 
-@interface WSAlbumTVC ()
+@interface WSAllAlbumsTVC ()
 
 @end
 
-@implementation WSAlbumTVC
-
-- (NSManagedObjectContext *)context
-{
-    if (!_context) {
-        _context = [(WSAppDelegate *)([[UIApplication sharedApplication] delegate]) managedObjectContext];
-    }
-    return _context;
-}
+@implementation WSAllAlbumsTVC
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -39,38 +27,11 @@
 {
     [super viewDidLoad];
 
-    NSLog(@"1");
-    if (!self.album) {
-        NSLog(@"2");
-        [self importAllPhotos];
-        self.album = [Album allAlbumsAndPhotosInManagedObjectContext:self.context];
-    }
-    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-}
-
-- (void)importAllPhotos
-{
-    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-    [library enumerateGroupsWithTypes:ALAssetsGroupAll
-                           usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
-                               if (!group) {
-                                   return;
-                               }
-                               [group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
-                                   if (!result) {
-                                       return;
-                                   }
-                                   [Photo photoOfALAsset:result
-                                  inManagedObjectContext:self.context];
-                               }];
-                           } failureBlock:^(NSError *error) {
-                               NSLog(@"%@", error);
-                           }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -83,28 +44,32 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return [self.album.photos count] + [self.album.albums count];
+    return 5;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell;
-    if (indexPath.row < [self.album.albums count]) {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"AlbumCell" forIndexPath:indexPath];
-        Album *album = [self.album.albums allObjects][indexPath.row];
-        cell.textLabel.text = album.title;
+    static NSString *CellIdentifier;
+
+    if (indexPath.row % 2) {
+        CellIdentifier = @"PhotosOnlyCell";
     } else {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"PhotoCell" forIndexPath:indexPath];
-        Photo *photo = [self.album.photos allObjects][indexPath.row - [self.album.albums count]];
-        cell.textLabel.text = photo.id;
+        CellIdentifier = @"PhotosAndAlbumsCell";
     }
+
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    
+    // Configure the cell...
+    
     return cell;
 }
 

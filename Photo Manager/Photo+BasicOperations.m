@@ -19,8 +19,8 @@
         NSLog(@"Asset is nil.");
         return nil;
     }
-    
-    if ([asset valueForKey:ALAssetPropertyType] != ALAssetTypePhoto) {
+
+    if ([asset valueForProperty:ALAssetPropertyType] != ALAssetTypePhoto) {
         NSLog(@"Photo.photoOfALAsset:inManagedObjectContext:");
         NSLog(@"Asset type is not photo.");
         return nil;
@@ -35,8 +35,9 @@
     Photo *photo = nil; // to return
 
     // fetch corresponding instance from Core Data
-    NSString *assetURL = [[asset valueForKey:ALAssetPropertyAssetURL]
+    NSString *assetURL = [[asset valueForProperty:ALAssetPropertyAssetURL]
                           absoluteString];
+    NSLog(@"%@", assetURL);
     NSFetchRequest *request = [NSFetchRequest
                                fetchRequestWithEntityName:@"Photo"];
     request.predicate = [NSPredicate predicateWithFormat:@"id = %@", assetURL];
@@ -45,13 +46,13 @@
 
     if (!matches || ([matches count] > 1)) { // error happened
         NSLog(@"Photo.photoOfALAsset:inManagedObjectContext:");
-        NSLog(@"Matches: %ul FetchError: %@", [matches count], error);
+        NSLog(@"Matches: %lu FetchError: %@", (unsigned long)[matches count], error);
     } else if (![matches count]) { // nothing match, create a new instance
         photo = [NSEntityDescription insertNewObjectForEntityForName:@"Photo"
                                               inManagedObjectContext:context];
         photo.id = assetURL;
-        photo.location = [asset valueForKey:ALAssetPropertyLocation];
-        photo.time = [asset valueForKey:ALAssetPropertyDate];
+        photo.location = [asset valueForProperty:ALAssetPropertyLocation];
+        photo.time = [asset valueForProperty:ALAssetPropertyDate];
     } else { // find corresponding instance in Core Data
         photo = [matches lastObject];
     }

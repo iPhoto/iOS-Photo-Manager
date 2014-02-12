@@ -24,10 +24,12 @@
 		A4A291E818AB65930083B8E9 /* Photo_ManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A291E718AB65930083B8E9 /* Photo_ManagerTests.m */; };
 		A4A291FD18AB66480083B8E9 /* Photo+BasicOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A291F718AB66480083B8E9 /* Photo+BasicOperations.m */; };
 		A4A291FE18AB66480083B8E9 /* Album+BasicOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A291F918AB66480083B8E9 /* Album+BasicOperations.m */; };
-		A4A2920318AB66750083B8E9 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4A2920018AB66750083B8E9 /* Storyboard.storyboard */; };
-		A4A2920418AB66750083B8E9 /* WSAlbumTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A2920218AB66750083B8E9 /* WSAlbumTVC.m */; };
 		A4A2920818AB6C960083B8E9 /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A2920718AB6C960083B8E9 /* Album.m */; };
 		A4A2920B18AB6C970083B8E9 /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A2920A18AB6C970083B8E9 /* Photo.m */; };
+		E9AEFB3518AB9F9200BA19F3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9AEFB3418AB9F9200BA19F3 /* Main.storyboard */; };
+		E9AEFB3818ABA4BD00BA19F3 /* WSRootTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9AEFB3718ABA4BD00BA19F3 /* WSRootTabBarController.m */; };
+		E9AEFB3B18ABA68A00BA19F3 /* WSAllAlbumsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E9AEFB3A18ABA68A00BA19F3 /* WSAllAlbumsTVC.m */; };
+		E9AEFB8A18ABBF0E00BA19F3 /* WSAlbumPVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E9AEFB8918ABBF0E00BA19F3 /* WSAlbumPVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,13 +65,17 @@
 		A4A291F718AB66480083B8E9 /* Photo+BasicOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Photo+BasicOperations.m"; sourceTree = "<group>"; };
 		A4A291F818AB66480083B8E9 /* Album+BasicOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Album+BasicOperations.h"; sourceTree = "<group>"; };
 		A4A291F918AB66480083B8E9 /* Album+BasicOperations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Album+BasicOperations.m"; sourceTree = "<group>"; };
-		A4A2920018AB66750083B8E9 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
-		A4A2920118AB66750083B8E9 /* WSAlbumTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSAlbumTVC.h; sourceTree = "<group>"; };
-		A4A2920218AB66750083B8E9 /* WSAlbumTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSAlbumTVC.m; sourceTree = "<group>"; };
 		A4A2920618AB6C960083B8E9 /* Album.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Album.h; sourceTree = "<group>"; };
 		A4A2920718AB6C960083B8E9 /* Album.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Album.m; sourceTree = "<group>"; };
 		A4A2920918AB6C970083B8E9 /* Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Photo.h; sourceTree = "<group>"; };
 		A4A2920A18AB6C970083B8E9 /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photo.m; sourceTree = "<group>"; };
+		E9AEFB3418AB9F9200BA19F3 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		E9AEFB3618ABA4BD00BA19F3 /* WSRootTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSRootTabBarController.h; sourceTree = "<group>"; };
+		E9AEFB3718ABA4BD00BA19F3 /* WSRootTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSRootTabBarController.m; sourceTree = "<group>"; };
+		E9AEFB3918ABA68A00BA19F3 /* WSAllAlbumsTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSAllAlbumsTVC.h; sourceTree = "<group>"; };
+		E9AEFB3A18ABA68A00BA19F3 /* WSAllAlbumsTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSAllAlbumsTVC.m; sourceTree = "<group>"; };
+		E9AEFB8818ABBF0E00BA19F3 /* WSAlbumPVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSAlbumPVC.h; sourceTree = "<group>"; };
+		E9AEFB8918ABBF0E00BA19F3 /* WSAlbumPVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSAlbumPVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,7 +138,7 @@
 		A4A291C418AB65930083B8E9 /* Photo Manager */ = {
 			isa = PBXGroup;
 			children = (
-				A4A2920518AB667B0083B8E9 /* Test */,
+				E9AEFB3318AB9F7800BA19F3 /* View */,
 				A4A291FF18AB66600083B8E9 /* Model */,
 				A4A291CD18AB65930083B8E9 /* WSAppDelegate.h */,
 				A4A291CE18AB65930083B8E9 /* WSAppDelegate.m */,
@@ -187,14 +193,18 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
-		A4A2920518AB667B0083B8E9 /* Test */ = {
+		E9AEFB3318AB9F7800BA19F3 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				A4A2920018AB66750083B8E9 /* Storyboard.storyboard */,
-				A4A2920118AB66750083B8E9 /* WSAlbumTVC.h */,
-				A4A2920218AB66750083B8E9 /* WSAlbumTVC.m */,
+				E9AEFB3418AB9F9200BA19F3 /* Main.storyboard */,
+				E9AEFB8818ABBF0E00BA19F3 /* WSAlbumPVC.h */,
+				E9AEFB8918ABBF0E00BA19F3 /* WSAlbumPVC.m */,
+				E9AEFB3918ABA68A00BA19F3 /* WSAllAlbumsTVC.h */,
+				E9AEFB3A18ABA68A00BA19F3 /* WSAllAlbumsTVC.m */,
+				E9AEFB3618ABA4BD00BA19F3 /* WSRootTabBarController.h */,
+				E9AEFB3718ABA4BD00BA19F3 /* WSRootTabBarController.m */,
 			);
-			name = Test;
+			name = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -275,7 +285,7 @@
 			files = (
 				A4A291C918AB65930083B8E9 /* InfoPlist.strings in Resources */,
 				A4A291D418AB65930083B8E9 /* Images.xcassets in Resources */,
-				A4A2920318AB66750083B8E9 /* Storyboard.storyboard in Resources */,
+				E9AEFB3518AB9F9200BA19F3 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,14 +304,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9AEFB8A18ABBF0E00BA19F3 /* WSAlbumPVC.m in Sources */,
 				A4A291CF18AB65930083B8E9 /* WSAppDelegate.m in Sources */,
+				E9AEFB3B18ABA68A00BA19F3 /* WSAllAlbumsTVC.m in Sources */,
 				A4A291CB18AB65930083B8E9 /* main.m in Sources */,
 				A4A291FE18AB66480083B8E9 /* Album+BasicOperations.m in Sources */,
 				A4A2920818AB6C960083B8E9 /* Album.m in Sources */,
 				A4A2920B18AB6C970083B8E9 /* Photo.m in Sources */,
-				A4A2920418AB66750083B8E9 /* WSAlbumTVC.m in Sources */,
 				A4A291FD18AB66480083B8E9 /* Photo+BasicOperations.m in Sources */,
 				A4A291D218AB65930083B8E9 /* Photo_Manager.xcdatamodeld in Sources */,
+				E9AEFB3818ABA4BD00BA19F3 /* WSRootTabBarController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -502,6 +514,7 @@
 				A4A291ED18AB65930083B8E9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A4A291EE18AB65930083B8E9 /* Build configuration list for PBXNativeTarget "Photo ManagerTests" */ = {
 			isa = XCConfigurationList;
@@ -510,6 +523,7 @@
 				A4A291F018AB65930083B8E9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

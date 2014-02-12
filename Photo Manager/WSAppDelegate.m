@@ -7,6 +7,7 @@
 //
 
 #import "WSAppDelegate.h"
+#import "WSRootTabBarController.h"
 
 @implementation WSAppDelegate
 
@@ -20,6 +21,9 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    self.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"RootController"];
     return YES;
 }
 
