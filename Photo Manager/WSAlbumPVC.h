@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WSAlbumPVC : UIPageViewController <UIPageViewControllerDataSource>
-
+@interface WSAlbumPVC : UIViewController
+@property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 @end

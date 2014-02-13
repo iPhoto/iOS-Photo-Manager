@@ -1,19 +1,19 @@
 //
-//  WSAllAlbumsTVC.m
+//  WSAlbumsTVC.m
 //  Photo Manager
 //
-//  Created by Song Xintong on 14-2-12.
+//  Created by Tony Song on 14-2-14.
 //  Copyright (c) 2014年 WeeSteps. All rights reserved.
 //
 
-#import "WSAllAlbumsTVC.h"
+#import "WSAlbumsTVC.h"
 #import "WSAlbumPVC.h"
 
-@interface WSAllAlbumsTVC ()
+@interface WSAlbumsTVC ()
 
 @end
 
-@implementation WSAllAlbumsTVC
+@implementation WSAlbumsTVC
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -27,7 +27,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"all";
+
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -54,19 +54,12 @@
 {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 5;
+    return 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier;
-
-    if (indexPath.row % 2) {
-        CellIdentifier = @"PhotosOnlyCell";
-    } else {
-        CellIdentifier = @"PhotosAndAlbumsCell";
-    }
-
+    static NSString *CellIdentifier = @"PhotosAndAlbumsCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
@@ -76,7 +69,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    ((WSAlbumPVC *)(segue.destinationViewController)).title = @"From Root";
+    ((WSAlbumPVC *)(segue.destinationViewController)).title = @"not from root";
 }
 
 /*

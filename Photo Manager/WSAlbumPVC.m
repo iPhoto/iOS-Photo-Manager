@@ -8,14 +8,24 @@
 
 #import "WSAlbumPVC.h"
 
-@interface WSAlbumPVC ()
+@interface WSAlbumPVC ()<UIPageViewControllerDelegate, UIPageViewControllerDataSource>
 
-@property (nonatomic) NSInteger index;
+@property (nonatomic, strong) UIPageViewController *pvc;
 @property (nonatomic, strong) NSArray *controllers;
 
 @end
 
 @implementation WSAlbumPVC
+
+- (UIPageViewController *)pvc
+{
+    if (!_pvc) {
+        _pvc = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
+                                               navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
+                                                             options:nil];
+    }
+    return _pvc;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -35,11 +45,22 @@
     [array addObject:[storyboard instantiateViewControllerWithIdentifier:@"Photos"]];
     [array addObject:[storyboard instantiateViewControllerWithIdentifier:@"Albums"]];
     self.controllers = array;
-    self.dataSource = self;
-    [self setViewControllers:@[self.controllers[self.index]]
+    self.pageControl.currentPage = 0;
+    self.pageControl.numberOfPages = [self.controllers count];
+    
+    self.pvc.delegate = self;
+    self.pvc.dataSource = self;
+    
+    [self.pvc setViewControllers:@[self.controllers[self.pageControl.currentPage]]
                    direction:UIPageViewControllerNavigationDirectionForward
                     animated:YES
                   completion:nil];
+    [self addChildViewController:self.pvc];
+    [self.view insertSubview: self.pvc.view belowSubview:self.pageControl];
+    
+    self.pvc.view.frame = CGRectMake(0.0, 0.0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
+    [self.pvc didMoveToParentViewController:self];
+    self.view.gestureRecognizers = self.pvc.gestureRecognizers;
 }
 
 - (void)didReceiveMemoryWarning
@@ -53,7 +74,7 @@
 
     NSInteger index = [self.controllers indexOfObject:viewController];
     if (index < [self.controllers count] - 1) {
-        return self.controllers[self.index + 1];
+        return self.controllers[index + 1];
     }
     return nil;
 }
@@ -62,7 +83,7 @@
 {
     NSInteger index = [self.controllers indexOfObject:viewController];
     if (index > 0) {
-        return self.controllers[self.index - 1];
+        return self.controllers[index - 1];
     }
     return nil;
 }
@@ -74,7 +95,19 @@
 
 - (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController
 {
-    return 0;
+    //pageViewController
+    return self.pageControl.currentPage;
+}
+
+- (void)pageViewController:(UIPageViewController *)pageViewController
+        didFinishAnimating:(BOOL)finished
+   previousViewControllers:(NSArray *)previousViewControllers
+       transitionCompleted:(BOOL)completed
+{
+    if (!completed) {
+        return;
+    }
+    self.pageControl.currentPage = [self.controllers indexOfObject:[self.pvc.viewControllers lastObject]];
 }
 
 @end

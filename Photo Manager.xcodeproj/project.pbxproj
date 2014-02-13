@@ -26,6 +26,8 @@
 		A4A291FE18AB66480083B8E9 /* Album+BasicOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A291F918AB66480083B8E9 /* Album+BasicOperations.m */; };
 		A4A2920818AB6C960083B8E9 /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A2920718AB6C960083B8E9 /* Album.m */; };
 		A4A2920B18AB6C970083B8E9 /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A2920A18AB6C970083B8E9 /* Photo.m */; };
+		A4D2493518AD2B3900CF1FC9 /* WSAlbumsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D2493418AD2B3900CF1FC9 /* WSAlbumsTVC.m */; };
+		A4D2493818AD308500CF1FC9 /* WSPhotosCVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D2493718AD308500CF1FC9 /* WSPhotosCVC.m */; };
 		E9AEFB3518AB9F9200BA19F3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9AEFB3418AB9F9200BA19F3 /* Main.storyboard */; };
 		E9AEFB3818ABA4BD00BA19F3 /* WSRootTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9AEFB3718ABA4BD00BA19F3 /* WSRootTabBarController.m */; };
 		E9AEFB3B18ABA68A00BA19F3 /* WSAllAlbumsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E9AEFB3A18ABA68A00BA19F3 /* WSAllAlbumsTVC.m */; };
@@ -69,6 +71,10 @@
 		A4A2920718AB6C960083B8E9 /* Album.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Album.m; sourceTree = "<group>"; };
 		A4A2920918AB6C970083B8E9 /* Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Photo.h; sourceTree = "<group>"; };
 		A4A2920A18AB6C970083B8E9 /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photo.m; sourceTree = "<group>"; };
+		A4D2493318AD2B3900CF1FC9 /* WSAlbumsTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSAlbumsTVC.h; sourceTree = "<group>"; };
+		A4D2493418AD2B3900CF1FC9 /* WSAlbumsTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSAlbumsTVC.m; sourceTree = "<group>"; };
+		A4D2493618AD308500CF1FC9 /* WSPhotosCVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSPhotosCVC.h; sourceTree = "<group>"; };
+		A4D2493718AD308500CF1FC9 /* WSPhotosCVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSPhotosCVC.m; sourceTree = "<group>"; };
 		E9AEFB3418AB9F9200BA19F3 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		E9AEFB3618ABA4BD00BA19F3 /* WSRootTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSRootTabBarController.h; sourceTree = "<group>"; };
 		E9AEFB3718ABA4BD00BA19F3 /* WSRootTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSRootTabBarController.m; sourceTree = "<group>"; };
@@ -197,6 +203,10 @@
 			isa = PBXGroup;
 			children = (
 				E9AEFB3418AB9F9200BA19F3 /* Main.storyboard */,
+				A4D2493618AD308500CF1FC9 /* WSPhotosCVC.h */,
+				A4D2493718AD308500CF1FC9 /* WSPhotosCVC.m */,
+				A4D2493318AD2B3900CF1FC9 /* WSAlbumsTVC.h */,
+				A4D2493418AD2B3900CF1FC9 /* WSAlbumsTVC.m */,
 				E9AEFB8818ABBF0E00BA19F3 /* WSAlbumPVC.h */,
 				E9AEFB8918ABBF0E00BA19F3 /* WSAlbumPVC.m */,
 				E9AEFB3918ABA68A00BA19F3 /* WSAllAlbumsTVC.h */,
@@ -307,10 +317,12 @@
 				E9AEFB8A18ABBF0E00BA19F3 /* WSAlbumPVC.m in Sources */,
 				A4A291CF18AB65930083B8E9 /* WSAppDelegate.m in Sources */,
 				E9AEFB3B18ABA68A00BA19F3 /* WSAllAlbumsTVC.m in Sources */,
+				A4D2493818AD308500CF1FC9 /* WSPhotosCVC.m in Sources */,
 				A4A291CB18AB65930083B8E9 /* main.m in Sources */,
 				A4A291FE18AB66480083B8E9 /* Album+BasicOperations.m in Sources */,
 				A4A2920818AB6C960083B8E9 /* Album.m in Sources */,
 				A4A2920B18AB6C970083B8E9 /* Photo.m in Sources */,
+				A4D2493518AD2B3900CF1FC9 /* WSAlbumsTVC.m in Sources */,
 				A4A291FD18AB66480083B8E9 /* Photo+BasicOperations.m in Sources */,
 				A4A291D218AB65930083B8E9 /* Photo_Manager.xcdatamodeld in Sources */,
 				E9AEFB3818ABA4BD00BA19F3 /* WSRootTabBarController.m in Sources */,
