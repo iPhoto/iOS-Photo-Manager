@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 
+// UICollectionViewCell that presents a photo.
 @interface WSPhotoCollectionCell : UICollectionViewCell
 
-@property (strong, nonatomic) ALAsset *asset;
-@property (strong, nonatomic) NSIndexPath *indexpath;
+@property (strong, nonatomic) ALAsset *asset; // of photo
+@property (strong, nonatomic) NSIndexPath *indexpath; // position in parent collection view
 
 @end

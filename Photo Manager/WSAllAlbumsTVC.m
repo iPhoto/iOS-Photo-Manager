@@ -6,28 +6,42 @@
 //  Copyright (c) 2014年 WeeSteps. All rights reserved.
 //
 
+
 #import "WSAllAlbumsTVC.h"
-#import "WSAlbumPVC.h"
+
+#import "Photo+BasicOperations.h"
+#import "Album+BasicOperations.h"
+
+#import "WSAppDelegate.h"
+#import "WSFinishLoadingDelegate.h"
+
 #import "WSAlbumTableCell.h"
 #import "WSPhotosCVC.h"
-#import "Photo+BasicOperations.h"
-#import "WSAppDelegate.h"
+#import "WSAlbumPVC.h"
 
-@interface WSAllAlbumsTVC ()
+#import "DisplayString.h"
+#import "UIIdentifierString.h"
 
-@property (nonatomic, strong)NSManagedObjectContext *context;
+@interface WSAllAlbumsTVC () <WSFinishLoadingDelegate>
+
+@property (nonatomic, strong)NSManagedObjectContext *context; // to access Core Data.
 
 @end
 
 @implementation WSAllAlbumsTVC
 
+#pragma mark - Access properties
+
 - (NSManagedObjectContext *)context
 {
     if (!_context) {
-        _context = ((WSAppDelegate *)([UIApplication sharedApplication].delegate)).managedObjectContext;
+        WSAppDelegate *delegate = [UIApplication sharedApplication].delegate;
+        _context = delegate.managedObjectContext;
     }
     return _context;
 }
+
+#pragma mark - Lifecycle
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -41,6 +55,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // Listenning for WSAppDelegate to finish importing photos
+    WSAppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    if (!delegate.loadFinished) {
+        [delegate addFinishLoadingDelegate:self];
+    }
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -52,6 +73,14 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Finish loading delegate
+
+- (void)loadingFinished:(id)sender
+{
+    NSLog(@"test");
+    [self.tableView reloadData];
 }
 
 #pragma mark - Table view data source
@@ -70,50 +99,46 @@
     return 5;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *cellIdentifier;
     WSAlbumTableCell *cell;
 
     if (indexPath.row == 0) { // all photos
-        cell = [tableView dequeueReusableCellWithIdentifier:@"PhotosOnlyCell"
+        cell = [tableView dequeueReusableCellWithIdentifier:IS_PHOTOS_ONLY_CELL
                                                forIndexPath:indexPath];
-        cell.titleLabel.text = @"所有照片";
-        cell.detailLabel.text = @"描述文字";
-        cell.thumbnailImageView.image = [UIImage imageNamed:@"photos"];
-#warning magic words
-        cell.albumId = @"ALL_PHOTOS";
-        return cell;
-    }
-
-    if (indexPath.row % 2) {
-        cellIdentifier = @"PhotosOnlyCell";
+        cell.albumId = ALBUM_ID_ALL_PHOTOS;
+        cell.titleLabel.text = DS_ALL_PHOTOS;
+        cell.photos = [Photo allPhotosInManagedObjectContext:self.context];
     } else {
-        cellIdentifier = @"PhotosAndAlbumsCell";
+#warning Incomplete for other cells.
+        if (indexPath.row % 2) {
+            cellIdentifier = IS_PHOTOS_AND_ALBUMS_CELL;
+        } else {
+            cellIdentifier = IS_PHOTOS_ONLY_CELL;
+        }
+        cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+        // Configure the cell...
+        
     }
-
-    cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
     return cell;
 }
 
+// This is optional for table view data source, but required for this app to use WSAlbumTableCell.
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 96.0;
+    return WS_ALBUM_TABLE_CELL_HEIGHT;
 }
 
+#pragma mark - Segues
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier compare:@"ToPhotos"] == NSOrderedSame) {
+    if ([segue.identifier compare:IS_SEGUE_TO_PHOTOS] == NSOrderedSame) {
         WSAlbumTableCell *cell = sender;
         WSPhotosCVC *destination = segue.destinationViewController;
         destination.title = cell.titleLabel.text;
-
-        if ([cell.albumId compare:@"ALL_PHOTOS"] == NSOrderedSame) {
-            destination.photos = [Photo allPhotosInManagedObjectContext:self.context];
-        }
+        destination.photos = cell.photos;
     }
 }
 

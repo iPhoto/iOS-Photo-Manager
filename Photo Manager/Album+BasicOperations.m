@@ -126,35 +126,6 @@
     return album;
 }
 
-+ (Album *)allAlbumsAndPhotosInManagedObjectContext:(NSManagedObjectContext *)context
-{
-    // fecth all photos and albums
-    NSFetchRequest *request;
-    NSError *error;
-    NSArray *albums;
-    NSArray *photos;
-    request = [NSFetchRequest fetchRequestWithEntityName:@"Album"];
-    albums = [context executeFetchRequest:request error:&error];
-    if (!albums) {
-        NSLog(@"Album.allAlbumsInManagedObjectContext:");
-        NSLog(@"Fetch all albums error: %@", error);
-    }
-    request = [NSFetchRequest fetchRequestWithEntityName:@"Photo"];
-    photos = [context executeFetchRequest:request error:&error];
-    if (!photos) {
-        NSLog(@"Album.allAlbumsInManagedObjectContext:");
-        NSLog(@"Fetch all photos error: %@", error);
-    }
-    // create Album instance
-    Album *album = [[Album alloc] init];
-#warning TODO: remove magic words
-    album.id = @"SPECIAL_ID_ALL";
-    album.title = @"ALL";
-    [album addAlbums:[[NSSet alloc] initWithArray:albums]];
-    [album addPhotos:[[NSSet alloc] initWithArray:photos]];
-    return album;
-}
-
 - (BOOL) isChildOf:(Album *)album
 {
     if (![self.albumsBelongsTo count]) {

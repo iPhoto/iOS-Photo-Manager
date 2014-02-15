@@ -16,28 +16,13 @@
 
 @implementation WSPhotoCollectionCell
 
+#pragma mark - Access properties
+
 - (void)setAsset:(ALAsset *)asset
 {
     _asset = asset;
+    // set image to thumbnail of asset
     self.imageView.image = [UIImage imageWithCGImage:_asset.thumbnail];
 }
-
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
-    return self;
-}
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
 @end

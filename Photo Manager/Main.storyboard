@@ -4,10 +4,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
-        <!--Root Tab Bar Controller-->
+        <!--Tab Bar Controller-->
         <scene sceneID="e7d-D9-zzL">
             <objects>
-                <tabBarController storyboardIdentifier="RootController" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="WS0-lW-kaO" customClass="WSRootTabBarController" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="RootController" definesPresentationContext="YES" id="WS0-lW-kaO" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="B7N-6J-jKX">

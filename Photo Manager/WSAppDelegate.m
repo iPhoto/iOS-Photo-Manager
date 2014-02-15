@@ -7,9 +7,18 @@
 //
 
 #import "WSAppDelegate.h"
-#import "WSRootTabBarController.h"
 #import "Photo+BasicOperations.h"
+#import "UIIdentifierString.h"
 #import <AssetsLibrary/AssetsLibrary.h>
+
+@interface WSAppDelegate ()
+
+@property (nonatomic) NSInteger loadTasks; // number of ongoing asynchronous tasks for loading photos
+@property (readwrite, nonatomic)BOOL loadFinished; // indicator of whether photo loading finished
+                                                    // readwrite inside this class
+@property (strong, nonatomic)NSMutableSet *delegates; // all delegates to notify after finish loading
+
+@end
 
 @implementation WSAppDelegate
 
@@ -17,16 +26,39 @@
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
+#pragma mark - Access properties
+
+- (NSMutableSet *)delegates
+{
+    if (!_delegates) {
+        _delegates = [[NSMutableSet alloc] init];
+    }
+    return _delegates;
+}
+
+#pragma mark - Load user photos
+
 - (void)loadUserPhotos
 {
+    self.loadFinished = NO;
     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+    self.loadTasks = 1;
     [library enumerateGroupsWithTypes:ALAssetsGroupAll
                            usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
                                if (!group) {
+                                   self.loadTasks -= 1;
+                                   if (self.loadTasks == 0) {
+                                       [self loadUserPhotosFinished];
+                                   }
                                    return;
                                }
+                               self.loadTasks += 1;
                                [group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
                                    if (!result) {
+                                       self.loadTasks -= 1;
+                                       if (self.loadTasks == 0) {
+                                           [self loadUserPhotosFinished];
+                                       }
                                        return;
                                    }
                                    NSLog(@"import photo");
@@ -39,6 +71,22 @@
                            }];
 }
 
+- (void)loadUserPhotosFinished
+{
+    self.loadFinished = YES;
+    [self.delegates enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        id<WSFinishLoadingDelegate> delegate = obj;
+        [delegate loadingFinished:self];
+    }];
+}
+
+- (void)addFinishLoadingDelegate:(id<WSFinishLoadingDelegate>)delegate
+{
+    [self.delegates addObject:delegate];
+}
+
+#pragma mark - Application delegate
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -48,8 +96,8 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
 
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    self.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"RootController"];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:IS_STORYBOARD_NAME bundle:nil];
+    self.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:IS_ROOT_CONTROLLER];
     return YES;
 }
 

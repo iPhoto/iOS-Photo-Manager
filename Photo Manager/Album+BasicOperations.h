@@ -8,6 +8,8 @@
 
 #import "Album.h"
 
+#define ALBUM_ID_ALL_PHOTOS @"ALL_PHOTOS"
+
 // Category of basic operations on the Album class.
 @interface Album (BasicOperations)
 
@@ -42,8 +44,6 @@
           belongsToAlbums:(NSSet *)albumsBelongsTo
    inManagedObjectContext:(NSManagedObjectContext *)context
                 conflicts:(NSSet *)conflicts;
-
-+ (Album *)allAlbumsAndPhotosInManagedObjectContext:(NSManagedObjectContext *)context;
 
 // Returns YES if this album is a direct/indirect child of |album|. Otherwise
 // returns NO.
