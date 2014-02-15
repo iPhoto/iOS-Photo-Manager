@@ -10,4 +10,6 @@
 
 @interface WSPhotosCVC : UICollectionViewController
 
+@property (nonatomic, strong)NSArray *photos; // of Photo
+
 @end

@@ -8,6 +8,8 @@
 
 #import "WSAppDelegate.h"
 #import "WSRootTabBarController.h"
+#import "Photo+BasicOperations.h"
+#import <AssetsLibrary/AssetsLibrary.h>
 
 @implementation WSAppDelegate
 
@@ -15,10 +17,34 @@
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
+- (void)loadUserPhotos
+{
+    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+    [library enumerateGroupsWithTypes:ALAssetsGroupAll
+                           usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
+                               if (!group) {
+                                   return;
+                               }
+                               [group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
+                                   if (!result) {
+                                       return;
+                                   }
+                                   NSLog(@"import photo");
+                                   [Photo photoOfALAsset:result
+                                  inManagedObjectContext:self.managedObjectContext];
+                               }];
+                           } failureBlock:^(NSError *error) {
+                               NSLog(@"WSAppDelegate.loadUserPhotos");
+                               NSLog(@"%@", error);
+                           }];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    [self loadUserPhotos];
+
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
 

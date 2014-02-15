@@ -37,7 +37,6 @@
     // fetch corresponding instance from Core Data
     NSString *assetURL = [[asset valueForProperty:ALAssetPropertyAssetURL]
                           absoluteString];
-    NSLog(@"%@", assetURL);
     NSFetchRequest *request = [NSFetchRequest
                                fetchRequestWithEntityName:@"Photo"];
     request.predicate = [NSPredicate predicateWithFormat:@"id = %@", assetURL];
@@ -58,6 +57,21 @@
     }
 
     return photo;
+}
+
++ (NSArray *)allPhotosInManagedObjectContext:(NSManagedObjectContext *)context
+{
+    NSFetchRequest *request = [NSFetchRequest
+                               fetchRequestWithEntityName:@"Photo"];
+    NSError *error;
+    NSArray *matches = [context executeFetchRequest:request error:&error];
+
+    if (!matches) { // error happened
+        NSLog(@"Photo.allPhotosInManagedObjectContext:");
+        NSLog(@"FetchError: %@", error);
+    }
+
+    return matches;
 }
 
 @end

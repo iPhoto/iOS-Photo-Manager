@@ -25,4 +25,5 @@
 + (Photo *)photoOfALAsset:(ALAsset *)asset
    inManagedObjectContext:(NSManagedObjectContext *)context;
 
++ (NSArray *)allPhotosInManagedObjectContext:(NSManagedObjectContext *)context;
 @end

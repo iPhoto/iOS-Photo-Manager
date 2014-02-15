@@ -8,12 +8,26 @@
 
 #import "WSAllAlbumsTVC.h"
 #import "WSAlbumPVC.h"
+#import "WSAlbumTableCell.h"
+#import "WSPhotosCVC.h"
+#import "Photo+BasicOperations.h"
+#import "WSAppDelegate.h"
 
 @interface WSAllAlbumsTVC ()
+
+@property (nonatomic, strong)NSManagedObjectContext *context;
 
 @end
 
 @implementation WSAllAlbumsTVC
+
+- (NSManagedObjectContext *)context
+{
+    if (!_context) {
+        _context = ((WSAppDelegate *)([UIApplication sharedApplication].delegate)).managedObjectContext;
+    }
+    return _context;
+}
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -27,7 +41,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"all";
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -59,24 +72,49 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier;
+    NSString *cellIdentifier;
+    WSAlbumTableCell *cell;
 
-    if (indexPath.row % 2) {
-        CellIdentifier = @"PhotosOnlyCell";
-    } else {
-        CellIdentifier = @"PhotosAndAlbumsCell";
+    if (indexPath.row == 0) { // all photos
+        cell = [tableView dequeueReusableCellWithIdentifier:@"PhotosOnlyCell"
+                                               forIndexPath:indexPath];
+        cell.titleLabel.text = @"所有照片";
+        cell.detailLabel.text = @"描述文字";
+        cell.thumbnailImageView.image = [UIImage imageNamed:@"photos"];
+#warning magic words
+        cell.albumId = @"ALL_PHOTOS";
+        return cell;
     }
 
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    if (indexPath.row % 2) {
+        cellIdentifier = @"PhotosOnlyCell";
+    } else {
+        cellIdentifier = @"PhotosAndAlbumsCell";
+    }
+
+    cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
     
     return cell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 96.0;
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    ((WSAlbumPVC *)(segue.destinationViewController)).title = @"From Root";
+    if ([segue.identifier compare:@"ToPhotos"] == NSOrderedSame) {
+        WSAlbumTableCell *cell = sender;
+        WSPhotosCVC *destination = segue.destinationViewController;
+        destination.title = cell.titleLabel.text;
+
+        if ([cell.albumId compare:@"ALL_PHOTOS"] == NSOrderedSame) {
+            destination.photos = [Photo allPhotosInManagedObjectContext:self.context];
+        }
+    }
 }
 
 /*

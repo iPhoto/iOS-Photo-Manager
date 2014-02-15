@@ -28,6 +28,9 @@
 		A4A2920B18AB6C970083B8E9 /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A2920A18AB6C970083B8E9 /* Photo.m */; };
 		A4D2493518AD2B3900CF1FC9 /* WSAlbumsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D2493418AD2B3900CF1FC9 /* WSAlbumsTVC.m */; };
 		A4D2493818AD308500CF1FC9 /* WSPhotosCVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A4D2493718AD308500CF1FC9 /* WSPhotosCVC.m */; };
+		E905495E18ADDEB0008A2827 /* WSImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E905495D18ADDEB0008A2827 /* WSImageViewController.m */; };
+		E905496118ADE8DC008A2827 /* WSAlbumTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E905496018ADE8DC008A2827 /* WSAlbumTableCell.m */; };
+		E905496418AE00E3008A2827 /* WSPhotoCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E905496318AE00E3008A2827 /* WSPhotoCollectionCell.m */; };
 		E9AEFB3518AB9F9200BA19F3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9AEFB3418AB9F9200BA19F3 /* Main.storyboard */; };
 		E9AEFB3818ABA4BD00BA19F3 /* WSRootTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9AEFB3718ABA4BD00BA19F3 /* WSRootTabBarController.m */; };
 		E9AEFB3B18ABA68A00BA19F3 /* WSAllAlbumsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E9AEFB3A18ABA68A00BA19F3 /* WSAllAlbumsTVC.m */; };
@@ -75,6 +78,12 @@
 		A4D2493418AD2B3900CF1FC9 /* WSAlbumsTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSAlbumsTVC.m; sourceTree = "<group>"; };
 		A4D2493618AD308500CF1FC9 /* WSPhotosCVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSPhotosCVC.h; sourceTree = "<group>"; };
 		A4D2493718AD308500CF1FC9 /* WSPhotosCVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSPhotosCVC.m; sourceTree = "<group>"; };
+		E905495C18ADDEB0008A2827 /* WSImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSImageViewController.h; sourceTree = "<group>"; };
+		E905495D18ADDEB0008A2827 /* WSImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSImageViewController.m; sourceTree = "<group>"; };
+		E905495F18ADE8DC008A2827 /* WSAlbumTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSAlbumTableCell.h; sourceTree = "<group>"; };
+		E905496018ADE8DC008A2827 /* WSAlbumTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSAlbumTableCell.m; sourceTree = "<group>"; };
+		E905496218AE00E3008A2827 /* WSPhotoCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSPhotoCollectionCell.h; sourceTree = "<group>"; };
+		E905496318AE00E3008A2827 /* WSPhotoCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSPhotoCollectionCell.m; sourceTree = "<group>"; };
 		E9AEFB3418AB9F9200BA19F3 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		E9AEFB3618ABA4BD00BA19F3 /* WSRootTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSRootTabBarController.h; sourceTree = "<group>"; };
 		E9AEFB3718ABA4BD00BA19F3 /* WSRootTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSRootTabBarController.m; sourceTree = "<group>"; };
@@ -203,6 +212,12 @@
 			isa = PBXGroup;
 			children = (
 				E9AEFB3418AB9F9200BA19F3 /* Main.storyboard */,
+				E905496218AE00E3008A2827 /* WSPhotoCollectionCell.h */,
+				E905496318AE00E3008A2827 /* WSPhotoCollectionCell.m */,
+				E905495F18ADE8DC008A2827 /* WSAlbumTableCell.h */,
+				E905496018ADE8DC008A2827 /* WSAlbumTableCell.m */,
+				E905495C18ADDEB0008A2827 /* WSImageViewController.h */,
+				E905495D18ADDEB0008A2827 /* WSImageViewController.m */,
 				A4D2493618AD308500CF1FC9 /* WSPhotosCVC.h */,
 				A4D2493718AD308500CF1FC9 /* WSPhotosCVC.m */,
 				A4D2493318AD2B3900CF1FC9 /* WSAlbumsTVC.h */,
@@ -314,9 +329,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E905496118ADE8DC008A2827 /* WSAlbumTableCell.m in Sources */,
 				E9AEFB8A18ABBF0E00BA19F3 /* WSAlbumPVC.m in Sources */,
 				A4A291CF18AB65930083B8E9 /* WSAppDelegate.m in Sources */,
 				E9AEFB3B18ABA68A00BA19F3 /* WSAllAlbumsTVC.m in Sources */,
+				E905496418AE00E3008A2827 /* WSPhotoCollectionCell.m in Sources */,
 				A4D2493818AD308500CF1FC9 /* WSPhotosCVC.m in Sources */,
 				A4A291CB18AB65930083B8E9 /* main.m in Sources */,
 				A4A291FE18AB66480083B8E9 /* Album+BasicOperations.m in Sources */,
@@ -324,6 +341,7 @@
 				A4A2920B18AB6C970083B8E9 /* Photo.m in Sources */,
 				A4D2493518AD2B3900CF1FC9 /* WSAlbumsTVC.m in Sources */,
 				A4A291FD18AB66480083B8E9 /* Photo+BasicOperations.m in Sources */,
+				E905495E18ADDEB0008A2827 /* WSImageViewController.m in Sources */,
 				A4A291D218AB65930083B8E9 /* Photo_Manager.xcdatamodeld in Sources */,
 				E9AEFB3818ABA4BD00BA19F3 /* WSRootTabBarController.m in Sources */,
 			);
