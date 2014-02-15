@@ -12,7 +12,7 @@
 #import "WSImageViewController.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 
-@interface WSPhotosCVC () <UICollectionViewDataSource>
+@interface WSPhotosCVC () <UICollectionViewDataSource, UIPageViewControllerDataSource, UIPageViewControllerDelegate>
 
 @property (nonatomic, strong)ALAssetsLibrary *library;
 
@@ -79,6 +79,7 @@
     [self.library assetForURL:[NSURL URLWithString:photo.id]
                   resultBlock:^(ALAsset *asset) {
                       cell.asset = asset;
+                      cell.indexpath = indexPath;
                   }
                  failureBlock:^(NSError *error) {
                      NSLog(@"WSPhotosCVC.collectionView:cellForItemAtIndexPath:");
@@ -91,10 +92,82 @@
 {
     if ([segue.identifier compare:@"ShowPhoto"] == NSOrderedSame) {
         WSPhotoCollectionCell *cell = sender;
-        WSImageViewController *destination = segue.destinationViewController;
-        destination.image = [UIImage imageWithCGImage:cell.asset.defaultRepresentation.fullResolutionImage];
-        //segue
+        
+        WSImageViewController *imageViewController = [WSImageViewController imageViewControllerForAsset:cell.asset
+                                                                                              indexPath:cell.indexpath];
+        UIPageViewController *destination = segue.destinationViewController;
+        [destination setViewControllers:@[imageViewController]
+                              direction:UIPageViewControllerNavigationDirectionForward
+                               animated:YES completion:nil];
+        destination.dataSource = self;
+        destination.delegate = self;
+        destination.title = [NSString stringWithFormat:@"%ld/%ld", cell.indexpath.row + 1,
+                                     [self collectionView:self.collectionView
+                                   numberOfItemsInSection:cell.indexpath.section]];
     }
+}
+
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController
+       viewControllerAfterViewController:(UIViewController *)viewController
+{
+    NSIndexPath *indexpath = ((WSImageViewController *)viewController).indexpath;
+    NSInteger row = indexpath.row + 1;
+    NSInteger section = indexpath.section;
+    while (row == [self collectionView:self.collectionView
+                       numberOfItemsInSection:indexpath.section]) {
+        section = section + 1;
+        if (section == [self numberOfSectionsInCollectionView:self.collectionView]) {
+            return nil;
+        }
+        row = 0;
+    }
+    NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:row inSection:section];
+    Photo *photo = [self.photos objectAtIndex:newIndexPath.row];
+    return [WSImageViewController imageViewControllerForAssetURL:[NSURL URLWithString:photo.id]
+                                                    indexPath:newIndexPath];
+}
+
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController
+       viewControllerBeforeViewController:(UIViewController *)viewController
+{
+    NSIndexPath *indexpath = ((WSImageViewController *)viewController).indexpath;
+    NSInteger row = indexpath.row - 1;
+    NSInteger section = indexpath.section;
+    while (row < 0) {
+        section = section - 1;
+        if (section < 0) {
+            return nil;
+        }
+        row = [self collectionView:self.collectionView numberOfItemsInSection:indexpath.section] - 1;
+    }
+    NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:row inSection:section];
+    Photo *photo = [self.photos objectAtIndex:newIndexPath.row];
+    return [WSImageViewController imageViewControllerForAssetURL:[NSURL URLWithString:photo.id]
+                                                                                    indexPath:newIndexPath];
+}
+
+- (void)pageViewController:(UIPageViewController *)pageViewController
+willTransitionToViewControllers:(NSArray *)pendingViewControllers
+{
+    WSImageViewController *ivc = [pendingViewControllers lastObject];
+    if (ivc.navigationController.navigationBarHidden) {
+        ivc.view.backgroundColor = [UIColor blackColor];
+    } else {
+        ivc.view.backgroundColor = [UIColor whiteColor];
+    }
+    [self.parentViewController setNeedsStatusBarAppearanceUpdate];
+    [ivc fitImageToScrollViewAnimated:NO];
+}
+
+- (void)pageViewController:(UIPageViewController *)pageViewController
+        didFinishAnimating:(BOOL)finished
+   previousViewControllers:(NSArray *)previousViewControllers
+       transitionCompleted:(BOOL)completed
+{
+    WSImageViewController *ivc = [pageViewController.viewControllers lastObject];
+    ivc.parentViewController.title = [NSString stringWithFormat:@"%ld/%ld", ivc.indexpath.row + 1,
+                                      [self collectionView:self.collectionView
+                                    numberOfItemsInSection:ivc.indexpath.section]];
 }
 
 @end

@@ -147,11 +147,11 @@
                         <viewControllerLayoutGuide type="bottom" id="0hF-QT-bRN"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="0R7-US-aDP">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="2" translatesAutoresizingMaskIntoConstraints="NO" id="1Vs-eg-pnJ">
-                                <rect key="frame" x="141" y="443" width="39" height="37"/>
+                                <rect key="frame" x="141" y="330" width="39" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="39" id="B72-cq-CO1"/>
@@ -174,7 +174,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F24-3i-fOj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="868" y="706"/>
+            <point key="canvasLocation" x="848" y="620"/>
         </scene>
         <!--PhotosCVC-->
         <scene sceneID="cZR-kl-TUl">
@@ -213,7 +213,7 @@
                                 </constraints>
                                 <connections>
                                     <outlet property="imageView" destination="yOf-t3-4Vr" id="gZL-Zh-Onf"/>
-                                    <segue destination="sNt-cK-4kO" kind="push" identifier="ShowPhoto" id="jgL-8b-IVA"/>
+                                    <segue destination="1G5-Gy-dcp" kind="push" id="fT8-04-OYy"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -229,10 +229,20 @@
             </objects>
             <point key="canvasLocation" x="1293" y="64"/>
         </scene>
+        <!--Photo BrowserPVC-->
+        <scene sceneID="01H-Ci-HLm">
+            <objects>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="1G5-Gy-dcp" customClass="WSPhotoBrowserPVC" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="0VR-AC-n8E"/>
+                </pageViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zSA-o7-Cn2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1700" y="64"/>
+        </scene>
         <!--Image View Controller-->
         <scene sceneID="uNq-LX-hmJ">
             <objects>
-                <viewController id="sNt-cK-4kO" customClass="WSImageViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PhotoBrowser" id="sNt-cK-4kO" customClass="WSImageViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="rtr-qc-iOU"/>
                         <viewControllerLayoutGuide type="bottom" id="tHD-pm-jy9"/>
@@ -244,24 +254,41 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.01" maximumZoomScale="20" translatesAutoresizingMaskIntoConstraints="NO" id="EcP-Mu-FVu">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="0nP-1g-O5x" appends="YES" id="Al8-kf-gpl"/>
+                                    <outletCollection property="gestureRecognizers" destination="ZhW-Fw-lcD" appends="YES" id="7gi-dU-bMv"/>
+                                </connections>
                             </scrollView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="EcP-Mu-FVu" secondAttribute="bottom" id="b5p-P6-wDs"/>
-                            <constraint firstItem="EcP-Mu-FVu" firstAttribute="top" secondItem="SED-cL-xmj" secondAttribute="top" id="c3C-0T-wzR"/>
-                            <constraint firstAttribute="trailing" secondItem="EcP-Mu-FVu" secondAttribute="trailing" id="fYc-fV-QdF"/>
-                            <constraint firstItem="EcP-Mu-FVu" firstAttribute="leading" secondItem="SED-cL-xmj" secondAttribute="leading" id="pq8-Yl-TQq"/>
+                            <constraint firstAttribute="bottom" secondItem="EcP-Mu-FVu" secondAttribute="bottom" id="94z-x3-9zC"/>
+                            <constraint firstAttribute="trailing" secondItem="EcP-Mu-FVu" secondAttribute="trailing" id="YJf-k9-vlt"/>
+                            <constraint firstItem="EcP-Mu-FVu" firstAttribute="leading" secondItem="SED-cL-xmj" secondAttribute="leading" id="bcm-CR-9Fc"/>
+                            <constraint firstItem="EcP-Mu-FVu" firstAttribute="top" secondItem="SED-cL-xmj" secondAttribute="top" id="q9P-2U-ujT"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="KId-T4-aVn"/>
                     <connections>
                         <outlet property="scrollView" destination="EcP-Mu-FVu" id="s52-dd-7zZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tkG-Os-DnJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="ZhW-Fw-lcD">
+                    <connections>
+                        <action selector="switchFullScreenMode:" destination="sNt-cK-4kO" id="X5m-hK-l4Y"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer numberOfTapsRequired="2" id="0nP-1g-O5x">
+                    <connections>
+                        <action selector="zoomInOrOut:" destination="sNt-cK-4kO" id="P6i-BV-xme"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1733" y="64"/>
+            <point key="canvasLocation" x="2113" y="64"/>
         </scene>
         <!--AlbumsTVC-->
         <scene sceneID="Kxr-vi-p8g">
@@ -329,7 +356,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zq9-Rf-S28" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1288" y="893"/>
+            <point key="canvasLocation" x="1302" y="789"/>
         </scene>
         <!--Navigation Controller - 照片-->
         <scene sceneID="zSb-LN-1b2">
@@ -340,6 +367,10 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="PHh-xC-skE">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="rXH-1k-RYY">
+                        <rect key="frame" x="0.0" y="436" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="nhP-RO-X5Q" kind="relationship" relationship="rootViewController" id="QsB-NM-A70"/>
                     </connections>
@@ -358,6 +389,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="pHz-qt-UyA"/>
+        <segue reference="v4z-jg-IlL"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -12,6 +12,6 @@
 @interface WSPhotoCollectionCell : UICollectionViewCell
 
 @property (strong, nonatomic) ALAsset *asset;
-
+@property (strong, nonatomic) NSIndexPath *indexpath;
 
 @end
