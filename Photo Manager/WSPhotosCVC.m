@@ -77,6 +77,10 @@ UIPageViewControllerDelegate>
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+
+# warning need test
+    [self.imageViewControllers removeAllObjects];
+    
     // Dispose of any resources that can be recreated.
 }
 
@@ -183,7 +187,7 @@ willTransitionToViewControllers:(NSArray *)pendingViewControllers
     }
     [self.parentViewController setNeedsStatusBarAppearanceUpdate];
     
-    [ivc fitScrollViewToImage];
+    [ivc.scrollView setZoomScale:ivc.scrollView.minimumZoomScale animated:NO];
 }
 
 - (void)pageViewController:(UIPageViewController *)pageViewController
@@ -211,7 +215,6 @@ willTransitionToViewControllers:(NSArray *)pendingViewControllers
             imageViewController = [WSImageViewController imageViewControllerForAsset:cell.asset
                                                                            indexPath:cell.indexpath];
         }
-        [imageViewController fitScrollViewToImage];
         UIPageViewController *destination = segue.destinationViewController;
         [destination setViewControllers:@[imageViewController]
                               direction:UIPageViewControllerNavigationDirectionForward

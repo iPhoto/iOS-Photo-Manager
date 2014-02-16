@@ -239,59 +239,6 @@
             </objects>
             <point key="canvasLocation" x="1700" y="64"/>
         </scene>
-        <!--Image View Controller-->
-        <scene sceneID="uNq-LX-hmJ">
-            <objects>
-                <viewController storyboardIdentifier="PhotoBrowser" wantsFullScreenLayout="YES" automaticallyAdjustsScrollViewInsets="NO" id="sNt-cK-4kO" customClass="WSImageViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="rtr-qc-iOU"/>
-                        <viewControllerLayoutGuide type="bottom" id="tHD-pm-jy9"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="SED-cL-xmj">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.01" maximumZoomScale="20" translatesAutoresizingMaskIntoConstraints="NO" id="EcP-Mu-FVu">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <gestureRecognizers/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="0nP-1g-O5x" appends="YES" id="Al8-kf-gpl"/>
-                                    <outletCollection property="gestureRecognizers" destination="ZhW-Fw-lcD" appends="YES" id="7gi-dU-bMv"/>
-                                </connections>
-                            </scrollView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <gestureRecognizers/>
-                        <constraints>
-                            <constraint firstItem="EcP-Mu-FVu" firstAttribute="leading" secondItem="SED-cL-xmj" secondAttribute="leading" id="3XE-WI-1j3"/>
-                            <constraint firstAttribute="trailing" secondItem="EcP-Mu-FVu" secondAttribute="trailing" id="4i1-pQ-2ze"/>
-                            <constraint firstItem="EcP-Mu-FVu" firstAttribute="top" secondItem="SED-cL-xmj" secondAttribute="top" id="R6o-lm-TIT"/>
-                            <constraint firstAttribute="bottom" secondItem="EcP-Mu-FVu" secondAttribute="bottom" id="qgd-iw-B0V"/>
-                        </constraints>
-                    </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="KId-T4-aVn"/>
-                    <connections>
-                        <outlet property="doubleTapReconizer" destination="0nP-1g-O5x" id="c55-2m-bDB"/>
-                        <outlet property="scrollView" destination="EcP-Mu-FVu" id="s52-dd-7zZ"/>
-                        <outlet property="singleTapReconizer" destination="ZhW-Fw-lcD" id="0xv-B6-B2u"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tkG-Os-DnJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="ZhW-Fw-lcD">
-                    <connections>
-                        <action selector="switchFullScreenMode:" destination="sNt-cK-4kO" id="X5m-hK-l4Y"/>
-                    </connections>
-                </tapGestureRecognizer>
-                <tapGestureRecognizer numberOfTapsRequired="2" id="0nP-1g-O5x">
-                    <connections>
-                        <action selector="zoomInOrOut:" destination="sNt-cK-4kO" id="P6i-BV-xme"/>
-                    </connections>
-                </tapGestureRecognizer>
-            </objects>
-            <point key="canvasLocation" x="2113" y="64"/>
-        </scene>
         <!--AlbumsTVC-->
         <scene sceneID="Kxr-vi-p8g">
             <objects>
