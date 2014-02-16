@@ -273,7 +273,9 @@
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="KId-T4-aVn"/>
                     <connections>
+                        <outlet property="doubleTapReconizer" destination="0nP-1g-O5x" id="c55-2m-bDB"/>
                         <outlet property="scrollView" destination="EcP-Mu-FVu" id="s52-dd-7zZ"/>
+                        <outlet property="singleTapReconizer" destination="ZhW-Fw-lcD" id="0xv-B6-B2u"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tkG-Os-DnJ" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -16,6 +16,8 @@
 @interface WSImageViewController () <UIScrollViewDelegate>
 
 @property (nonatomic, strong)UIImageView *imageView;
+@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *singleTapReconizer;
+@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *doubleTapReconizer;
 
 @end
 
@@ -99,6 +101,8 @@
     [super viewDidLoad];
     
     [self.scrollView addSubview:self.imageView];
+
+    [self.singleTapReconizer requireGestureRecognizerToFail:self.doubleTapReconizer];
     
 	// Do any additional setup after loading the view.
 }
