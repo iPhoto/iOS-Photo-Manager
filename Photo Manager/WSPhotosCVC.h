@@ -14,6 +14,6 @@
 // browser views of photos. This will allow user to switch between photos directly in browser.
 @interface WSPhotosCVC : UICollectionViewController
 
-@property (nonatomic, strong)NSArray *photos; // of Photo
+@property (nonatomic, strong) NSArray *photos; // of Photo
 
 @end

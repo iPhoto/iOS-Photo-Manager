@@ -14,8 +14,8 @@
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
-@property (nonatomic, strong)UIImage *image; // full resolution image of photo
-@property (nonatomic, strong)NSIndexPath *indexpath; // position of photo in parent collection view
+@property (nonatomic, strong) UIImage *image; // full resolution image of photo
+@property (nonatomic, strong) NSIndexPath *indexpath; // position of photo in parent collection view
 
 // Returns a instance of WSImageViewController that displays the photo represented by |asset|.
 //
@@ -32,12 +32,7 @@
 + (WSImageViewController *)imageViewControllerForAssetURL:(NSURL *)assetURL
                                                 indexPath:(NSIndexPath *)indexpath;
 
-// Scaling and moving the displayed photo to fit the size of surrounded scroll view.
-//
-// The photo will be displayed centered and fully displayed, and as big as possible under that
-// condition.
-//
-// |animated| indicates whether if the changing is happend animatedly or not.
-- (void)fitImageToScrollViewAnimated:(BOOL)animated;
+// Setting scroll view parameters to fit current image. Also zoom and move image to fit the scroll view.
+- (void)fitScrollViewToImage;
 
 @end

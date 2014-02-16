@@ -14,9 +14,9 @@
 @interface WSAppDelegate ()
 
 @property (nonatomic) NSInteger loadTasks; // number of ongoing asynchronous tasks for loading photos
-@property (readwrite, nonatomic)BOOL loadFinished; // indicator of whether photo loading finished
+@property (readwrite, nonatomic) BOOL loadFinished; // indicator of whether photo loading finished
                                                     // readwrite inside this class
-@property (strong, nonatomic)NSMutableSet *delegates; // all delegates to notify after finish loading
+@property (strong, nonatomic) NSMutableSet *delegates; // all delegates to notify after finish loading
 
 @end
 

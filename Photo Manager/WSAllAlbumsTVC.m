@@ -24,7 +24,7 @@
 
 @interface WSAllAlbumsTVC () <WSFinishLoadingDelegate>
 
-@property (nonatomic, strong)NSManagedObjectContext *context; // to access Core Data.
+@property (nonatomic, strong) NSManagedObjectContext *context; // to access Core Data.
 
 @end
 

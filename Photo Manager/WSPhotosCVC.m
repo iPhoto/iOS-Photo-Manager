@@ -21,13 +21,22 @@
 @interface WSPhotosCVC () <UICollectionViewDataSource, UIPageViewControllerDataSource,
 UIPageViewControllerDelegate>
 
-@property (nonatomic, strong)ALAssetsLibrary *library; // to access photo assets
+@property (nonatomic, strong) ALAssetsLibrary *library; // to access photo assets
+@property (nonatomic, strong) NSMutableDictionary *imageViewControllers; // created controllers with photo id as key
 
 @end
 
 @implementation WSPhotosCVC
 
 #pragma mark - Access properties
+
+- (NSMutableDictionary *)imageViewControllers
+{
+    if (!_imageViewControllers) {
+        _imageViewControllers = [[NSMutableDictionary alloc] init];
+    }
+    return _imageViewControllers;
+}
 
 - (NSArray *)photos
 {
@@ -121,8 +130,16 @@ UIPageViewControllerDelegate>
     }
     NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:row inSection:section];
     Photo *photo = [self.photos objectAtIndex:newIndexPath.row];
-    return [WSImageViewController imageViewControllerForAssetURL:[NSURL URLWithString:photo.id]
+    
+    WSImageViewController *wivc = [self.imageViewControllers objectForKey:photo.id];
+    if (wivc) {
+        return wivc;
+    }
+    
+    wivc = [WSImageViewController imageViewControllerForAssetURL:[NSURL URLWithString:photo.id]
                                                     indexPath:newIndexPath];
+    [self.imageViewControllers setObject:wivc forKey:photo.id];
+    return wivc;
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController
@@ -141,8 +158,16 @@ UIPageViewControllerDelegate>
     }
     NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:row inSection:section];
     Photo *photo = [self.photos objectAtIndex:newIndexPath.row];
-    return [WSImageViewController imageViewControllerForAssetURL:[NSURL URLWithString:photo.id]
+    
+    WSImageViewController *wivc = [self.imageViewControllers objectForKey:photo.id];
+    if (wivc) {
+        return wivc;
+    }
+    
+    wivc = [WSImageViewController imageViewControllerForAssetURL:[NSURL URLWithString:photo.id]
                                                        indexPath:newIndexPath];
+    [self.imageViewControllers setObject:wivc forKey:photo.id];
+    return wivc;
 }
 
 #pragma mark - Page view delegate
@@ -158,7 +183,7 @@ willTransitionToViewControllers:(NSArray *)pendingViewControllers
     }
     [self.parentViewController setNeedsStatusBarAppearanceUpdate];
     
-    [ivc fitImageToScrollViewAnimated:NO];
+    [ivc fitScrollViewToImage];
 }
 
 - (void)pageViewController:(UIPageViewController *)pageViewController
@@ -180,9 +205,13 @@ willTransitionToViewControllers:(NSArray *)pendingViewControllers
     if ([segue.identifier compare:IS_SEGUE_SHOW_PHOTO] == NSOrderedSame) {
         WSPhotoCollectionCell *cell = sender;
         
-        WSImageViewController *imageViewController = [WSImageViewController
-                                                      imageViewControllerForAsset:cell.asset
-                                                      indexPath:cell.indexpath];
+        Photo *photo = [self.photos objectAtIndex:cell.indexpath.row];
+        WSImageViewController *imageViewController = [self.imageViewControllers objectForKey:photo.id];
+        if (!imageViewController) {
+            imageViewController = [WSImageViewController imageViewControllerForAsset:cell.asset
+                                                                           indexPath:cell.indexpath];
+        }
+        [imageViewController fitScrollViewToImage];
         UIPageViewController *destination = segue.destinationViewController;
         [destination setViewControllers:@[imageViewController]
                               direction:UIPageViewControllerNavigationDirectionForward
