@@ -45,7 +45,7 @@ UIPageViewControllerDelegate>
     return _library;
 }
 
-#pragma mark - Initialization
+#pragma mark - Lifecycle
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -157,6 +157,7 @@ willTransitionToViewControllers:(NSArray *)pendingViewControllers
         ivc.view.backgroundColor = [UIColor whiteColor];
     }
     [self.parentViewController setNeedsStatusBarAppearanceUpdate];
+    
     [ivc fitImageToScrollViewAnimated:NO];
 }
 

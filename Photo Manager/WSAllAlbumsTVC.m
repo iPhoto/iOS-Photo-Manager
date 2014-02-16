@@ -79,7 +79,6 @@
 
 - (void)loadingFinished:(id)sender
 {
-    NSLog(@"test");
     [self.tableView reloadData];
 }
 

@@ -61,7 +61,6 @@
                                        }
                                        return;
                                    }
-                                   NSLog(@"import photo");
                                    [Photo photoOfALAsset:result
                                   inManagedObjectContext:self.managedObjectContext];
                                }];

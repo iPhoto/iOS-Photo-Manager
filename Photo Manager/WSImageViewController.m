@@ -42,6 +42,7 @@
 {
     self.imageView.image = image;
     [self.imageView sizeToFit];
+    [self.scrollView addSubview:self.imageView];
     [self fitScrollViewToImage];
 }
 
@@ -49,6 +50,7 @@
 {
     _scrollView = scrollView;
     _scrollView.delegate = self;
+    [self.scrollView addSubview:self.imageView];
     [self fitScrollViewToImage];
 }
 
@@ -99,11 +101,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [self.scrollView addSubview:self.imageView];
 
     [self.singleTapReconizer requireGestureRecognizerToFail:self.doubleTapReconizer];
-    
+
 	// Do any additional setup after loading the view.
 }
 
@@ -133,20 +133,14 @@
     if (self.scrollView.zoomScale > self.scrollView.minimumZoomScale) { // zoom out
         [self fitImageToScrollViewAnimated:YES];
     } else { // zoom in at tap point
-        CGSize viewSize = self.scrollView.bounds.size;
-        CGFloat maxScale = self.scrollView.maximumZoomScale;
         CGPoint touchPoint = [sender locationInView:self.imageView];
-        CGFloat centerX, centerY;
-        centerX = touchPoint.x - viewSize.width * 0.5 / maxScale;
-        centerY = touchPoint.y - viewSize.height * 0.5 / maxScale;
-        if (centerX < 0) {
-            centerX = 0.0;
-        }
-        if (centerY < 0) {
-            centerY = 0.0;
-        }
-        CGRect rect = CGRectMake(centerX, centerY, viewSize.width / maxScale,
-                                 viewSize.height / maxScale);
+        CGFloat scale = self.scrollView.maximumZoomScale / self.scrollView.minimumZoomScale;
+        CGSize viewSize = self.scrollView.bounds.size;
+        CGFloat originX, originY;
+        originX = touchPoint.x - viewSize.width * 0.5 / scale;
+        originY = touchPoint.y - viewSize.height * 0.5 / scale;
+        CGRect rect = CGRectMake(originX, originY, viewSize.width / scale,
+                                 viewSize.height / scale);
         [self.scrollView zoomToRect:rect animated:YES];
     }
 }
@@ -160,14 +154,29 @@
 
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView
 {
-    CGFloat offsetX = (scrollView.bounds.size.width > scrollView.contentSize.width)?
-    (scrollView.bounds.size.width - scrollView.contentSize.width) * 0.5 : 0.0;
-    
-    CGFloat offsetY = (scrollView.bounds.size.height > scrollView.contentSize.height)?
-    (scrollView.bounds.size.height - scrollView.contentSize.height) * 0.5 : 0.0;
-    
-    self.imageView.center = CGPointMake(scrollView.contentSize.width * 0.5 + offsetX,
-                                        scrollView.contentSize.height * 0.5 + offsetY);
+    CGSize viewSize = self.scrollView.bounds.size;
+    CGSize contentSize = self.scrollView.contentSize;
+    CGPoint contentOffset = self.scrollView.contentOffset;
+    CGFloat offsetX, offsetY;
+    if (viewSize.width > contentSize.width) {
+        offsetX = (contentSize.width - viewSize.width) * 0.5;
+    } else if (contentOffset.x < 0) {
+        offsetX = 0.0;
+    } else if (contentOffset.x + viewSize.width > contentSize.width) {
+        offsetX = contentSize.width - viewSize.width;
+    } else {
+        offsetX = contentOffset.x;
+    }
+    if (viewSize.height > contentSize.height) {
+        offsetY = (contentSize.height - viewSize.height) * 0.5;
+    } else if (contentOffset.y < 0) {
+        offsetY = 0.0;
+    } else if (contentOffset.y + viewSize.height > contentSize.height) {
+        offsetY = contentSize.height - viewSize.height;
+    } else {
+        offsetY = contentOffset.y;
+    }
+    [self.scrollView setContentOffset:CGPointMake(offsetX, offsetY) animated:NO];
 }
 
 #pragma mark - Image scaling
@@ -181,6 +190,7 @@
     if (!self.image) {
         self.scrollView.contentSize = CGSizeZero;
     } else {
+        self.scrollView.zoomScale = 1.0;
         self.scrollView.contentSize = self.image.size;
         
         CGSize imageSize = self.scrollView.contentSize;
@@ -206,22 +216,13 @@
         if (self.scrollView.maximumZoomScale < 3 * self.scrollView.minimumZoomScale) {
             self.scrollView.maximumZoomScale = 3 * self.scrollView.minimumZoomScale;
         }
+        [self fitImageToScrollViewAnimated:NO];
     }
-    
-    [self fitImageToScrollViewAnimated:NO];
 }
 
 - (void)fitImageToScrollViewAnimated:(BOOL)animated
 {
-    CGSize viewSize = self.scrollView.bounds.size;
     [self.scrollView setZoomScale:self.scrollView.minimumZoomScale animated:animated];
-    if (animated) {
-        [UIView animateWithDuration:1.0 animations:^{
-            self.imageView.center = CGPointMake(viewSize.width * 0.5, viewSize.height * 0.5);
-        }];
-    } else {
-        self.imageView.center = CGPointMake(viewSize.width * 0.5, viewSize.height * 0.5);
-    }
 }
 
 @end
