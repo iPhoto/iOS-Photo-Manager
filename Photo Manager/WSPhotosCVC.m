@@ -22,7 +22,8 @@
 UIPageViewControllerDelegate>
 
 @property (nonatomic, strong) ALAssetsLibrary *library; // to access photo assets
-@property (nonatomic, strong) NSMutableDictionary *imageViewControllers; // created controllers with photo id as key
+@property (nonatomic, strong) NSMutableDictionary *imageViewControllers; // created controllers with
+                                                                        // photo id as key
 
 @end
 
@@ -78,8 +79,8 @@ UIPageViewControllerDelegate>
 {
     [super didReceiveMemoryWarning];
 
-# warning need test
-    [self.imageViewControllers removeAllObjects];
+# warning Need Test.
+    [self.imageViewControllers removeAllObjects]; // cached controllers can be mass and memory consuming
     
     // Dispose of any resources that can be recreated.
 }
@@ -186,7 +187,10 @@ willTransitionToViewControllers:(NSArray *)pendingViewControllers
         ivc.view.backgroundColor = [UIColor whiteColor];
     }
     [self.parentViewController setNeedsStatusBarAppearanceUpdate];
-    
+
+    // set image tp size, position and orientation
+    [ivc.scrollView updateOrientation:self.interfaceOrientation];
+    [ivc.scrollView updateZoomScale];
     [ivc.scrollView setZoomScale:ivc.scrollView.minimumZoomScale animated:NO];
 }
 
@@ -215,6 +219,7 @@ willTransitionToViewControllers:(NSArray *)pendingViewControllers
             imageViewController = [WSImageViewController imageViewControllerForAsset:cell.asset
                                                                            indexPath:cell.indexpath];
         }
+        imageViewController.view.backgroundColor = [UIColor whiteColor];
         UIPageViewController *destination = segue.destinationViewController;
         [destination setViewControllers:@[imageViewController]
                               direction:UIPageViewControllerNavigationDirectionForward

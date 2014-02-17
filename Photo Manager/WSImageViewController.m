@@ -6,9 +6,9 @@
 //  Copyright (c) 2014年 WeeSteps. All rights reserved.
 //
 
-#import "WSAppDelegate.h"
-
 #import "WSImageViewController.h"
+
+#import "WSAppDelegate.h"
 
 #import "UIIdentifierString.h"
 #import "DisplayString.h"
@@ -17,8 +17,6 @@
 
 @interface WSImageViewController ()
 
-//@property (nonatomic, strong) UIImageView *imageView;
-//@property (nonatomic, strong) UIView *middleView;
 @end
 
 @implementation WSImageViewController
@@ -39,6 +37,8 @@
 {
     if (!_scrollView) {
         _scrollView = [[WSPhotoScrollView alloc] initWithFrame:self.view.bounds];
+
+        [_scrollView updateOrientation:self.interfaceOrientation];
         [self.view addSubview:_scrollView];
         [_scrollView addGestureRecognizer:self.singleTapRecognizer];
         [_scrollView addGestureRecognizer:self.doubleTapRecognizer];
@@ -73,9 +73,11 @@
                                              indexPath:(NSIndexPath *)indexpath
 {
     WSImageViewController *imageViewController = [[WSImageViewController alloc] init];
-    imageViewController.image =
-    [UIImage imageWithCGImage:asset.defaultRepresentation.fullResolutionImage];
+
     imageViewController.indexpath = indexpath;
+    imageViewController.image =
+        [UIImage imageWithCGImage:asset.defaultRepresentation.fullResolutionImage];
+
     return imageViewController;
 }
 
@@ -83,8 +85,9 @@
                                                 indexPath:(NSIndexPath *)indexpath
 {
     WSImageViewController *imageViewController = [[WSImageViewController alloc] init];
+
     imageViewController.indexpath = indexpath;
-    
+
     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
     [library assetForURL:assetURL
              resultBlock:^(ALAsset *asset) {
@@ -95,28 +98,27 @@
                 NSLog(@"WSImageViewController.imageViewControllerForAssetURL:indexPath:");
                 NSLog(@"Fetch asset failure error: %@", error);
             }];
+
     return imageViewController;
 }
-
-
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
+
 	// Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - IBActions
+#pragma mark - Gesture reconization
 
-- (void)singleTapped:(UITapGestureRecognizer *)sender // tap once,
-                                                                // switch to full screen or back
+- (void)singleTapped:(UITapGestureRecognizer *)sender // tap once, switch to full screen or back
 {
     if (self.navigationController.navigationBarHidden) {
         [self.navigationController setNavigationBarHidden:NO];
@@ -130,9 +132,20 @@
     [self.parentViewController setNeedsStatusBarAppearanceUpdate];
 }
 
-- (void)doubleTapped:(UITapGestureRecognizer *)sender
+- (void)doubleTapped:(UITapGestureRecognizer *)sender // tap twice, tell scroll view to zoom photo
 {
     [self.scrollView doubleTapped:sender];
+}
+
+#pragma mark - Rotation
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+                                         duration:(NSTimeInterval)duration
+{
+    [UIView animateWithDuration:duration animations:^{
+        [self.scrollView updateOrientation:toInterfaceOrientation];
+        [self.scrollView updateZoomScale];
+    }];
 }
 
 @end

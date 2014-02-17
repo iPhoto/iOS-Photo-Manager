@@ -18,8 +18,8 @@
 
 @property (nonatomic, strong) UIImage *image; // full resolution image of photo
 @property (nonatomic, strong) NSIndexPath *indexpath; // position of photo in parent collection view
-@property (strong, nonatomic) UITapGestureRecognizer *singleTapRecognizer;
-@property (strong, nonatomic) UITapGestureRecognizer *doubleTapRecognizer;
+@property (strong, nonatomic) UITapGestureRecognizer *singleTapRecognizer; // to switch full screen
+@property (strong, nonatomic) UITapGestureRecognizer *doubleTapRecognizer; // to zoom in and out
 
 
 // Returns a instance of WSImageViewController that displays the photo represented by |asset|.

@@ -128,9 +128,9 @@
 		A4A291B018AB65930083B8E9 = {
 			isa = PBXGroup;
 			children = (
+				A4A291BB18AB65930083B8E9 /* Frameworks */,
 				A4A291C418AB65930083B8E9 /* Photo Manager */,
 				A4A291E118AB65930083B8E9 /* Photo ManagerTests */,
-				A4A291BB18AB65930083B8E9 /* Frameworks */,
 				A4A291BA18AB65930083B8E9 /* Products */,
 			);
 			sourceTree = "<group>";
