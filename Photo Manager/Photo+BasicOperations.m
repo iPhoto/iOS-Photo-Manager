@@ -74,4 +74,38 @@
     return matches;
 }
 
++ (NSArray *)unclassifiedPhotosInManagedObjectContext:(NSManagedObjectContext *)context
+{
+    NSFetchRequest *request = [NSFetchRequest
+                               fetchRequestWithEntityName:@"Photo"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"unClassified = YES"];
+    request.predicate = predicate;
+    NSError *error;
+    NSArray *matches = [context executeFetchRequest:request error:&error];
+
+    if (!matches) { // error happened
+        NSLog(@"Photo.allPhotosInManagedObjectContext:");
+        NSLog(@"FetchError: %@", error);
+    }
+
+    return matches;
+}
+
++ (NSArray *)archivedPhotosInManagedObjectContext:(NSManagedObjectContext *)context
+{
+    NSFetchRequest *request = [NSFetchRequest
+                               fetchRequestWithEntityName:@"Photo"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"archived = YES"];
+    request.predicate = predicate;
+    NSError *error;
+    NSArray *matches = [context executeFetchRequest:request error:&error];
+
+    if (!matches) { // error happened
+        NSLog(@"Photo.allPhotosInManagedObjectContext:");
+        NSLog(@"FetchError: %@", error);
+    }
+
+    return matches;
+}
+
 @end

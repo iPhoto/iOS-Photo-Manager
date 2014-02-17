@@ -122,9 +122,11 @@
 {
     if (self.navigationController.navigationBarHidden) {
         [self.navigationController setNavigationBarHidden:NO];
+        [self.navigationController setToolbarHidden:NO];
         self.view.backgroundColor = [UIColor whiteColor];
     } else {
         [self.navigationController setNavigationBarHidden:YES];
+        [self.navigationController setToolbarHidden:YES];
         self.view.backgroundColor = [UIColor blackColor];
     }
     WSAppDelegate *delegate = [UIApplication sharedApplication].delegate;

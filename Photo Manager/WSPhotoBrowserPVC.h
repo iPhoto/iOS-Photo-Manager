@@ -11,8 +11,8 @@
 // UIPageViewController which contains multiple WSImageViewController and allow switch over between
 // photos.
 //
-// I need this class only because I need to hide the status bar when browse photo in full screen
-// mode and it can only be done in this page view controller.
+// I need this class only because I need to hide the status bar and tool bar when browse photo in
+// full screen mode and it can only be done in this page view controller.
 @interface WSPhotoBrowserPVC : UIPageViewController
 
 @end

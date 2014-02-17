@@ -19,4 +19,16 @@
     return self.navigationController.navigationBarHidden;
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    self.navigationController.toolbarHidden = YES;
+    [super viewWillDisappear:animated];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    self.navigationController.toolbarHidden = NO;
+    [super viewWillAppear:animated];
+}
+
 @end

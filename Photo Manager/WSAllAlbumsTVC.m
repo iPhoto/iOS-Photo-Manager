@@ -61,7 +61,7 @@
     if (!delegate.loadFinished) {
         [delegate addFinishLoadingDelegate:self];
     }
-    
+
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -110,16 +110,25 @@
         cell.albumId = ALBUM_ID_ALL_PHOTOS;
         cell.titleLabel.text = DS_ALL_PHOTOS;
         cell.photos = [Photo allPhotosInManagedObjectContext:self.context];
-    } else {
+    } else if (indexPath.row == 1) { // unclassified photos
+        cell = [tableView dequeueReusableCellWithIdentifier:IS_PHOTOS_ONLY_CELL
+                                               forIndexPath:indexPath];
+        cell.albumId = ALBUM_ID_UNCLASSIFIED_PHOTOS;
+        cell.titleLabel.text = DS_UNCLASSIFIED_PHOTOS;
+        cell.photos = [Photo unclassifiedPhotosInManagedObjectContext:self.context];
+    } else if (indexPath.row == 2) { // archived photos
+        cell = [tableView dequeueReusableCellWithIdentifier:IS_PHOTOS_ONLY_CELL
+                                               forIndexPath:indexPath];
+        cell.albumId = ALBUM_ID_ARCHIVED_PHOTOS;
+        cell.titleLabel.text = DS_ARCHIVED_PHOTOS;
+        cell.photos = [Photo archivedPhotosInManagedObjectContext:self.context];
+    }
+    else {
 #warning Incomplete for other cells.
-        if (indexPath.row % 2) {
-            cellIdentifier = IS_PHOTOS_AND_ALBUMS_CELL;
-        } else {
-            cellIdentifier = IS_PHOTOS_ONLY_CELL;
-        }
+        cellIdentifier = IS_PHOTOS_ONLY_CELL;
         cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
         // Configure the cell...
-        
+        cell.photos = nil;
     }
     return cell;
 }

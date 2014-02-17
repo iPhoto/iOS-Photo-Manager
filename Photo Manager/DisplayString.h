@@ -13,6 +13,8 @@
 #pragma mark - Displayed NSStrings
 
 #define DS_ALL_PHOTOS @"所有照片"
+#define DS_UNCLASSIFIED_PHOTOS @"未整理照片"
+#define DS_ARCHIVED_PHOTOS @"已归档照片"
 
 #pragma mark - Displayed NSString Formats
 

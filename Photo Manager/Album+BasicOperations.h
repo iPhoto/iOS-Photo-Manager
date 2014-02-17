@@ -9,6 +9,8 @@
 #import "Album.h"
 
 #define ALBUM_ID_ALL_PHOTOS @"ALL_PHOTOS"
+#define ALBUM_ID_UNCLASSIFIED_PHOTOS @"UNCLASSIFIED_PHOTOS"
+#define ALBUM_ID_ARCHIVED_PHOTOS @"ARCHIVED_PHOTOS"
 
 // Category of basic operations on the Album class.
 @interface Album (BasicOperations)

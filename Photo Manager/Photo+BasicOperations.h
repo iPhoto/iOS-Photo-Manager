@@ -31,4 +31,18 @@
 //
 // The results in the returning array is not guaranteed to be ordered.
 + (NSArray *)allPhotosInManagedObjectContext:(NSManagedObjectContext *)context;
+
+// Returns all unclassified photos' information in Core Data. Each photo's information is returned
+// in a instance of Photo class binding with the instance of Photo entity in Core Data. Uses
+// |context| to access Core Data.
+//
+// The results in the returning array is not guaranteed to be ordered.
++ (NSArray *)unclassifiedPhotosInManagedObjectContext:(NSManagedObjectContext *)context;
+
+// Returns all archived photos' information in Core Data. Each photo's information is returned
+// in a instance of Photo class binding with the instance of Photo entity in Core Data. Uses
+// |context| to access Core Data.
+//
+// The results in the returning array is not guaranteed to be ordered.
++ (NSArray *)archivedPhotosInManagedObjectContext:(NSManagedObjectContext *)context;
 @end

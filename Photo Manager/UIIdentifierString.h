@@ -18,6 +18,7 @@
 
 #define IS_ROOT_CONTROLLER @"RootController"
 #define IS_PHOTO_BROWSER @"PhotoBrowser"
+#define IS_NO_PHOTO @"NoPhotos"
 
 #pragma mark - Table View Cells
 

@@ -71,7 +71,6 @@ UIPageViewControllerDelegate>
     [super viewDidLoad];
     
     self.collectionView.dataSource = self;
-    
 	// Do any additional setup after loading the view.
 }
 
@@ -95,6 +94,13 @@ UIPageViewControllerDelegate>
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section
 {
+    if (![self.photos count]) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:IS_STORYBOARD_NAME bundle:nil];
+        self.collectionView.backgroundView =
+            ((UIViewController *)[storyboard instantiateViewControllerWithIdentifier:IS_NO_PHOTO]).view;
+    } else {
+        self.collectionView.backgroundView = nil;
+    }
     return [self.photos count];
 }
 
