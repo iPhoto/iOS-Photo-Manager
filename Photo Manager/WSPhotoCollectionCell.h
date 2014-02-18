@@ -12,11 +12,9 @@
 // UICollectionViewCell that presents a photo.
 @interface WSPhotoCollectionCell : UICollectionViewCell
 
-@property (weak, nonatomic) IBOutlet UIView *selectedView;
-@property (weak, nonatomic) IBOutlet UIImageView *selectedSymbolView;
-
 @property (strong, nonatomic) ALAsset *asset; // of photo
 @property (strong, nonatomic) NSIndexPath *indexpath; // position in parent collection view
 
+- (void)setSelectedViewHidden:(BOOL)hidden;
 
 @end

@@ -18,6 +18,7 @@
 
 #define DS_SELECT @"选择"
 #define DS_CANCEL @"取消"
+#define DS_SELECT_PHOTOS @"选择照片"
 
 #pragma mark - Displayed NSString Formats
 

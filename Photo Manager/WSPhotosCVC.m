@@ -67,19 +67,24 @@ UIPageViewControllerDataSource, UIPageViewControllerDelegate>
 
 - (void)setSelecting:(BOOL)selecting
 {
-    if (!selecting) {
+    _selecting = selecting;
+    
+    self.selectButton.title = _selecting ? DS_CANCEL : DS_SELECT;
+    [self.navigationItem setHidesBackButton:_selecting animated:NO];
+    self.navigationItem.title = _selecting ? DS_SELECT_PHOTOS : self.title;
+    
+    self.tabBarController.tabBar.hidden = _selecting;
+    self.navigationController.toolbarHidden = !_selecting;
+    
+    self.collectionView.allowsMultipleSelection = _selecting;
+    if (!_selecting) {
         for (NSIndexPath *indexpath in [self.collectionView indexPathsForSelectedItems]) {
             [self.collectionView deselectItemAtIndexPath:indexpath animated:NO];
             WSPhotoCollectionCell *cell =
             (WSPhotoCollectionCell *)[self.collectionView cellForItemAtIndexPath:indexpath];
-            cell.selectedView.hidden = YES;
-            cell.selectedSymbolView.hidden = YES;
+            [cell setSelectedViewHidden:YES];
         }
     }
-
-    _selecting = selecting;
-    self.collectionView.allowsMultipleSelection = _selecting;
-    self.selectButton.title = _selecting ? DS_CANCEL : DS_SELECT;
 }
 
 #pragma mark - Lifecycle
@@ -161,16 +166,14 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
         return;
     }
     WSPhotoCollectionCell *cell = (WSPhotoCollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    cell.selectedView.hidden = NO;
-    cell.selectedSymbolView.hidden = NO;
+    [cell setSelectedViewHidden:NO];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView
 didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     WSPhotoCollectionCell *cell = (WSPhotoCollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    cell.selectedView.hidden = YES;
-    cell.selectedSymbolView.hidden = YES;
+    [cell setSelectedViewHidden:NO];
 }
 
 #pragma mark - Page view data source
