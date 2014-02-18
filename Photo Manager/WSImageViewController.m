@@ -121,13 +121,17 @@
 - (void)singleTapped:(UITapGestureRecognizer *)sender // tap once, switch to full screen or back
 {
     if (self.navigationController.navigationBarHidden) {
-        [self.navigationController setNavigationBarHidden:NO];
-        [self.navigationController setToolbarHidden:NO];
-        self.view.backgroundColor = [UIColor whiteColor];
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+        [self.navigationController setToolbarHidden:NO animated:YES];
+        [UIView animateWithDuration:1.0 animations:^{
+            self.view.backgroundColor = [UIColor whiteColor];
+        }];
     } else {
-        [self.navigationController setNavigationBarHidden:YES];
-        [self.navigationController setToolbarHidden:YES];
-        self.view.backgroundColor = [UIColor blackColor];
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
+        [self.navigationController setToolbarHidden:YES animated:YES];
+        [UIView animateWithDuration:0.2 animations:^{
+            self.view.backgroundColor = [UIColor blackColor];
+        }];
     }
     WSAppDelegate *delegate = [UIApplication sharedApplication].delegate;
     delegate.window.backgroundColor = self.view.backgroundColor;

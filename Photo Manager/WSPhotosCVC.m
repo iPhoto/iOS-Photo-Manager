@@ -18,16 +18,26 @@
 
 #import <AssetsLibrary/AssetsLibrary.h>
 
-@interface WSPhotosCVC () <UICollectionViewDataSource, UIPageViewControllerDataSource,
-UIPageViewControllerDelegate>
+@interface WSPhotosCVC () <UICollectionViewDataSource, UICollectionViewDelegate,
+UIPageViewControllerDataSource, UIPageViewControllerDelegate>
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *selectButton;
 
 @property (nonatomic, strong) ALAssetsLibrary *library; // to access photo assets
 @property (nonatomic, strong) NSMutableDictionary *imageViewControllers; // created controllers with
                                                                         // photo id as key
+@property (nonatomic) BOOL selecting; // is under selection mode
 
 @end
 
 @implementation WSPhotosCVC
+
+#pragma mark - IBActions
+
+- (IBAction)selectPhotos:(UIBarButtonItem *)sender
+{
+    self.selecting = !self.selecting;
+}
 
 #pragma mark - Access properties
 
@@ -55,6 +65,23 @@ UIPageViewControllerDelegate>
     return _library;
 }
 
+- (void)setSelecting:(BOOL)selecting
+{
+    if (!selecting) {
+        for (NSIndexPath *indexpath in [self.collectionView indexPathsForSelectedItems]) {
+            [self.collectionView deselectItemAtIndexPath:indexpath animated:NO];
+            WSPhotoCollectionCell *cell =
+            (WSPhotoCollectionCell *)[self.collectionView cellForItemAtIndexPath:indexpath];
+            cell.selectedView.hidden = YES;
+            cell.selectedSymbolView.hidden = YES;
+        }
+    }
+
+    _selecting = selecting;
+    self.collectionView.allowsMultipleSelection = _selecting;
+    self.selectButton.title = _selecting ? DS_CANCEL : DS_SELECT;
+}
+
 #pragma mark - Lifecycle
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -71,6 +98,7 @@ UIPageViewControllerDelegate>
     [super viewDidLoad];
     
     self.collectionView.dataSource = self;
+    self.selecting = NO;
 	// Do any additional setup after loading the view.
 }
 
@@ -98,6 +126,7 @@ UIPageViewControllerDelegate>
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:IS_STORYBOARD_NAME bundle:nil];
         self.collectionView.backgroundView =
             ((UIViewController *)[storyboard instantiateViewControllerWithIdentifier:IS_NO_PHOTO]).view;
+        self.selectButton.enabled = NO;
     } else {
         self.collectionView.backgroundView = nil;
     }
@@ -121,6 +150,27 @@ UIPageViewControllerDelegate>
                      NSLog(@"Fetch asset failure error: %@", error);
                  }];
     return cell;
+}
+
+#pragma mark - Collection view delegate
+
+- (void)collectionView:(UICollectionView *)collectionView
+didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (!self.selecting) {
+        return;
+    }
+    WSPhotoCollectionCell *cell = (WSPhotoCollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    cell.selectedView.hidden = NO;
+    cell.selectedSymbolView.hidden = NO;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView
+didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    WSPhotoCollectionCell *cell = (WSPhotoCollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    cell.selectedView.hidden = YES;
+    cell.selectedSymbolView.hidden = YES;
 }
 
 #pragma mark - Page view data source
@@ -236,6 +286,15 @@ willTransitionToViewControllers:(NSArray *)pendingViewControllers
                              [self collectionView:self.collectionView
                            numberOfItemsInSection:cell.indexpath.section]];
     }
+
+}
+
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
+{
+    if ([identifier compare:IS_SEGUE_SHOW_PHOTO] == NSOrderedSame) {
+        return !self.selecting;
+    }
+    return YES;
 }
 
 @end

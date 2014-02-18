@@ -147,11 +147,11 @@
                         <viewControllerLayoutGuide type="bottom" id="0hF-QT-bRN"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="0R7-US-aDP">
-                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="2" translatesAutoresizingMaskIntoConstraints="NO" id="1Vs-eg-pnJ">
-                                <rect key="frame" x="141" y="330" width="39" height="37"/>
+                                <rect key="frame" x="141" y="443" width="39" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="39" id="B72-cq-CO1"/>
@@ -230,21 +230,40 @@
                                     <rect key="frame" x="0.0" y="0.0" width="79" height="79"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photos" translatesAutoresizingMaskIntoConstraints="NO" id="yOf-t3-4Vr">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yOf-t3-4Vr">
                                             <rect key="frame" x="0.0" y="0.0" width="79" height="79"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </imageView>
+                                        <view hidden="YES" alpha="0.20000000000000001" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ogv-hp-dqb">
+                                            <rect key="frame" x="0.0" y="0.0" width="79" height="79"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                        </view>
+                                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CheckSymbol" translatesAutoresizingMaskIntoConstraints="NO" id="qlk-49-XJ1">
+                                            <rect key="frame" x="56" y="56" width="20" height="20"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="yOf-t3-4Vr" secondAttribute="bottom" id="WPf-m8-H2K"/>
-                                    <constraint firstItem="yOf-t3-4Vr" firstAttribute="leading" secondItem="zKt-YJ-sju" secondAttribute="leading" id="YEL-ck-czS"/>
-                                    <constraint firstAttribute="trailing" secondItem="yOf-t3-4Vr" secondAttribute="trailing" id="feD-jf-cH2"/>
-                                    <constraint firstItem="yOf-t3-4Vr" firstAttribute="top" secondItem="zKt-YJ-sju" secondAttribute="top" id="yLi-H1-y89"/>
+                                    <constraint firstItem="Ogv-hp-dqb" firstAttribute="top" secondItem="yOf-t3-4Vr" secondAttribute="top" id="0SK-gC-eGv"/>
+                                    <constraint firstItem="Ogv-hp-dqb" firstAttribute="bottom" secondItem="yOf-t3-4Vr" secondAttribute="bottom" id="Ock-IJ-QiJ"/>
+                                    <constraint firstItem="yOf-t3-4Vr" firstAttribute="top" secondItem="zKt-YJ-sju" secondAttribute="top" id="Odq-q8-gkf"/>
+                                    <constraint firstItem="yOf-t3-4Vr" firstAttribute="trailing" secondItem="qlk-49-XJ1" secondAttribute="trailing" constant="3" id="RwF-Mm-dpu"/>
+                                    <constraint firstItem="qlk-49-XJ1" firstAttribute="top" secondItem="zKt-YJ-sju" secondAttribute="top" constant="56" id="Sb1-m9-ibT"/>
+                                    <constraint firstAttribute="bottom" secondItem="qlk-49-XJ1" secondAttribute="bottom" constant="3" id="V7a-1y-Q7C"/>
+                                    <constraint firstAttribute="trailing" secondItem="qlk-49-XJ1" secondAttribute="trailing" constant="3" id="aOI-VW-MbM"/>
+                                    <constraint firstItem="qlk-49-XJ1" firstAttribute="leading" secondItem="zKt-YJ-sju" secondAttribute="leading" constant="56" id="bYS-xc-cJ3"/>
+                                    <constraint firstItem="qlk-49-XJ1" firstAttribute="trailing" secondItem="Ogv-hp-dqb" secondAttribute="trailing" constant="-3" id="cIR-xi-RK3"/>
+                                    <constraint firstItem="yOf-t3-4Vr" firstAttribute="leading" secondItem="zKt-YJ-sju" secondAttribute="leading" id="ef4-oB-9F8"/>
+                                    <constraint firstItem="Ogv-hp-dqb" firstAttribute="bottom" secondItem="qlk-49-XJ1" secondAttribute="bottom" constant="3" id="n12-YN-f4U"/>
+                                    <constraint firstItem="Ogv-hp-dqb" firstAttribute="leading" secondItem="yOf-t3-4Vr" secondAttribute="leading" id="xpd-8t-K3e"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="imageView" destination="yOf-t3-4Vr" id="gZL-Zh-Onf"/>
+                                    <outlet property="selectedSymbolView" destination="qlk-49-XJ1" id="qNR-V5-WaZ"/>
+                                    <outlet property="selectedView" destination="Ogv-hp-dqb" id="tOH-YJ-VyI"/>
                                     <segue destination="1G5-Gy-dcp" kind="push" id="fT8-04-OYy"/>
                                 </connections>
                             </collectionViewCell>
@@ -255,7 +274,16 @@
                         </connections>
                     </collectionView>
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="SFZ-iE-ZHq"/>
+                    <navigationItem key="navigationItem" id="SFZ-iE-ZHq">
+                        <barButtonItem key="rightBarButtonItem" title="选择" id="gSh-Df-mOu">
+                            <connections>
+                                <action selector="selectPhotos:" destination="3fZ-gl-Poe" id="VgZ-hM-xV1"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="selectButton" destination="gSh-Df-mOu" id="K0s-1p-qTz"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TdD-3q-vWF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -359,6 +387,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="CheckSymbol" width="50" height="49"/>
         <image name="photos" width="30" height="30"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
@@ -367,6 +396,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="v4z-jg-IlL"/>
+        <segue reference="pHz-qt-UyA"/>
     </inferredMetricsTieBreakers>
 </document>

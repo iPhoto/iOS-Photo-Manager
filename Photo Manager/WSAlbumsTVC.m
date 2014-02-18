@@ -8,6 +8,7 @@
 
 #import "WSAlbumsTVC.h"
 #import "WSAlbumPVC.h"
+#import "WSAlbumTableCell.h"
 
 @interface WSAlbumsTVC ()
 
@@ -69,7 +70,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 96.0;
+    return WS_ALBUM_TABLE_CELL_HEIGHT;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
