@@ -12,7 +12,7 @@
 //
 // This class is also data source and delegate of a page view controller that contains all image
 // browser views of photos. This will allow user to switch between photos directly in browser.
-@interface WSPhotosCVC : UICollectionViewController
+@interface WSPhotosCVC : UIViewController
 
 @property (nonatomic, strong) NSArray *photos; // of Photo
 

@@ -21,6 +21,8 @@
 @interface WSPhotosCVC () <UICollectionViewDataSource, UICollectionViewDelegate,
 UIPageViewControllerDataSource, UIPageViewControllerDelegate>
 
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectButton;
 
 @property (nonatomic, strong) ALAssetsLibrary *library; // to access photo assets
@@ -74,7 +76,7 @@ UIPageViewControllerDataSource, UIPageViewControllerDelegate>
     self.navigationItem.title = _selecting ? DS_SELECT_PHOTOS : self.title;
     
     self.tabBarController.tabBar.hidden = _selecting;
-    self.navigationController.toolbarHidden = !_selecting;
+    self.toolbar.hidden = !_selecting;
     
     self.collectionView.allowsMultipleSelection = _selecting;
     if (!_selecting) {

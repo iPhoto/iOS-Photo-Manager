@@ -123,7 +123,7 @@
     if (self.navigationController.navigationBarHidden) {
         [self.navigationController setNavigationBarHidden:NO animated:YES];
         [self.navigationController setToolbarHidden:NO animated:YES];
-        [UIView animateWithDuration:1.0 animations:^{
+        [UIView animateWithDuration:0.2 animations:^{
             self.view.backgroundColor = [UIColor whiteColor];
         }];
     } else {
