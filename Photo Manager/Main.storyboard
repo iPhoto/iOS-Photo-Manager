@@ -179,7 +179,7 @@
         <!--PhotosCVC-->
         <scene sceneID="I0E-HE-V0i">
             <objects>
-                <viewController id="Tm3-xh-EGf" customClass="WSPhotosCVC" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Photos" id="Tm3-xh-EGf" customClass="WSPhotosCVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="xNu-ZD-pD2"/>
                         <viewControllerLayoutGuide type="bottom" id="ns5-9C-eYJ"/>

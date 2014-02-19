@@ -151,6 +151,7 @@
     [UIView animateWithDuration:duration animations:^{
         [self.scrollView updateOrientation:toInterfaceOrientation];
         [self.scrollView updateZoomScale];
+        [self.scrollView setZoomScale:self.scrollView.minimumZoomScale];
     }];
 }
 

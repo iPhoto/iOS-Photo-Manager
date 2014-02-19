@@ -125,7 +125,7 @@
     }
     else {
 #warning Incomplete for other cells.
-        cellIdentifier = IS_PHOTOS_ONLY_CELL;
+        cellIdentifier = IS_PHOTOS_AND_ALBUMS_CELL;
         cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
         // Configure the cell...
         cell.photos = nil;
