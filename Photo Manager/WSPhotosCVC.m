@@ -77,8 +77,7 @@ UIPageViewControllerDataSource, UIPageViewControllerDelegate>
     
     self.tabBarController.tabBar.hidden = _selecting;
     self.toolbar.hidden = !_selecting;
-    
-    self.collectionView.allowsMultipleSelection = _selecting;
+
     if (!_selecting) {
         for (NSIndexPath *indexpath in [self.collectionView indexPathsForSelectedItems]) {
             [self.collectionView deselectItemAtIndexPath:indexpath animated:NO];
@@ -87,6 +86,7 @@ UIPageViewControllerDataSource, UIPageViewControllerDelegate>
             [cell setSelectedViewHidden:YES];
         }
     }
+    self.collectionView.allowsMultipleSelection = _selecting;
 }
 
 #pragma mark - Lifecycle
@@ -105,6 +105,7 @@ UIPageViewControllerDataSource, UIPageViewControllerDelegate>
     [super viewDidLoad];
     
     self.collectionView.dataSource = self;
+    self.collectionView.delegate = self;
     self.selecting = NO;
 	// Do any additional setup after loading the view.
 }
@@ -175,7 +176,7 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     WSPhotoCollectionCell *cell = (WSPhotoCollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    [cell setSelectedViewHidden:NO];
+    [cell setSelectedViewHidden:YES];
 }
 
 #pragma mark - Page view data source
