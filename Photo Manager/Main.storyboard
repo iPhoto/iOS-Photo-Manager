@@ -4,10 +4,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
-        <!--Tab Bar Controller-->
+        <!--RootTBC-->
         <scene sceneID="e7d-D9-zzL">
             <objects>
-                <tabBarController storyboardIdentifier="RootController" definesPresentationContext="YES" id="WS0-lW-kaO" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="RootController" definesPresentationContext="YES" id="WS0-lW-kaO" customClass="WSRootTBC" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="B7N-6J-jKX">
@@ -21,7 +21,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Usq-a5-40q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-522" y="575"/>
+            <point key="canvasLocation" x="-542" y="583"/>
         </scene>
         <!--All AlbumsTVC - 所有相册-->
         <scene sceneID="4U3-TK-Hpr">

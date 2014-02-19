@@ -33,6 +33,7 @@
 		E905495E18ADDEB0008A2827 /* WSImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E905495D18ADDEB0008A2827 /* WSImageViewController.m */; };
 		E905496118ADE8DC008A2827 /* WSAlbumTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E905496018ADE8DC008A2827 /* WSAlbumTableCell.m */; };
 		E905496418AE00E3008A2827 /* WSPhotoCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E905496318AE00E3008A2827 /* WSPhotoCollectionCell.m */; };
+		E919513A18B4602F00BDDCEB /* WSRootTBC.m in Sources */ = {isa = PBXBuildFile; fileRef = E919513918B4602F00BDDCEB /* WSRootTBC.m */; };
 		E9AEFB3518AB9F9200BA19F3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9AEFB3418AB9F9200BA19F3 /* Main.storyboard */; };
 		E9AEFB3B18ABA68A00BA19F3 /* WSAllAlbumsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E9AEFB3A18ABA68A00BA19F3 /* WSAllAlbumsTVC.m */; };
 		E9AEFB8A18ABBF0E00BA19F3 /* WSAlbumPVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E9AEFB8918ABBF0E00BA19F3 /* WSAlbumPVC.m */; };
@@ -92,6 +93,8 @@
 		E905496018ADE8DC008A2827 /* WSAlbumTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSAlbumTableCell.m; sourceTree = "<group>"; };
 		E905496218AE00E3008A2827 /* WSPhotoCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSPhotoCollectionCell.h; sourceTree = "<group>"; };
 		E905496318AE00E3008A2827 /* WSPhotoCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSPhotoCollectionCell.m; sourceTree = "<group>"; };
+		E919513818B4602F00BDDCEB /* WSRootTBC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSRootTBC.h; sourceTree = "<group>"; };
+		E919513918B4602F00BDDCEB /* WSRootTBC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSRootTBC.m; sourceTree = "<group>"; };
 		E9AEFB3418AB9F9200BA19F3 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		E9AEFB3918ABA68A00BA19F3 /* WSAllAlbumsTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSAllAlbumsTVC.h; sourceTree = "<group>"; };
 		E9AEFB3A18ABA68A00BA19F3 /* WSAllAlbumsTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSAllAlbumsTVC.m; sourceTree = "<group>"; };
@@ -219,6 +222,8 @@
 			isa = PBXGroup;
 			children = (
 				E9AEFB3418AB9F9200BA19F3 /* Main.storyboard */,
+				E919513818B4602F00BDDCEB /* WSRootTBC.h */,
+				E919513918B4602F00BDDCEB /* WSRootTBC.m */,
 				A4FA976318AF5A78009B148C /* WSPhotoBrowserPVC.h */,
 				A4FA976418AF5A78009B148C /* WSPhotoBrowserPVC.m */,
 				E905496218AE00E3008A2827 /* WSPhotoCollectionCell.h */,
@@ -356,6 +361,7 @@
 				E905495E18ADDEB0008A2827 /* WSImageViewController.m in Sources */,
 				A4A291D218AB65930083B8E9 /* Photo_Manager.xcdatamodeld in Sources */,
 				A4FA976518AF5A78009B148C /* WSPhotoBrowserPVC.m in Sources */,
+				E919513A18B4602F00BDDCEB /* WSRootTBC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
