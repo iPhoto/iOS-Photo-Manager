@@ -8,27 +8,23 @@
 
 #import "WSPhotoBrowserPVC.h"
 
-@interface WSPhotoBrowserPVC ()
-
-@end
-
 @implementation WSPhotoBrowserPVC
 
-- (BOOL)prefersStatusBarHidden
+- (BOOL)prefersStatusBarHidden // Override
 {
     return self.navigationController.navigationBarHidden;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [self.navigationController setToolbarHidden:YES animated:animated];
     [super viewWillDisappear:animated];
+    [self.navigationController setToolbarHidden:YES animated:animated];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self.navigationController setToolbarHidden:NO animated:animated];
     [super viewWillAppear:animated];
+    [self.navigationController setToolbarHidden:NO animated:animated];
 }
 
 @end

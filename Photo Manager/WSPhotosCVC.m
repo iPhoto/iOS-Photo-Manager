@@ -245,21 +245,21 @@ willTransitionToViewControllers:(NSArray *)pendingViewControllers
     WSImageViewController *ivc = [pendingViewControllers lastObject];
     if (ivc.navigationController.navigationBarHidden) {
         ivc.view.backgroundColor = [UIColor blackColor];
-        [ivc.descriptionView removeFromSuperview];
+        //[ivc.descriptionView removeFromSuperview];
     } else {
         ivc.view.backgroundColor = [UIColor whiteColor];
-        [ivc.view addSubview:ivc.descriptionView];
+        //[ivc.view addSubview:ivc.descriptionView];
     }
     [self.parentViewController setNeedsStatusBarAppearanceUpdate];
 
     // set image tp size, position and orientation
-    [ivc.scrollView updateOrientation:self.interfaceOrientation];
+    /*[ivc.scrollView updateOrientation:self.interfaceOrientation];
     [ivc.scrollView updateZoomScale];
-    [ivc.scrollView setZoomScale:ivc.scrollView.minimumZoomScale animated:NO];
+    [ivc.scrollView setZoomScale:ivc.scrollView.minimumZoomScale animated:NO];*/
     CGSize viewSize = ivc.view.bounds.size;
     CGFloat toolbarHeight = ivc.navigationController.toolbar.frame.size.height;
     CGRect frame = CGRectMake(0, viewSize.height - toolbarHeight - 100, viewSize.width, 100);
-    ivc.descriptionView.frame = frame;
+    //ivc.descriptionView.frame = frame;
 }
 
 - (void)pageViewController:(UIPageViewController *)pageViewController

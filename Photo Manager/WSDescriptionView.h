@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+// View to display and edit description of a photo or album.
 @interface WSDescriptionView : UIView
 
-@property (nonatomic, strong) NSString *descriptionText;
+@property (nonatomic, strong) NSString *descriptionText; // description text to display
 
-- (void)setTextViewDelegate:(id<UITextViewDelegate>)delegate;
+// Notify text view to stop editing and dismiss keyboard.
 - (void)dismissKeyboard;
 
 @end

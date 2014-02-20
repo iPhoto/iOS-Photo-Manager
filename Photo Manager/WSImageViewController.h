@@ -9,17 +9,11 @@
 #import <UIKit/UIKit.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 
-#import "WSPhotoScrollView.h"
-#import "WSDescriptionView.h"
 // UIViewController to display a photo.
 @interface WSImageViewController : UIViewController
 
-@property (nonatomic, strong) WSPhotoScrollView *scrollView;
-@property (strong, nonatomic) WSDescriptionView *descriptionView;
 @property (nonatomic, strong) UIImage *image; // full resolution image of photo
 @property (nonatomic, strong) NSIndexPath *indexpath; // position of photo in parent collection view
-@property (strong, nonatomic) UITapGestureRecognizer *singleTapRecognizer; // to switch full screen
-@property (strong, nonatomic) UITapGestureRecognizer *doubleTapRecognizer; // to zoom in and out
 
 // Returns a instance of WSImageViewController that displays the photo represented by |asset|.
 //
@@ -35,6 +29,5 @@
 // instance.
 + (WSImageViewController *)imageViewControllerForAssetURL:(NSURL *)assetURL
                                                 indexPath:(NSIndexPath *)indexpath;
-
 
 @end

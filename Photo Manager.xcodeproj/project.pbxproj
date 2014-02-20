@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A4838FAB18B509E500A51ED9 /* WSDescriptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4838FAA18B509E500A51ED9 /* WSDescriptionView.m */; };
+		A4838FAF18B6639000A51ED9 /* WSImageViewControllerView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4838FAE18B6639000A51ED9 /* WSImageViewControllerView.m */; };
 		A4A291BD18AB65930083B8E9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4A291BC18AB65930083B8E9 /* Foundation.framework */; };
 		A4A291BF18AB65930083B8E9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4A291BE18AB65930083B8E9 /* CoreGraphics.framework */; };
 		A4A291C118AB65930083B8E9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4A291C018AB65930083B8E9 /* UIKit.framework */; };
@@ -53,6 +54,8 @@
 /* Begin PBXFileReference section */
 		A4838FA918B509E500A51ED9 /* WSDescriptionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSDescriptionView.h; sourceTree = "<group>"; };
 		A4838FAA18B509E500A51ED9 /* WSDescriptionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSDescriptionView.m; sourceTree = "<group>"; };
+		A4838FAD18B6639000A51ED9 /* WSImageViewControllerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSImageViewControllerView.h; sourceTree = "<group>"; };
+		A4838FAE18B6639000A51ED9 /* WSImageViewControllerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSImageViewControllerView.m; sourceTree = "<group>"; };
 		A4A291B918AB65930083B8E9 /* Photo Manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Photo Manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4A291BC18AB65930083B8E9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A4A291BE18AB65930083B8E9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -224,19 +227,21 @@
 		E9AEFB3318AB9F7800BA19F3 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				A4838FA918B509E500A51ED9 /* WSDescriptionView.h */,
-				A4838FAA18B509E500A51ED9 /* WSDescriptionView.m */,
 				E9AEFB3418AB9F9200BA19F3 /* Main.storyboard */,
-				E919513818B4602F00BDDCEB /* WSRootTBC.h */,
-				E919513918B4602F00BDDCEB /* WSRootTBC.m */,
 				A4FA976318AF5A78009B148C /* WSPhotoBrowserPVC.h */,
 				A4FA976418AF5A78009B148C /* WSPhotoBrowserPVC.m */,
+				E905495C18ADDEB0008A2827 /* WSImageViewController.h */,
+				E905495D18ADDEB0008A2827 /* WSImageViewController.m */,
+				A4838FAD18B6639000A51ED9 /* WSImageViewControllerView.h */,
+				A4838FAE18B6639000A51ED9 /* WSImageViewControllerView.m */,
+				A4838FA918B509E500A51ED9 /* WSDescriptionView.h */,
+				A4838FAA18B509E500A51ED9 /* WSDescriptionView.m */,
+				E919513818B4602F00BDDCEB /* WSRootTBC.h */,
+				E919513918B4602F00BDDCEB /* WSRootTBC.m */,
 				E905496218AE00E3008A2827 /* WSPhotoCollectionCell.h */,
 				E905496318AE00E3008A2827 /* WSPhotoCollectionCell.m */,
 				E905495F18ADE8DC008A2827 /* WSAlbumTableCell.h */,
 				E905496018ADE8DC008A2827 /* WSAlbumTableCell.m */,
-				E905495C18ADDEB0008A2827 /* WSImageViewController.h */,
-				E905495D18ADDEB0008A2827 /* WSImageViewController.m */,
 				A4D2493618AD308500CF1FC9 /* WSPhotosCVC.h */,
 				A4D2493718AD308500CF1FC9 /* WSPhotosCVC.m */,
 				A4D2493318AD2B3900CF1FC9 /* WSAlbumsTVC.h */,
@@ -361,6 +366,7 @@
 				A4A291FE18AB66480083B8E9 /* Album+BasicOperations.m in Sources */,
 				A4A2920818AB6C960083B8E9 /* Album.m in Sources */,
 				A4A2920B18AB6C970083B8E9 /* Photo.m in Sources */,
+				A4838FAF18B6639000A51ED9 /* WSImageViewControllerView.m in Sources */,
 				A4D2493518AD2B3900CF1FC9 /* WSAlbumsTVC.m in Sources */,
 				A4A291FD18AB66480083B8E9 /* Photo+BasicOperations.m in Sources */,
 				A4FA977018B12C5A009B148C /* WSPhotoScrollView.m in Sources */,
