@@ -10,8 +10,6 @@
 
 #import "WSAppDelegate.h"
 
-#import "WSDescriptionView.h"
-
 #import "UIIdentifierString.h"
 #import "DisplayString.h"
 
@@ -19,7 +17,7 @@
 
 @interface WSImageViewController ()
 
-@property (strong, nonatomic) WSDescriptionView *descriptionView;
+@property (nonatomic) BOOL keyboardOn;
 
 @end
 
@@ -31,6 +29,9 @@
 {
     if (!_descriptionView) {
         CGSize viewSize = self.view.bounds.size;
+        if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+            viewSize = CGSizeMake(viewSize.height, viewSize.width);
+        }
         CGFloat toolbarHeight = self.navigationController.toolbar.frame.size.height;
         CGRect frame = CGRectMake(0, viewSize.height - toolbarHeight - 100, viewSize.width, 100);
         _descriptionView = [[WSDescriptionView alloc] initWithFrame:frame];
@@ -75,7 +76,7 @@
 - (UITapGestureRecognizer *)doubleTapRecognizer
 {
     if (!_doubleTapRecognizer) {
-        _doubleTapRecognizer =[[UITapGestureRecognizer alloc]
+        _doubleTapRecognizer = [[UITapGestureRecognizer alloc]
                                initWithTarget:self action:@selector(doubleTapped:)];
         _doubleTapRecognizer.numberOfTapsRequired = 2;
     }
@@ -120,15 +121,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
 	// Do any additional setup after loading the view.
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self.view addSubview:self.descriptionView];
     self.descriptionView.descriptionText = @"照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述";
     
+    if (!self.navigationController.navigationBarHidden) {        
+        [self.view addSubview:self.descriptionView];
+    }
+    
+    self.keyboardOn = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
                                                  name:UIKeyboardWillShowNotification
@@ -136,6 +141,14 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidShow:)
+                                                 name:UIKeyboardDidShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidHide:)
+                                                 name:UIKeyboardDidHideNotification
                                                object:nil];
 }
 
@@ -146,6 +159,12 @@
                                                   object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:UIKeyboardWillHideNotification
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardDidShowNotification
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardDidHideNotification
                                                   object:nil];
 }
 
@@ -160,18 +179,36 @@
 
 - (void)singleTapped:(UITapGestureRecognizer *)sender // tap once, switch to full screen or back
 {
+    if (self.keyboardOn) {
+        [self.descriptionView dismissKeyboard];
+        return;
+    }
     if (self.navigationController.navigationBarHidden) {
         [self.navigationController setNavigationBarHidden:NO animated:YES];
         [self.navigationController setToolbarHidden:NO animated:YES];
         [UIView animateWithDuration:0.2 animations:^{
             self.view.backgroundColor = [UIColor whiteColor];
         }];
+        [UIView transitionWithView:self.descriptionView
+                          duration:0.2
+                           options:UIViewAnimationOptionTransitionCrossDissolve
+                        animations:^{
+                            [self.view addSubview:self.descriptionView];
+                        }
+                        completion:nil];
     } else {
         [self.navigationController setNavigationBarHidden:YES animated:YES];
         [self.navigationController setToolbarHidden:YES animated:YES];
         [UIView animateWithDuration:0.2 animations:^{
             self.view.backgroundColor = [UIColor blackColor];
         }];
+        [UIView transitionWithView:self.descriptionView
+                          duration:0.2
+                           options:UIViewAnimationOptionTransitionCrossDissolve
+                        animations:^{
+                            [self.descriptionView removeFromSuperview];
+                        }
+                        completion:nil];
     }
     WSAppDelegate *delegate = [UIApplication sharedApplication].delegate;
     delegate.window.backgroundColor = self.view.backgroundColor;
@@ -202,6 +239,19 @@
 - (void)keyboardWillShow:(NSNotification *)notification
 {
     CGRect keyboardFrame = [[[notification userInfo] valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    CGSize viewSize = self.view.bounds.size;
+    if (self.interfaceOrientation == UIInterfaceOrientationLandscapeRight) {
+        keyboardFrame = CGRectMake(keyboardFrame.origin.y,
+                                   viewSize.height - keyboardFrame.size.width - keyboardFrame.origin.x,
+                                   keyboardFrame.size.height,
+                                   keyboardFrame.size.width);
+    }
+    if (self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft) {
+        keyboardFrame = CGRectMake(viewSize.width - keyboardFrame.origin.y - keyboardFrame.size.height,
+                                   keyboardFrame.origin.x,
+                                   keyboardFrame.size.height,
+                                   keyboardFrame.size.width);
+    }
     NSNumber *keyboardDuration = [[notification userInfo] valueForKey:UIKeyboardAnimationDurationUserInfoKey];
     UIViewAnimationCurve keyboardCurve = [[[notification userInfo] valueForKey:UIKeyboardAnimationCurveUserInfoKey] intValue];
     UIViewAnimationOptions keyboardAnimationOptions = keyboardCurve << 16;
@@ -211,7 +261,8 @@
                                  originalFrame.size.width,
                                  originalFrame.size.height);
     [UIView animateWithDuration:[keyboardDuration doubleValue]
-                          delay:0 options:keyboardAnimationOptions
+                          delay:0
+                        options:keyboardAnimationOptions
                      animations:^{
                          self.descriptionView.frame = newFrame;
                      }
@@ -227,11 +278,22 @@
     UIViewAnimationCurve keyboardCurve = [[[notification userInfo] valueForKey:UIKeyboardAnimationCurveUserInfoKey] intValue];
     UIViewAnimationOptions keyboardAnimationOptions = keyboardCurve << 16;
     [UIView animateWithDuration:[keyboardDuration doubleValue]
-                          delay:0 options:keyboardAnimationOptions
+                          delay:0
+                        options:keyboardAnimationOptions
                      animations:^{
                          self.descriptionView.frame = frame;
                      }
                      completion:nil];
+}
+
+- (void)keyboardDidShow:(NSNotification *)notification
+{
+    self.keyboardOn = YES;
+}
+
+- (void)keyboardDidHide:(NSNotification *)notification
+{
+    self.keyboardOn = NO;
 }
 
 @end

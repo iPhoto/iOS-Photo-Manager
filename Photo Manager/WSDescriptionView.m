@@ -10,7 +10,6 @@
 
 #define WS_DESCRIPTION_VIEW_MAX_HEIGHT 100
 #define WS_DESCRIPTION_VIEW_IMAGE_WIDTH 20
-#define WS_DESCRIPTION_VIEW_INSET 2
 
 @interface WSDescriptionView () <UITextViewDelegate>
 
@@ -108,24 +107,18 @@
 
     self.textView.frame =
     CGRectMake(viewBounds.origin.x, viewBounds.origin.y,
-               viewBounds.size.width - WS_DESCRIPTION_VIEW_IMAGE_WIDTH -  2 * WS_DESCRIPTION_VIEW_INSET,
+               viewBounds.size.width - WS_DESCRIPTION_VIEW_IMAGE_WIDTH,
                viewBounds.size.height);
 
 
-    CGFloat textHeight = [self.textView.text sizeWithFont:self.textView.font].height;
-    /*[[NSString stringWithFormat:@"%@\n",self.textView.text]
+    CGFloat textHeight = [[NSString stringWithFormat:@"%@\n",self.textView.text]
                           boundingRectWithSize:CGSizeMake(self.textView.frame.size.width, CGFLOAT_MAX)
-                          options:NSStringDrawingUsesLineFragmentOrigin //| NSStringDrawingUsesFontLeading
+                          options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
                           attributes:[NSDictionary dictionaryWithObjectsAndKeys:self.textView.font,NSFontAttributeName, nil]
                           context:nil].size.height
-        + self.textView.textContainerInset.top + self.textView.textContainerInset.bottom;
-    if (self.textView.allowsEditingTextAttributes) {
-        NSLog(@"allow");
-
-    }
-    NSLog(@"%@", NSStringFromUIEdgeInsets(self.textView.textContainerInset));*/
-    if (textHeight < WS_DESCRIPTION_VIEW_IMAGE_WIDTH +  2 * WS_DESCRIPTION_VIEW_INSET) {
-        textHeight = WS_DESCRIPTION_VIEW_IMAGE_WIDTH +  2 * WS_DESCRIPTION_VIEW_INSET;
+                        + self.textView.textContainerInset.top + self.textView.textContainerInset.bottom;
+    if (textHeight < WS_DESCRIPTION_VIEW_IMAGE_WIDTH) {
+        textHeight = WS_DESCRIPTION_VIEW_IMAGE_WIDTH;
     }
     if (textHeight > WS_DESCRIPTION_VIEW_MAX_HEIGHT) {
         textHeight = WS_DESCRIPTION_VIEW_MAX_HEIGHT;
@@ -140,10 +133,10 @@
     self.blurBackgroundBar.frame = viewBounds;
     self.textView.frame =
     CGRectMake(viewBounds.origin.x, viewBounds.origin.y,
-               viewBounds.size.width - WS_DESCRIPTION_VIEW_IMAGE_WIDTH -  2 * WS_DESCRIPTION_VIEW_INSET,
+               viewBounds.size.width - WS_DESCRIPTION_VIEW_IMAGE_WIDTH,
                viewBounds.size.height);
     self.editButton.frame =
-    CGRectMake(origin.x + viewSize.width - WS_DESCRIPTION_VIEW_IMAGE_WIDTH - WS_DESCRIPTION_VIEW_INSET,
+    CGRectMake(origin.x + viewSize.width - WS_DESCRIPTION_VIEW_IMAGE_WIDTH,
                origin.y + (viewSize.height - WS_DESCRIPTION_VIEW_IMAGE_WIDTH) * 0.5,
                WS_DESCRIPTION_VIEW_IMAGE_WIDTH, WS_DESCRIPTION_VIEW_IMAGE_WIDTH);
 }
@@ -169,6 +162,11 @@ shouldChangeTextInRange:(NSRange)range
     self.textView.editable = NO;
     self.textView.selectable = NO;
     self.editButton.hidden = NO;
+}
+
+- (void)dismissKeyboard
+{
+    [self.textView resignFirstResponder];
 }
 
 /*
