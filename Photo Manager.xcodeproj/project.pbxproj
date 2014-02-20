@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A4838FAB18B509E500A51ED9 /* WSDescriptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4838FAA18B509E500A51ED9 /* WSDescriptionView.m */; };
 		A4A291BD18AB65930083B8E9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4A291BC18AB65930083B8E9 /* Foundation.framework */; };
 		A4A291BF18AB65930083B8E9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4A291BE18AB65930083B8E9 /* CoreGraphics.framework */; };
 		A4A291C118AB65930083B8E9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4A291C018AB65930083B8E9 /* UIKit.framework */; };
@@ -50,6 +51,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A4838FA918B509E500A51ED9 /* WSDescriptionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSDescriptionView.h; sourceTree = "<group>"; };
+		A4838FAA18B509E500A51ED9 /* WSDescriptionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSDescriptionView.m; sourceTree = "<group>"; };
 		A4A291B918AB65930083B8E9 /* Photo Manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Photo Manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4A291BC18AB65930083B8E9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A4A291BE18AB65930083B8E9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -221,6 +224,8 @@
 		E9AEFB3318AB9F7800BA19F3 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A4838FA918B509E500A51ED9 /* WSDescriptionView.h */,
+				A4838FAA18B509E500A51ED9 /* WSDescriptionView.m */,
 				E9AEFB3418AB9F9200BA19F3 /* Main.storyboard */,
 				E919513818B4602F00BDDCEB /* WSRootTBC.h */,
 				E919513918B4602F00BDDCEB /* WSRootTBC.m */,
@@ -352,6 +357,7 @@
 				E905496418AE00E3008A2827 /* WSPhotoCollectionCell.m in Sources */,
 				A4D2493818AD308500CF1FC9 /* WSPhotosCVC.m in Sources */,
 				A4A291CB18AB65930083B8E9 /* main.m in Sources */,
+				A4838FAB18B509E500A51ED9 /* WSDescriptionView.m in Sources */,
 				A4A291FE18AB66480083B8E9 /* Album+BasicOperations.m in Sources */,
 				A4A2920818AB6C960083B8E9 /* Album.m in Sources */,
 				A4A2920B18AB6C970083B8E9 /* Photo.m in Sources */,

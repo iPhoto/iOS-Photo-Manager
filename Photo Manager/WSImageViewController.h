@@ -21,7 +21,6 @@
 @property (strong, nonatomic) UITapGestureRecognizer *singleTapRecognizer; // to switch full screen
 @property (strong, nonatomic) UITapGestureRecognizer *doubleTapRecognizer; // to zoom in and out
 
-
 // Returns a instance of WSImageViewController that displays the photo represented by |asset|.
 //
 // This method requires caller to provide |indexpath|, indicating the position of displayed photo in

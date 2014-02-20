@@ -10,6 +10,8 @@
 
 #import "WSAppDelegate.h"
 
+#import "WSDescriptionView.h"
+
 #import "UIIdentifierString.h"
 #import "DisplayString.h"
 
@@ -17,11 +19,24 @@
 
 @interface WSImageViewController ()
 
+@property (strong, nonatomic) WSDescriptionView *descriptionView;
+
 @end
 
 @implementation WSImageViewController
 
 #pragma mark - Access properties
+
+- (WSDescriptionView *)descriptionView
+{
+    if (!_descriptionView) {
+        CGSize viewSize = self.view.bounds.size;
+        CGFloat toolbarHeight = self.navigationController.toolbar.frame.size.height;
+        CGRect frame = CGRectMake(0, viewSize.height - toolbarHeight - 30, viewSize.width, 30);
+        _descriptionView = [[WSDescriptionView alloc] initWithFrame:frame];
+    }
+    return _descriptionView;
+}
 
 - (void)setImage:(UIImage *)image
 {
@@ -109,6 +124,31 @@
 	// Do any additional setup after loading the view.
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.view addSubview:self.descriptionView];
+    self.descriptionView.descriptionText = @"Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. ";
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardWillShowNotification
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardWillHideNotification
+                                                  object:nil];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -153,6 +193,30 @@
         [self.scrollView updateZoomScale];
         [self.scrollView setZoomScale:self.scrollView.minimumZoomScale];
     }];
+}
+
+- (void)keyboardWillShow:(NSNotification *)notification
+{
+    CGRect keyboardFrame = [[[notification userInfo] valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    NSNumber *keyboardDuration = [[notification userInfo] valueForKey:UIKeyboardAnimationDurationUserInfoKey];
+    UIViewAnimationCurve keyboardCurve = [[[notification userInfo] valueForKey:UIKeyboardAnimationCurveUserInfoKey] intValue];
+    UIViewAnimationOptions keyboardAnimationOptions = keyboardCurve;
+    CGRect originalFrame = self.descriptionView.frame;
+    CGRect newFrame = CGRectMake(originalFrame.origin.x,
+                                 keyboardFrame.origin.y - originalFrame.size.height,
+                                 originalFrame.size.width,
+                                 originalFrame.size.height);
+    [UIView animateWithDuration:[keyboardDuration doubleValue]
+                          delay:0 options:keyboardAnimationOptions
+                     animations:^{
+                         self.descriptionView.frame = newFrame;
+                     }
+                     completion:nil];
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification
+{
+    
 }
 
 @end
