@@ -32,7 +32,7 @@
     if (!_descriptionView) {
         CGSize viewSize = self.view.bounds.size;
         CGFloat toolbarHeight = self.navigationController.toolbar.frame.size.height;
-        CGRect frame = CGRectMake(0, viewSize.height - toolbarHeight - 30, viewSize.width, 30);
+        CGRect frame = CGRectMake(0, viewSize.height - toolbarHeight - 100, viewSize.width, 100);
         _descriptionView = [[WSDescriptionView alloc] initWithFrame:frame];
     }
     return _descriptionView;
@@ -127,7 +127,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.view addSubview:self.descriptionView];
-    self.descriptionView.descriptionText = @"Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. Something very long. ";
+    self.descriptionView.descriptionText = @"照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述";
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
@@ -192,6 +192,10 @@
         [self.scrollView updateOrientation:toInterfaceOrientation];
         [self.scrollView updateZoomScale];
         [self.scrollView setZoomScale:self.scrollView.minimumZoomScale];
+        CGSize viewSize = self.view.bounds.size;
+        CGFloat toolbarHeight = self.navigationController.toolbar.frame.size.height;
+        CGRect frame = CGRectMake(0, viewSize.height - toolbarHeight - 100, viewSize.width, 100);
+        self.descriptionView.frame = frame;
     }];
 }
 
@@ -200,7 +204,7 @@
     CGRect keyboardFrame = [[[notification userInfo] valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     NSNumber *keyboardDuration = [[notification userInfo] valueForKey:UIKeyboardAnimationDurationUserInfoKey];
     UIViewAnimationCurve keyboardCurve = [[[notification userInfo] valueForKey:UIKeyboardAnimationCurveUserInfoKey] intValue];
-    UIViewAnimationOptions keyboardAnimationOptions = keyboardCurve;
+    UIViewAnimationOptions keyboardAnimationOptions = keyboardCurve << 16;
     CGRect originalFrame = self.descriptionView.frame;
     CGRect newFrame = CGRectMake(originalFrame.origin.x,
                                  keyboardFrame.origin.y - originalFrame.size.height,
@@ -216,7 +220,18 @@
 
 - (void)keyboardWillHide:(NSNotification *)notification
 {
-    
+    CGSize viewSize = self.view.bounds.size;
+    CGFloat toolbarHeight = self.navigationController.toolbar.frame.size.height;
+    CGRect frame = CGRectMake(0, viewSize.height - toolbarHeight - 100, viewSize.width, 100);
+    NSNumber *keyboardDuration = [[notification userInfo] valueForKey:UIKeyboardAnimationDurationUserInfoKey];
+    UIViewAnimationCurve keyboardCurve = [[[notification userInfo] valueForKey:UIKeyboardAnimationCurveUserInfoKey] intValue];
+    UIViewAnimationOptions keyboardAnimationOptions = keyboardCurve << 16;
+    [UIView animateWithDuration:[keyboardDuration doubleValue]
+                          delay:0 options:keyboardAnimationOptions
+                     animations:^{
+                         self.descriptionView.frame = frame;
+                     }
+                     completion:nil];
 }
 
 @end

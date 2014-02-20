@@ -12,4 +12,6 @@
 
 @property (nonatomic, strong) NSString *descriptionText;
 
+- (void)setTextViewDelegate:(id<UITextViewDelegate>)delegate;
+
 @end

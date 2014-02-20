@@ -8,10 +8,11 @@
 
 #import "WSDescriptionView.h"
 
+#define WS_DESCRIPTION_VIEW_MAX_HEIGHT 100
 #define WS_DESCRIPTION_VIEW_IMAGE_WIDTH 20
 #define WS_DESCRIPTION_VIEW_INSET 2
 
-@interface WSDescriptionView ()
+@interface WSDescriptionView () <UITextViewDelegate>
 
 @property (nonatomic, strong) UITextView *textView;
 @property (nonatomic, strong) UIToolbar *blurBackgroundBar;
@@ -20,6 +21,11 @@
 @end
 
 @implementation WSDescriptionView
+
+- (void)setTextViewDelegate:(id<UITextViewDelegate>)delegate
+{
+    self.textView.delegate = delegate;
+}
 
 - (UIButton *)editButton
 {
@@ -46,6 +52,10 @@
         _textView.editable = NO;
         _textView.selectable = NO;
         _textView.backgroundColor = nil;
+        _textView.delegate = self;
+        _textView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+        _textView.textColor = [UIColor whiteColor];
+        _textView.contentInset = UIEdgeInsetsZero;
     }
     return _textView;
 }
@@ -58,12 +68,15 @@
 - (void)setDescriptionText:(NSString *)descriptionText
 {
     self.textView.text = descriptionText;
+    [self layoutSubviews];
 }
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
+        self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.8];
+
         [self.layer insertSublayer:[self.blurBackgroundBar layer] atIndex:0];
         [self addSubview:self.textView];
         [self addSubview:self.editButton];
@@ -91,17 +104,71 @@
 - (void)layoutSubviews
 {
     CGRect viewBounds = self.bounds;
-    CGPoint original = viewBounds.origin;
+
+
+    self.textView.frame =
+    CGRectMake(viewBounds.origin.x, viewBounds.origin.y,
+               viewBounds.size.width - WS_DESCRIPTION_VIEW_IMAGE_WIDTH -  2 * WS_DESCRIPTION_VIEW_INSET,
+               viewBounds.size.height);
+
+
+    CGFloat textHeight = [self.textView.text sizeWithFont:self.textView.font].height;
+    /*[[NSString stringWithFormat:@"%@\n",self.textView.text]
+                          boundingRectWithSize:CGSizeMake(self.textView.frame.size.width, CGFLOAT_MAX)
+                          options:NSStringDrawingUsesLineFragmentOrigin //| NSStringDrawingUsesFontLeading
+                          attributes:[NSDictionary dictionaryWithObjectsAndKeys:self.textView.font,NSFontAttributeName, nil]
+                          context:nil].size.height
+        + self.textView.textContainerInset.top + self.textView.textContainerInset.bottom;
+    if (self.textView.allowsEditingTextAttributes) {
+        NSLog(@"allow");
+
+    }
+    NSLog(@"%@", NSStringFromUIEdgeInsets(self.textView.textContainerInset));*/
+    if (textHeight < WS_DESCRIPTION_VIEW_IMAGE_WIDTH +  2 * WS_DESCRIPTION_VIEW_INSET) {
+        textHeight = WS_DESCRIPTION_VIEW_IMAGE_WIDTH +  2 * WS_DESCRIPTION_VIEW_INSET;
+    }
+    if (textHeight > WS_DESCRIPTION_VIEW_MAX_HEIGHT) {
+        textHeight = WS_DESCRIPTION_VIEW_MAX_HEIGHT;
+    }
+    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y + self.frame.size.height - textHeight,
+                            self.frame.size.width, textHeight);
+
+    viewBounds = self.bounds;
+    CGPoint origin = viewBounds.origin;
     CGSize viewSize = viewBounds.size;
+
     self.blurBackgroundBar.frame = viewBounds;
     self.textView.frame =
     CGRectMake(viewBounds.origin.x, viewBounds.origin.y,
                viewBounds.size.width - WS_DESCRIPTION_VIEW_IMAGE_WIDTH -  2 * WS_DESCRIPTION_VIEW_INSET,
                viewBounds.size.height);
     self.editButton.frame =
-    CGRectMake(original.x + viewSize.width - WS_DESCRIPTION_VIEW_IMAGE_WIDTH - WS_DESCRIPTION_VIEW_INSET,
-               original.y + (viewSize.height - WS_DESCRIPTION_VIEW_IMAGE_WIDTH) * 0.5,
+    CGRectMake(origin.x + viewSize.width - WS_DESCRIPTION_VIEW_IMAGE_WIDTH - WS_DESCRIPTION_VIEW_INSET,
+               origin.y + (viewSize.height - WS_DESCRIPTION_VIEW_IMAGE_WIDTH) * 0.5,
                WS_DESCRIPTION_VIEW_IMAGE_WIDTH, WS_DESCRIPTION_VIEW_IMAGE_WIDTH);
+}
+
+- (BOOL)textView:(UITextView *)textView
+shouldChangeTextInRange:(NSRange)range
+ replacementText:(NSString *)text
+{
+    if ([text isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];
+        return NO;
+    }
+    return YES;
+}
+
+- (void)textViewDidChange:(UITextView *)textView
+{
+    [self layoutSubviews];
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    self.textView.editable = NO;
+    self.textView.selectable = NO;
+    self.editButton.hidden = NO;
 }
 
 /*
