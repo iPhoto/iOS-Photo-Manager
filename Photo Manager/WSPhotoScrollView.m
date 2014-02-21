@@ -89,8 +89,6 @@
     if (self.zoomScale < self.minimumZoomScale) {
         self.zoomScale = self.minimumZoomScale;
     }
-
-    [self layoutIfNeeded];
 }
 
 - (void)layoutSubviews { // Override

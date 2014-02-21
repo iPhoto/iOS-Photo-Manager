@@ -110,7 +110,6 @@
 
 - (void)viewWillAppear:(BOOL)animated // Override
 {
-    NSLog(@"will appear");
 #warning Using test description text.
     self.view.descriptionText = @"照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述";
 

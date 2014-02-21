@@ -118,8 +118,6 @@
     }
 
     self.scrollView.frame = self.bounds;
-
-    //[self layoutIfNeeded];
 }
 
 - (void)fitImageToView // public
@@ -144,19 +142,11 @@
                           duration:0.2
                            options:UIViewAnimationOptionTransitionCrossDissolve
                         animations:^{
-                            if (hidden) {
-                                [self.descriptionView removeFromSuperview];
-                            } else {
-                                [self addSubview:self.descriptionView];
-                            }
+                            self.descriptionView.hidden = hidden;
                         }
                         completion:nil];
     } else {
-        if (hidden) {
-            [self.descriptionView removeFromSuperview];
-        } else {
-            [self addSubview:self.descriptionView];
-        }
+        self.descriptionView.hidden = hidden;
     }
 }
 
