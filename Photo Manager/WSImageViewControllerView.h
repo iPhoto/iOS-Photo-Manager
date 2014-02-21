@@ -17,7 +17,8 @@
 
 @property (nonatomic) BOOL keyboardOn; // if keyboard is on
 @property (nonatomic) CGRect keyboardFrame; // frame of keyboard in the WSImageViewControllerView's coordinate system
-@property (nonatomic, strong) NSString* descriptionText; // text of description view
+@property (nonatomic, strong) NSString *descriptionText; // text of description view
+@property (nonatomic, strong) UIImage *image; // image of scroll view to display
 
 // Custom initialization method. Need to keep reference of controller to get toolbar
 // size for layouting. Return the initialized instance.
@@ -25,9 +26,6 @@
 // |controller| is the WSImageViewController instance which use this
 // WSImageViewControllerView instance as roo view.
 - (id)initWithFrame:(CGRect)frame controller:(WSImageViewController *)controller;
-
-// Notify description view to stop editing and dismiss keyboard.
-- (void)dismissKeyboard;
 
 // Set description view visibility.
 //
@@ -50,5 +48,11 @@
 // |duration| and |options| are animation duration and options of keyboard dismissing.
 - (void)animateDescriptionViewBackWithDuration:(NSTimeInterval)duration
                                        options:(UIViewAnimationOptions)options;
+
+// Notify description view to stop editing and dismiss keyboard.
+- (void)dismissKeyboard;
+
+// Reset scroll view's zoom scale range with current image size and orientation.
+- (void)updateImageScaleRange;
 
 @end

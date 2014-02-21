@@ -13,12 +13,11 @@
 @interface WSPhotoScrollView : UIScrollView <UIScrollViewDelegate>
 
 @property (strong, nonatomic) UIImage *image; // displayed image
-@property (strong, nonatomic) UIImageView *imageView; // displayed image view
 
-- (void)updateZoomScale; // reset zoom scale range with current image size and device orientation
-- (void)updateOrientation:(UIInterfaceOrientation)orientation; // reset frame size to fit current
-                                                                // orientation
+// Reset zoom scale range with current image size and orientation.
+- (void)updateZoomScale;
 
-- (void)doubleTapped:(UITapGestureRecognizer *)tapGesture; // zoom image when user double tapped
+// Zoom image in or out when user double tapped
+- (void)doubleTapped:(UITapGestureRecognizer *)tapGesture;
 
 @end

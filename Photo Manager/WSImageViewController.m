@@ -19,10 +19,6 @@
 @interface WSImageViewController ()
 
 @property (nonatomic, strong) WSImageViewControllerView *view;
-@property (nonatomic, strong) WSPhotoScrollView *scrollView;
-
-@property (strong, nonatomic) UITapGestureRecognizer *singleTapRecognizer;
-@property (strong, nonatomic) UITapGestureRecognizer *doubleTapRecognizer;
 
 @property (nonatomic) BOOL keyboardOn;
 @property (nonatomic) CGRect keyboardFrame;
@@ -35,47 +31,12 @@
 
 - (void)setImage:(UIImage *)image
 {
-    self.scrollView.image = image;
+    self.view.image = image;
 }
 
 - (UIImage *)image
 {
-    return self.scrollView.image;
-}
-
-- (WSPhotoScrollView *)scrollView
-{
-    if (!_scrollView) {
-        _scrollView = [[WSPhotoScrollView alloc] initWithFrame:self.view.bounds];
-        
-#warning TODO: Orientation
-        [_scrollView updateOrientation:self.interfaceOrientation];
-        [self.view insertSubview:_scrollView atIndex:0];
-        [_scrollView addGestureRecognizer:self.singleTapRecognizer];
-        [_scrollView addGestureRecognizer:self.doubleTapRecognizer];
-    }
-    return _scrollView;
-}
-
-- (UITapGestureRecognizer *)singleTapRecognizer
-{
-    if (!_singleTapRecognizer) {
-        _singleTapRecognizer =[[UITapGestureRecognizer alloc]
-                               initWithTarget:self action:@selector(singleTapped:)];
-        _singleTapRecognizer.numberOfTapsRequired = 1;
-        [_singleTapRecognizer requireGestureRecognizerToFail:self.doubleTapRecognizer];
-    }
-    return _singleTapRecognizer;
-}
-
-- (UITapGestureRecognizer *)doubleTapRecognizer
-{
-    if (!_doubleTapRecognizer) {
-        _doubleTapRecognizer = [[UITapGestureRecognizer alloc]
-                                initWithTarget:self action:@selector(doubleTapped:)];
-        _doubleTapRecognizer.numberOfTapsRequired = 2;
-    }
-    return _doubleTapRecognizer;
+    return self.view.image;
 }
 
 - (BOOL)keyboardOn
@@ -147,6 +108,7 @@
 
 - (void)viewWillAppear:(BOOL)animated // Override
 {
+    self.toolBarHeight = self.navigationController.toolbar.frame.size.height;
 #warning Using test description text.
     self.view.descriptionText = @"照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述";
     
@@ -193,8 +155,7 @@
 
 #pragma mark - Gesture reconization
 
-- (void)singleTapped:(UITapGestureRecognizer *)sender // tap once, dismiss keyboard if it's on,
-                                                    // otherwise switch to full screen or back
+- (void)singleTapped // public
 {
     if (self.keyboardOn) {
 #warning User taps on navigation bar will not dismiss keyboard.
@@ -221,25 +182,23 @@
     [self.parentViewController setNeedsStatusBarAppearanceUpdate];
 }
 
-- (void)doubleTapped:(UITapGestureRecognizer *)sender // tap twice, notify scroll view to zoom photo
-{
-    [self.scrollView doubleTapped:sender];
-}
-
 #pragma mark - Rotation
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation // Override
                                          duration:(NSTimeInterval)duration
 {
-    [UIView animateWithDuration:duration animations:^{
-        [self.scrollView updateOrientation:toInterfaceOrientation];
-        [self.scrollView updateZoomScale];
-        [self.scrollView setZoomScale:self.scrollView.minimumZoomScale];
-        CGSize viewSize = self.view.bounds.size;
-        CGFloat toolbarHeight = self.navigationController.toolbar.frame.size.height;
-        CGRect frame = CGRectMake(0, viewSize.height - toolbarHeight - 100, viewSize.width, 100);
-        //self.descriptionView.frame = frame;
-    }];
+    [self.view updateImageScaleRange];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    self.toolBarHeight = self.navigationController.toolbar.frame.size.height;
+}
+
+#pragma mark - Description view
+- (void)setDescriptionViewHidden:(BOOL)hidden Animated:(BOOL)animated
+{
+    [self.view setDescriptionViewHidden:hidden Animated:animated];
 }
 
 #pragma mark - Keyboard
@@ -284,7 +243,7 @@
     self.keyboardFrame = [self frameOfCurrentOrientationFromFrame:keyboardFrame];
 }
 
-- (CGRect)frameOfCurrentOrientationFromFrame:(CGRect)origFrame // public
+- (CGRect)frameOfCurrentOrientationFromFrame:(CGRect)origFrame
 {
     CGRect frame = origFrame;
     CGSize viewSize = self.view.bounds.size; // do not support up-sides-down

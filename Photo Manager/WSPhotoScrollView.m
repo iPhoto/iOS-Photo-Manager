@@ -8,17 +8,14 @@
 
 #import "WSPhotoScrollView.h"
 
+@interface WSPhotoScrollView ()
+
+@property (strong, nonatomic) UIImageView *imageView;
+@end
+
 @implementation WSPhotoScrollView
 
 #pragma mark - Access properties
-
-- (UIImageView *)imageView
-{
-    if (!_imageView) {
-        _imageView = [[UIImageView alloc] init];
-    }
-    return _imageView;
-}
 
 - (UIImage *)image
 {
@@ -35,18 +32,19 @@
 
     [self updateZoomScale];
     [self setZoomScale:self.minimumZoomScale animated:NO];
-    [self centerContent];
 }
 
-- (void)setFrame:(CGRect)frame
+- (UIImageView *)imageView
 {
-    [super setFrame:frame];
-    [self centerContent];
+    if (!_imageView) {
+        _imageView = [[UIImageView alloc] init];
+    }
+    return _imageView;
 }
 
 #pragma mark - Lifecycle
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithFrame:(CGRect)frame // Override
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -55,53 +53,9 @@
     return self;
 }
 
-#pragma mark - Scroll view delegate
+#pragma mark - Layout
 
-- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
-{
-    return self.imageView;
-}
-
-- (void)scrollViewDidZoom:(__unused UIScrollView *)scrollView
-{
-    [self centerContent];
-}
-
-#pragma mark - Gesture recognization
-
-- (void)doubleTapped:(UITapGestureRecognizer *)tapGesture
-{
-    if (self.zoomScale == self.minimumZoomScale) {
-        CGPoint touchPoint = [tapGesture locationInView:self.imageView];
-        CGFloat scale = self.maximumZoomScale / self.minimumZoomScale;
-        CGSize viewSize = self.bounds.size;
-        CGFloat originX, originY;
-        originX = touchPoint.x - viewSize.width * 0.5 / scale;
-        originY = touchPoint.y - viewSize.height * 0.5 / scale;
-        CGRect rect = CGRectMake(originX, originY, viewSize.width / scale,
-                                 viewSize.height / scale);
-        [self zoomToRect:rect animated:YES];
-    }else {
-        [self setZoomScale:self.minimumZoomScale animated:YES];
-    }
-}
-
-#pragma mark - Keep image looks good
-
-- (void)updateOrientation:(UIInterfaceOrientation)orientation;
-{
-    CGRect screenRectBounds = [UIScreen mainScreen].bounds;
-    CGRect scrollViewFrame;
-    if (UIInterfaceOrientationIsLandscape(orientation)) {
-        scrollViewFrame = CGRectMake(screenRectBounds.origin.x, screenRectBounds.origin.y,
-                                     screenRectBounds.size.height, screenRectBounds.size.width);
-    } else {
-        scrollViewFrame = screenRectBounds;
-    }
-    [self setFrame:scrollViewFrame];
-}
-
-- (void)updateZoomScale
+- (void)updateZoomScale // public
 {
     CGSize imageSize = self.image.size;
     CGSize viewSize = self.bounds.size;
@@ -127,11 +81,17 @@
     if (self.maximumZoomScale < 3 * self.minimumZoomScale) {
         self.maximumZoomScale = 3 * self.minimumZoomScale;
     }
+
+    if (self.zoomScale > self.maximumZoomScale) {
+        self.zoomScale = self.maximumZoomScale;
+    }
+    if (self.zoomScale < self.minimumZoomScale) {
+        self.zoomScale = self.minimumZoomScale;
+    }
 }
 
-- (void)centerContent {
+- (void)layoutSubviews { // Override
     CGFloat top = 0, left = 0;
-
     if (self.contentSize.width < self.bounds.size.width) {
         left = (self.bounds.size.width-self.contentSize.width) * 0.5f;
     }
@@ -139,6 +99,32 @@
         top = (self.bounds.size.height-self.contentSize.height) * 0.5f;
     }
     self.contentInset = UIEdgeInsetsMake(top, left, top, left);
+}
+
+#pragma mark - Scroll view delegate
+
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
+{
+    return self.imageView;
+}
+
+#pragma mark - Gesture recognization
+
+- (void)doubleTapped:(UITapGestureRecognizer *)tapGesture // public
+{
+    if (self.zoomScale == self.minimumZoomScale) {
+        CGPoint touchPoint = [tapGesture locationInView:self.imageView];
+        CGFloat scale = self.maximumZoomScale / self.minimumZoomScale;
+        CGSize viewSize = self.bounds.size;
+        CGFloat originX, originY;
+        originX = touchPoint.x - viewSize.width * 0.5 / scale;
+        originY = touchPoint.y - viewSize.height * 0.5 / scale;
+        CGRect rect = CGRectMake(originX, originY, viewSize.width / scale,
+                                 viewSize.height / scale);
+        [self zoomToRect:rect animated:YES];
+    }else {
+        [self setZoomScale:self.minimumZoomScale animated:YES];
+    }
 }
 
 @end

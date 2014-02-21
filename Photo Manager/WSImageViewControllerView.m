@@ -9,11 +9,16 @@
 #import "WSImageViewControllerView.h"
 
 #import "WSDescriptionView.h"
+#import "WSPhotoScrollView.h"
 
 @interface WSImageViewControllerView ()
 
 @property (nonatomic, strong) WSDescriptionView *descriptionView;
+@property (nonatomic, strong) WSPhotoScrollView *scrollView;
 @property (nonatomic, weak) WSImageViewController *controller; // should be weak to avoid circular reference
+
+@property (strong, nonatomic) UITapGestureRecognizer *singleTapRecognizer;
+@property (strong, nonatomic) UITapGestureRecognizer *doubleTapRecognizer;
 
 @end
 
@@ -31,12 +36,54 @@
     self.descriptionView.descriptionText = descriptionText;
 }
 
+- (UIImage *)image
+{
+    return self.scrollView.image;
+}
+
+- (void)setImage:(UIImage *)image
+{
+    self.scrollView.image = image;
+}
+
 - (WSDescriptionView *)descriptionView
 {
     if (!_descriptionView) {
         _descriptionView = [[WSDescriptionView alloc] initWithFrame:self.bounds];
     }
     return _descriptionView;
+}
+
+- (WSPhotoScrollView *)scrollView
+{
+    if (!_scrollView) {
+        _scrollView = [[WSPhotoScrollView alloc] initWithFrame:self.bounds];
+        [self insertSubview:_scrollView atIndex:0];
+        [_scrollView addGestureRecognizer:self.singleTapRecognizer];
+        [_scrollView addGestureRecognizer:self.doubleTapRecognizer];
+    }
+    return _scrollView;
+}
+
+- (UITapGestureRecognizer *)singleTapRecognizer
+{
+    if (!_singleTapRecognizer) {
+        _singleTapRecognizer =[[UITapGestureRecognizer alloc]
+                               initWithTarget:self.controller action:@selector(singleTapped)];
+        _singleTapRecognizer.numberOfTapsRequired = 1;
+        [_singleTapRecognizer requireGestureRecognizerToFail:self.doubleTapRecognizer];
+    }
+    return _singleTapRecognizer;
+}
+
+- (UITapGestureRecognizer *)doubleTapRecognizer
+{
+    if (!_doubleTapRecognizer) {
+        _doubleTapRecognizer = [[UITapGestureRecognizer alloc]
+                                initWithTarget:self action:@selector(doubleTapped:)];
+        _doubleTapRecognizer.numberOfTapsRequired = 2;
+    }
+    return _doubleTapRecognizer;
 }
 
 #pragma mark - Lifecycle
@@ -64,10 +111,25 @@
         self.descriptionView.frame = CGRectMake(0, keyboardTop - descriptionViewHeight,
                                             viewSize.width, descriptionViewHeight);
     } else {
-        CGFloat toolbarHeight = self.controller.navigationController.toolbar.frame.size.height;
+        CGFloat toolbarHeight = self.controller.toolBarHeight;
+        NSLog(@"%f", toolbarHeight);
         self.descriptionView.frame = CGRectMake(0, viewSize.height - toolbarHeight - descriptionViewHeight,
                                                 viewSize.width, descriptionViewHeight);
     }
+
+    self.scrollView.frame = self.bounds;
+}
+
+- (void)updateImageScaleRange // public
+{
+    [self.scrollView updateZoomScale];
+}
+
+#pragma mark - Gesture recognization
+
+- (void)doubleTapped:(UITapGestureRecognizer *)sender // tap twice, notify scroll view to zoom photo
+{
+    [self.scrollView doubleTapped:sender];
 }
 
 #pragma mark - Description view and Keyboard
@@ -113,7 +175,7 @@
                      completion:nil];
 }
 
-- (void)animateDescriptionViewBackWithDuration:(NSTimeInterval)duration
+- (void)animateDescriptionViewBackWithDuration:(NSTimeInterval)duration // public
                                        options:(UIViewAnimationOptions)options;
 {
     CGSize viewSize = self.bounds.size;

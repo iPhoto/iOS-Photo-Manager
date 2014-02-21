@@ -14,6 +14,7 @@
 
 @property (nonatomic, strong) UIImage *image; // full resolution image of photo
 @property (nonatomic, strong) NSIndexPath *indexpath; // position of photo in parent collection view
+@property (nonatomic) CGFloat toolBarHeight;
 
 // Returns a instance of WSImageViewController that displays the photo represented by |asset|.
 //
@@ -29,5 +30,15 @@
 // instance.
 + (WSImageViewController *)imageViewControllerForAssetURL:(NSURL *)assetURL
                                                 indexPath:(NSIndexPath *)indexpath;
+
+// Handle single tap gesture. If keyboar is on, this will dismiss the keyboard. Otherwise, this will
+// switch between full screen mode and normal mode.
+- (void)singleTapped;
+
+// Set description view visibility.
+//
+// |hidden| indicates the visibility state should be set to description view. |animated|
+// indicates should this change be animated.
+- (void)setDescriptionViewHidden:(BOOL)hidden Animated:(BOOL)animated;
 
 @end

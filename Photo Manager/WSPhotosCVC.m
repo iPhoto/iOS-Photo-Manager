@@ -245,21 +245,12 @@ willTransitionToViewControllers:(NSArray *)pendingViewControllers
     WSImageViewController *ivc = [pendingViewControllers lastObject];
     if (ivc.navigationController.navigationBarHidden) {
         ivc.view.backgroundColor = [UIColor blackColor];
-        //[ivc.descriptionView removeFromSuperview];
+        [ivc setDescriptionViewHidden:YES Animated:NO];
     } else {
         ivc.view.backgroundColor = [UIColor whiteColor];
-        //[ivc.view addSubview:ivc.descriptionView];
+        [ivc setDescriptionViewHidden:NO Animated:NO];
     }
     [self.parentViewController setNeedsStatusBarAppearanceUpdate];
-
-    // set image tp size, position and orientation
-    /*[ivc.scrollView updateOrientation:self.interfaceOrientation];
-    [ivc.scrollView updateZoomScale];
-    [ivc.scrollView setZoomScale:ivc.scrollView.minimumZoomScale animated:NO];*/
-    CGSize viewSize = ivc.view.bounds.size;
-    CGFloat toolbarHeight = ivc.navigationController.toolbar.frame.size.height;
-    CGRect frame = CGRectMake(0, viewSize.height - toolbarHeight - 100, viewSize.width, 100);
-    //ivc.descriptionView.frame = frame;
 }
 
 - (void)pageViewController:(UIPageViewController *)pageViewController
@@ -288,6 +279,7 @@ willTransitionToViewControllers:(NSArray *)pendingViewControllers
                                                                            indexPath:cell.indexpath];
         }
         imageViewController.view.backgroundColor = [UIColor whiteColor];
+        
         UIPageViewController *destination = segue.destinationViewController;
         [destination setViewControllers:@[imageViewController]
                               direction:UIPageViewControllerNavigationDirectionForward
