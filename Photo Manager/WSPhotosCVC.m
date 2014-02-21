@@ -26,8 +26,6 @@ UIPageViewControllerDataSource, UIPageViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectButton;
 
 @property (nonatomic, strong) ALAssetsLibrary *library; // to access photo assets
-@property (nonatomic, strong) NSMutableDictionary *imageViewControllers; // created controllers with
-                                                                        // photo id as key
 @property (nonatomic) BOOL selecting; // is under selection mode
 
 @end
@@ -42,14 +40,6 @@ UIPageViewControllerDataSource, UIPageViewControllerDelegate>
 }
 
 #pragma mark - Access properties
-
-- (NSMutableDictionary *)imageViewControllers
-{
-    if (!_imageViewControllers) {
-        _imageViewControllers = [[NSMutableDictionary alloc] init];
-    }
-    return _imageViewControllers;
-}
 
 - (NSArray *)photos
 {
@@ -99,16 +89,6 @@ UIPageViewControllerDataSource, UIPageViewControllerDelegate>
     self.collectionView.delegate = self;
     self.selecting = NO;
 	// Do any additional setup after loading the view.
-}
-
-- (void)didReceiveMemoryWarning // Override
-{
-    [super didReceiveMemoryWarning];
-
-# warning Need Test.
-    [self.imageViewControllers removeAllObjects]; // cached controllers can be mass and memory consuming
-    
-    // Dispose of any resources that can be recreated.
 }
 
 # pragma mark - Collection view data source
@@ -189,16 +169,9 @@ didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
     NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:row inSection:section];
     Photo *photo = [self.photos objectAtIndex:newIndexPath.row];
     
-    WSImageViewController *wivc = [self.imageViewControllers objectForKey:photo.id];
-    if (wivc) {
-        return wivc;
-    }
-    
-    wivc = [WSImageViewController imageViewControllerForAssetURL:[NSURL URLWithString:photo.id]
+    return [WSImageViewController imageViewControllerForAssetURL:[NSURL URLWithString:photo.id]
                                                        indexPath:newIndexPath
                                                            frame:self.view.bounds];
-    [self.imageViewControllers setObject:wivc forKey:photo.id];
-    return wivc;
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController
@@ -218,16 +191,9 @@ didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
     NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:row inSection:section];
     Photo *photo = [self.photos objectAtIndex:newIndexPath.row];
     
-    WSImageViewController *wivc = [self.imageViewControllers objectForKey:photo.id];
-    if (wivc) {
-        return wivc;
-    }
-    
-    wivc = [WSImageViewController imageViewControllerForAssetURL:[NSURL URLWithString:photo.id]
+    return [WSImageViewController imageViewControllerForAssetURL:[NSURL URLWithString:photo.id]
                                                        indexPath:newIndexPath
                                                            frame:self.view.bounds];
-    [self.imageViewControllers setObject:wivc forKey:photo.id];
-    return wivc;
 }
 
 #pragma mark - Page view delegate
@@ -264,14 +230,9 @@ willTransitionToViewControllers:(NSArray *)pendingViewControllers
 {
     if ([segue.identifier compare:IS_SEGUE_SHOW_PHOTO] == NSOrderedSame) {
         WSPhotoCollectionCell *cell = sender;
-        
-        Photo *photo = [self.photos objectAtIndex:cell.indexpath.row];
-        WSImageViewController *imageViewController = [self.imageViewControllers objectForKey:photo.id];
-        if (!imageViewController) {
-            imageViewController = [WSImageViewController imageViewControllerForAsset:cell.asset
-                                                                           indexPath:cell.indexpath
-                                                                               frame:self.view.bounds];
-        }
+        WSImageViewController *imageViewController = [WSImageViewController imageViewControllerForAsset:cell.asset
+                                                                                              indexPath:cell.indexpath
+                                                                                                  frame:self.view.bounds];
         imageViewController.view.backgroundColor = [UIColor whiteColor];
         
         UIPageViewController *destination = segue.destinationViewController;
