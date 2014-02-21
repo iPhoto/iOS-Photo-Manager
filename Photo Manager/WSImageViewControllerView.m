@@ -89,6 +89,14 @@
     return _doubleTapRecognizer;
 }
 
+- (void)setFrame:(CGRect)frame
+{
+    [super setFrame:frame];
+    if (_scrollView) {
+        _scrollView.frame = frame;
+    }
+}
+
 #pragma mark - Lifecycle
 
 - (id)initWithFrame:(CGRect)frame controller:(WSImageViewController *)controller // public

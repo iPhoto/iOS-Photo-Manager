@@ -209,6 +209,15 @@ willTransitionToViewControllers:(NSArray *)pendingViewControllers
         [ivc setDescriptionViewHidden:NO Animated:NO];
     }
     [self.parentViewController setNeedsStatusBarAppearanceUpdate];
+
+#warning This is not suggested. But I don't know other way to get oriented frame size before transition
+    CGSize screenSize = [UIScreen mainScreen].bounds.size;
+    if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+        ivc.view.frame = CGRectMake(0, 0, screenSize.height, screenSize.width);
+    } else {
+        ivc.view.frame = CGRectMake(0, 0, screenSize.width, screenSize.height);
+    }
+    [ivc fitImageToView];
 }
 
 - (void)pageViewController:(UIPageViewController *)pageViewController
