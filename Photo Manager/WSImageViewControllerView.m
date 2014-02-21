@@ -118,6 +118,8 @@
     }
 
     self.scrollView.frame = self.bounds;
+
+    //[self layoutIfNeeded];
 }
 
 - (void)fitImageToView // public
