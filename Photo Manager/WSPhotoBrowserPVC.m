@@ -15,13 +15,13 @@
     return self.navigationController.navigationBarHidden;
 }
 
-- (void)viewWillDisappear:(BOOL)animated
+- (void)viewWillDisappear:(BOOL)animated // Override
 {
     [super viewWillDisappear:animated];
     [self.navigationController setToolbarHidden:YES animated:animated];
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated // Override
 {
     [super viewWillAppear:animated];
     [self.navigationController setToolbarHidden:NO animated:animated];

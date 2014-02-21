@@ -111,8 +111,8 @@
         self.descriptionView.frame = CGRectMake(0, keyboardTop - descriptionViewHeight,
                                             viewSize.width, descriptionViewHeight);
     } else {
-        CGFloat toolbarHeight = self.controller.toolBarHeight;
-        NSLog(@"%f", toolbarHeight);
+        CGFloat toolbarHeight = self.controller.navigationController.toolbar.frame.size.height;
+        
         self.descriptionView.frame = CGRectMake(0, viewSize.height - toolbarHeight - descriptionViewHeight,
                                                 viewSize.width, descriptionViewHeight);
     }
@@ -120,9 +120,10 @@
     self.scrollView.frame = self.bounds;
 }
 
-- (void)updateImageScaleRange // public
+- (void)fitImageToView // public
 {
     [self.scrollView updateZoomScale];
+    [self.scrollView setZoomScale:self.scrollView.minimumZoomScale];
 }
 
 #pragma mark - Gesture recognization
@@ -181,9 +182,9 @@
     CGSize viewSize = self.bounds.size;
     CGFloat toolbarHeight = self.controller.navigationController.toolbar.frame.size.height;
     CGRect frame = CGRectMake(0,
-                              viewSize.height - toolbarHeight - 100,
+                              viewSize.height - toolbarHeight - self.descriptionView.frame.size.height,
                               viewSize.width,
-                              100);
+                              self.descriptionView.frame.size.height);
     [UIView animateWithDuration:duration
                           delay:0
                         options:options

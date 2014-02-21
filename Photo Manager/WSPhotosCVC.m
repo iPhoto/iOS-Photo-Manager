@@ -91,16 +91,7 @@ UIPageViewControllerDataSource, UIPageViewControllerDelegate>
 
 #pragma mark - Lifecycle
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (void)viewDidLoad
+- (void)viewDidLoad // Override
 {
     [super viewDidLoad];
     
@@ -110,7 +101,7 @@ UIPageViewControllerDataSource, UIPageViewControllerDelegate>
 	// Do any additional setup after loading the view.
 }
 
-- (void)didReceiveMemoryWarning
+- (void)didReceiveMemoryWarning // Override
 {
     [super didReceiveMemoryWarning];
 
@@ -204,7 +195,8 @@ didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
     }
     
     wivc = [WSImageViewController imageViewControllerForAssetURL:[NSURL URLWithString:photo.id]
-                                                    indexPath:newIndexPath];
+                                                       indexPath:newIndexPath
+                                                           frame:self.view.bounds];
     [self.imageViewControllers setObject:wivc forKey:photo.id];
     return wivc;
 }
@@ -232,7 +224,8 @@ didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
     }
     
     wivc = [WSImageViewController imageViewControllerForAssetURL:[NSURL URLWithString:photo.id]
-                                                       indexPath:newIndexPath];
+                                                       indexPath:newIndexPath
+                                                           frame:self.view.bounds];
     [self.imageViewControllers setObject:wivc forKey:photo.id];
     return wivc;
 }
@@ -267,7 +260,7 @@ willTransitionToViewControllers:(NSArray *)pendingViewControllers
 
 #pragma mark - Segues
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender // Override
 {
     if ([segue.identifier compare:IS_SEGUE_SHOW_PHOTO] == NSOrderedSame) {
         WSPhotoCollectionCell *cell = sender;
@@ -276,7 +269,8 @@ willTransitionToViewControllers:(NSArray *)pendingViewControllers
         WSImageViewController *imageViewController = [self.imageViewControllers objectForKey:photo.id];
         if (!imageViewController) {
             imageViewController = [WSImageViewController imageViewControllerForAsset:cell.asset
-                                                                           indexPath:cell.indexpath];
+                                                                           indexPath:cell.indexpath
+                                                                               frame:self.view.bounds];
         }
         imageViewController.view.backgroundColor = [UIColor whiteColor];
         
@@ -293,7 +287,7 @@ willTransitionToViewControllers:(NSArray *)pendingViewControllers
 
 }
 
-- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender // Override
 {
     if ([identifier compare:IS_SEGUE_SHOW_PHOTO] == NSOrderedSame) {
         return !self.selecting;

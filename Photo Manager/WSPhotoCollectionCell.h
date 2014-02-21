@@ -15,6 +15,7 @@
 @property (strong, nonatomic) ALAsset *asset; // of photo
 @property (strong, nonatomic) NSIndexPath *indexpath; // position in parent collection view
 
+// Controle selected view and selected symbol view to be hidden or not
 - (void)setSelectedViewHidden:(BOOL)hidden;
 
 @end

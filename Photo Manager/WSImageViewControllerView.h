@@ -21,7 +21,7 @@
 @property (nonatomic, strong) UIImage *image; // image of scroll view to display
 
 // Custom initialization method. Need to keep reference of controller to get toolbar
-// size for layouting. Return the initialized instance.
+// height for layouting. Return the initialized instance.
 //
 // |controller| is the WSImageViewController instance which use this
 // WSImageViewControllerView instance as roo view.
@@ -52,7 +52,7 @@
 // Notify description view to stop editing and dismiss keyboard.
 - (void)dismissKeyboard;
 
-// Reset scroll view's zoom scale range with current image size and orientation.
-- (void)updateImageScaleRange;
+// Reset image to fit the screen and orientation.
+- (void)fitImageToView;
 
 @end

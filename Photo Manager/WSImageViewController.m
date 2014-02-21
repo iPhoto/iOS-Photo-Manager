@@ -20,8 +20,8 @@
 
 @property (nonatomic, strong) WSImageViewControllerView *view;
 
-@property (nonatomic) BOOL keyboardOn;
-@property (nonatomic) CGRect keyboardFrame;
+@property (nonatomic) BOOL keyboardOn; // if keyboard is on
+@property (nonatomic) CGRect keyboardFrame; // frame of keyboard if it's on screen
 
 @end
 
@@ -67,8 +67,9 @@
 
 + (WSImageViewController *)imageViewControllerForAsset:(ALAsset *)asset
                                              indexPath:(NSIndexPath *)indexpath
+                                                 frame:(CGRect)frame
 {
-    WSImageViewController *imageViewController = [[WSImageViewController alloc] init];
+    WSImageViewController *imageViewController = [[WSImageViewController alloc] initWithFrame:frame];
 
     imageViewController.indexpath = indexpath;
     imageViewController.image =
@@ -79,8 +80,9 @@
 
 + (WSImageViewController *)imageViewControllerForAssetURL:(NSURL *)assetURL
                                                 indexPath:(NSIndexPath *)indexpath
+                                                    frame:(CGRect)frame
 {
-    WSImageViewController *imageViewController = [[WSImageViewController alloc] init];
+    WSImageViewController *imageViewController = [[WSImageViewController alloc] initWithFrame:frame];
     imageViewController.indexpath = indexpath;
 
     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
@@ -97,21 +99,20 @@
     return imageViewController;
 }
 
-- (WSImageViewController *)init // Override
+- (WSImageViewController *)initWithFrame:(CGRect)frame
 {
     WSImageViewController *controller = [super init];
     if (controller) { // user custom root view instead
-        controller.view = [[WSImageViewControllerView alloc] initWithFrame:controller.view.frame controller:self];
+        controller.view = [[WSImageViewControllerView alloc] initWithFrame:frame controller:self];
     }
     return controller;
 }
 
 - (void)viewWillAppear:(BOOL)animated // Override
 {
-    self.toolBarHeight = self.navigationController.toolbar.frame.size.height;
 #warning Using test description text.
     self.view.descriptionText = @"照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述";
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
                                                  name:UIKeyboardWillShowNotification
@@ -187,12 +188,12 @@
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation // Override
                                          duration:(NSTimeInterval)duration
 {
-    [self.view updateImageScaleRange];
+    [self.view fitImageToView];
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+- (void)fitImageToView // public
 {
-    self.toolBarHeight = self.navigationController.toolbar.frame.size.height;
+    [self.view fitImageToView];
 }
 
 #pragma mark - Description view

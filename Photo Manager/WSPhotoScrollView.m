@@ -11,6 +11,7 @@
 @interface WSPhotoScrollView ()
 
 @property (strong, nonatomic) UIImageView *imageView;
+
 @end
 
 @implementation WSPhotoScrollView
@@ -88,6 +89,8 @@
     if (self.zoomScale < self.minimumZoomScale) {
         self.zoomScale = self.minimumZoomScale;
     }
+
+    [self layoutIfNeeded];
 }
 
 - (void)layoutSubviews { // Override
