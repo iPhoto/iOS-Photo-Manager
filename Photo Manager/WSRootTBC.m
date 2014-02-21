@@ -18,7 +18,6 @@
 {
     [super viewDidLoad];
     self.delegate = self;
-	// Do any additional setup after loading the view.
 }
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController // Override

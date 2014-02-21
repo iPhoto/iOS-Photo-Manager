@@ -11,6 +11,9 @@
 #import "WSDescriptionView.h"
 #import "WSPhotoScrollView.h"
 
+#define WS_IMAGE_VIEW_CONTROLLER_TOOL_BAR_HEIGHT_LANDSCAPE 32
+#define WS_IMAGE_VIEW_CONTROLLER_TOOL_BAR_HEIGHT_PORTRAIT 44
+
 @interface WSImageViewControllerView ()
 
 @property (nonatomic, strong) WSDescriptionView *descriptionView;
@@ -111,7 +114,9 @@
         self.descriptionView.frame = CGRectMake(0, keyboardTop - descriptionViewHeight,
                                             viewSize.width, descriptionViewHeight);
     } else {
-        CGFloat toolbarHeight = self.controller.navigationController.toolbar.frame.size.height;
+#warning Using fixed numbers. This is because toobar height was not up-to-date sometimes.
+        CGFloat toolbarHeight = UIInterfaceOrientationIsLandscape(self.controller.interfaceOrientation) ?
+        WS_IMAGE_VIEW_CONTROLLER_TOOL_BAR_HEIGHT_LANDSCAPE : WS_IMAGE_VIEW_CONTROLLER_TOOL_BAR_HEIGHT_PORTRAIT;
         
         self.descriptionView.frame = CGRectMake(0, viewSize.height - toolbarHeight - descriptionViewHeight,
                                                 viewSize.width, descriptionViewHeight);

@@ -88,7 +88,6 @@ UIPageViewControllerDataSource, UIPageViewControllerDelegate>
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
     self.selecting = NO;
-	// Do any additional setup after loading the view.
 }
 
 # pragma mark - Collection view data source
