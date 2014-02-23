@@ -204,9 +204,11 @@ willTransitionToViewControllers:(NSArray *)pendingViewControllers
     if (ivc.navigationController.navigationBarHidden) {
         ivc.view.backgroundColor = [UIColor blackColor];
         [ivc setDescriptionViewHidden:YES Animated:NO];
+        [ivc setTimeLocationViewHidden:YES Animated:NO];
     } else {
         ivc.view.backgroundColor = [UIColor whiteColor];
         [ivc setDescriptionViewHidden:NO Animated:NO];
+        [ivc setTimeLocationViewHidden:NO Animated:NO];
     }
     [self.parentViewController setNeedsStatusBarAppearanceUpdate];
 

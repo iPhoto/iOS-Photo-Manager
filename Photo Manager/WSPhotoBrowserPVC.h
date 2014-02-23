@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+#define WS_PHOTO_BROWSER_PVC_NAVIGATIONBAR_BOTTOM_LANDSCAPE 52
+#define WS_PHOTO_BROWSER_PVC_NAVIGATIONBAR_BOTTOM_PORTRAIT 64
+
 // UIPageViewController which contains multiple WSImageViewController and allow switch over between
 // photos.
 //

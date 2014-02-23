@@ -10,6 +10,8 @@
 
 #import "WSDescriptionView.h"
 #import "WSPhotoScrollView.h"
+#import "WSTimeLocationView.h"
+#import "WSPhotoBrowserPVC.h"
 
 #define WS_IMAGE_VIEW_CONTROLLER_TOOL_BAR_HEIGHT_LANDSCAPE 32
 #define WS_IMAGE_VIEW_CONTROLLER_TOOL_BAR_HEIGHT_PORTRAIT 44
@@ -17,6 +19,7 @@
 @interface WSImageViewControllerView ()
 
 @property (nonatomic, strong) WSDescriptionView *descriptionView;
+@property (nonatomic, strong) WSTimeLocationView *timeLocationView;
 @property (nonatomic, strong) WSPhotoScrollView *scrollView;
 @property (nonatomic, weak) WSImageViewController *controller; // should be weak to avoid circular reference
 
@@ -55,6 +58,14 @@
         _descriptionView = [[WSDescriptionView alloc] initWithFrame:self.bounds];
     }
     return _descriptionView;
+}
+
+- (WSTimeLocationView *)timeLocationView
+{
+    if (!_timeLocationView) {
+        _timeLocationView = [[WSTimeLocationView alloc] initWithFrame:self.bounds];
+    }
+    return _timeLocationView;
 }
 
 - (WSPhotoScrollView *)scrollView
@@ -106,6 +117,7 @@
         self.controller = controller;
         self.keyboardOn = NO;
         [self addSubview:self.descriptionView];
+        [self addSubview:self.timeLocationView];
     }
     return self;
 }
@@ -129,6 +141,10 @@
         self.descriptionView.frame = CGRectMake(0, viewSize.height - toolbarHeight - descriptionViewHeight,
                                                 viewSize.width, descriptionViewHeight);
     }
+    
+    CGFloat navigationBarBottom = UIInterfaceOrientationIsLandscape(self.controller.interfaceOrientation) ?
+    WS_PHOTO_BROWSER_PVC_NAVIGATIONBAR_BOTTOM_LANDSCAPE : WS_PHOTO_BROWSER_PVC_NAVIGATIONBAR_BOTTOM_PORTRAIT;
+    self.timeLocationView.frame = CGRectMake(0, navigationBarBottom, self.bounds.size.width, WS_TIME_LOCATION_VIEW_HEIGHT);
 
     self.scrollView.frame = self.bounds;
 }
@@ -160,6 +176,21 @@
                         completion:nil];
     } else {
         self.descriptionView.hidden = hidden;
+    }
+}
+
+- (void)setTimeLocationViewHidden:(BOOL)hidden Animated:(BOOL)animated // public
+{
+    if (animated) {
+        [UIView transitionWithView:self.timeLocationView
+                          duration:0.2
+                           options:UIViewAnimationOptionTransitionCrossDissolve
+                        animations:^{
+                            self.timeLocationView.hidden = hidden;
+                        }
+                        completion:nil];
+    } else {
+        self.timeLocationView.hidden = hidden;
     }
 }
 

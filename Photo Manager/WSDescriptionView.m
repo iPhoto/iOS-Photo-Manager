@@ -123,8 +123,6 @@
     if (self.bounds.size.height != newViewHeight) {
         self.bounds = CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width, newViewHeight);
     }
-    
-    //[self.superview layoutIfNeeded];
 }
 
 - (void)layoutSubviews // Override
@@ -143,7 +141,7 @@
                                        newViewBounds.origin.y + (newViewBounds.size.height - WS_DESCRIPTION_VIEW_IMAGE_SIDE_LENGTH) * 0.5,
                                        WS_DESCRIPTION_VIEW_IMAGE_SIDE_LENGTH,
                                        WS_DESCRIPTION_VIEW_IMAGE_SIDE_LENGTH);
- }
+}
 
 #pragma mark - Editing and keyboard
 

@@ -46,6 +46,8 @@
 // indicates should this change be animated.
 - (void)setDescriptionViewHidden:(BOOL)hidden Animated:(BOOL)animated;
 
+- (void)setTimeLocationViewHidden:(BOOL)hidden Animated:(BOOL)animated;
+
 // Reset image to fit the screen and orientation.
 - (void)fitImageToView;
 

@@ -8,9 +8,6 @@
 
 #import "WSPhotoBrowserPVC.h"
 
-#define WS_PHOTO_BROWSER_PVC_NAVIGATIONBAR_BOTTOM_LANDSCAPE 52
-#define WS_PHOTO_BROWSER_PVC_NAVIGATIONBAR_BOTTOM_PORTRAIT 64
-
 @interface WSPhotoBrowserPVC()
 
 @property (nonatomic, strong) UIButton *titleButton;

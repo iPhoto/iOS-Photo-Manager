@@ -33,6 +33,8 @@
 // indicates should this change be animated.
 - (void)setDescriptionViewHidden:(BOOL)hidden Animated:(BOOL)animated;
 
+- (void)setTimeLocationViewHidden:(BOOL)hidden Animated:(BOOL)animated;
+
 // Animate description view to the top of the keyboard. This should be called on keyboard
 // showing.
 //

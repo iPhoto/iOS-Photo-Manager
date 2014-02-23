@@ -167,6 +167,7 @@
         [self.navigationController setNavigationBarHidden:NO animated:YES];
         [self.navigationController setToolbarHidden:NO animated:YES];
         [self.view setDescriptionViewHidden:NO Animated:YES];
+        [self.view setTimeLocationViewHidden:NO Animated:YES];
         [UIView animateWithDuration:0.2 animations:^{
             self.view.backgroundColor = [UIColor whiteColor];
         }];
@@ -174,6 +175,7 @@
         [self.navigationController setNavigationBarHidden:YES animated:YES];
         [self.navigationController setToolbarHidden:YES animated:YES];
         [self.view setDescriptionViewHidden:YES Animated:YES];
+        [self.view setTimeLocationViewHidden:YES Animated:YES];
         [UIView animateWithDuration:0.2 animations:^{
             self.view.backgroundColor = [UIColor blackColor];
         }];
@@ -200,6 +202,11 @@
 - (void)setDescriptionViewHidden:(BOOL)hidden Animated:(BOOL)animated
 {
     [self.view setDescriptionViewHidden:hidden Animated:animated];
+}
+
+- (void)setTimeLocationViewHidden:(BOOL)hidden Animated:(BOOL)animated
+{
+    [self.view setTimeLocationViewHidden:hidden Animated:animated];
 }
 
 #pragma mark - Keyboard
