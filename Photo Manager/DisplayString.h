@@ -20,6 +20,8 @@
 #define DS_CANCEL @"取消"
 #define DS_SELECT_PHOTOS @"选择照片"
 
+#define DS_NO_DESCRIPTION @"尚未添加描述信息..."
+
 #pragma mark - Displayed NSString Formats
 
 #define DS_ALBUM_DESCRIPTION_FORMAT @"%ld张照片"

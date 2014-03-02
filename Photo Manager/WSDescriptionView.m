@@ -8,6 +8,8 @@
 
 #import "WSDescriptionView.h"
 
+#import "DisplayString.h"
+
 #define WS_DESCRIPTION_VIEW_MAX_HEIGHT 100
 #define WS_DESCRIPTION_VIEW_IMAGE_SIDE_LENGTH 20
 #define WS_DESCRIPTION_VIEW_BLUR_BACKGROUND_ALPHA 0.3
@@ -16,6 +18,7 @@
 @interface WSDescriptionView () <UITextViewDelegate>
 
 @property (nonatomic, strong) UITextView *textView;
+@property (nonatomic, strong) UITextView *hintView;
 @property (nonatomic, strong) UIButton *editButton;
 @property (nonatomic, strong) UIToolbar *blurBackgroundBar;
 
@@ -33,6 +36,7 @@
 - (void)setDescriptionText:(NSString *)descriptionText
 {
     self.textView.text = descriptionText;
+    self.hintView.hidden = descriptionText.length ? YES : NO;
     [self layoutIfNeeded];
 }
 
@@ -50,8 +54,27 @@
         _textView.selectable = NO;
         
         _textView.delegate = self;
+        
+        
     }
     return _textView;
+}
+
+- (UITextView *)hintView
+{
+    if (!_hintView) {
+        _hintView = [[UITextView alloc] init];
+        
+        _hintView.backgroundColor = nil;
+        
+        _hintView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+        _hintView.textColor = [UIColor lightGrayColor];
+        _hintView.text = DS_NO_DESCRIPTION;
+        
+        _hintView.editable = NO;
+        _hintView.selectable = NO;
+    }
+    return _hintView;
 }
 
 - (UIButton *)editButton
@@ -83,6 +106,7 @@
         [self.layer insertSublayer:[self.blurBackgroundBar layer] atIndex:0];
         [self addSubview:self.textView];
         [self addSubview:self.editButton];
+        [self addSubview:self.hintView];
         
         [self.editButton addTarget:self
                             action:@selector(editButtonClicked)
@@ -141,6 +165,7 @@
                                        newViewBounds.origin.y + (newViewBounds.size.height - WS_DESCRIPTION_VIEW_IMAGE_SIDE_LENGTH) * 0.5,
                                        WS_DESCRIPTION_VIEW_IMAGE_SIDE_LENGTH,
                                        WS_DESCRIPTION_VIEW_IMAGE_SIDE_LENGTH);
+    self.hintView.frame = self.textView.frame;
 }
 
 #pragma mark - Editing and keyboard
@@ -152,6 +177,7 @@
         self.textView.editable = YES;
         self.textView.selectable = YES;
         self.editButton.hidden = YES;
+        self.hintView.hidden = YES;
     } else {
         self.textView.editable = NO;
     }
@@ -183,6 +209,7 @@
     self.textView.editable = NO;
     self.textView.selectable = NO;
     self.editButton.hidden = NO;
+    self.hintView.hidden = self.descriptionText.length ? YES : NO;
 }
 
 @end
