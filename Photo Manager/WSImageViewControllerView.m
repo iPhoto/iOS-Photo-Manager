@@ -25,6 +25,8 @@
 
 @property (strong, nonatomic) UITapGestureRecognizer *singleTapRecognizer;
 @property (strong, nonatomic) UITapGestureRecognizer *doubleTapRecognizer;
+@property (strong, nonatomic) UITapGestureRecognizer *tapTimeLocationViewRecognizer;
+@property (strong, nonatomic) UITapGestureRecognizer *tapDescriptionViewRecognizer;
 
 @end
 
@@ -56,6 +58,7 @@
 {
     if (!_descriptionView) {
         _descriptionView = [[WSDescriptionView alloc] initWithFrame:self.bounds];
+        [_descriptionView addGestureRecognizer:self.tapDescriptionViewRecognizer];
     }
     return _descriptionView;
 }
@@ -64,6 +67,7 @@
 {
     if (!_timeLocationView) {
         _timeLocationView = [[WSTimeLocationView alloc] initWithFrame:self.bounds];
+        [_timeLocationView addGestureRecognizer:self.tapTimeLocationViewRecognizer];
     }
     return _timeLocationView;
 }
@@ -98,6 +102,26 @@
         _doubleTapRecognizer.numberOfTapsRequired = 2;
     }
     return _doubleTapRecognizer;
+}
+
+- (UITapGestureRecognizer *)tapTimeLocationViewRecognizer
+{
+    if (!_tapTimeLocationViewRecognizer) {
+        _tapTimeLocationViewRecognizer = [[UITapGestureRecognizer alloc]
+                                          initWithTarget:self action:@selector(timeLocationViewTapped)];
+        _tapTimeLocationViewRecognizer.numberOfTapsRequired = 1;
+    }
+    return _tapTimeLocationViewRecognizer;
+}
+
+- (UITapGestureRecognizer *)tapDescriptionViewRecognizer
+{
+    if (!_tapDescriptionViewRecognizer) {
+        _tapDescriptionViewRecognizer = [[UITapGestureRecognizer alloc]
+                                         initWithTarget:self action:@selector(descriptionViewTapped)];
+        _tapDescriptionViewRecognizer.numberOfTapsRequired = 1;
+    }
+    return _tapDescriptionViewRecognizer;
 }
 
 - (void)setFrame:(CGRect)frame
@@ -159,7 +183,31 @@
 
 - (void)doubleTapped:(UITapGestureRecognizer *)sender // tap twice, notify scroll view to zoom photo
 {
+    if (self.controller.keyboardOn) {
+        [self dismissKeyboard];
+    }
+    
+    WSPhotoBrowserPVC * parentPVC = (WSPhotoBrowserPVC *)self.controller.parentViewController;
+    if (parentPVC.parentAlbumsShown) {
+        [parentPVC hideParentAlbums];
+    }
+    
     [self.scrollView doubleTapped:sender];
+}
+
+- (void)timeLocationViewTapped
+{
+    if (self.keyboardOn) {
+        [self dismissKeyboard];
+    }
+}
+
+- (void)descriptionViewTapped
+{
+    WSPhotoBrowserPVC *pvc = (WSPhotoBrowserPVC *)self.controller.parentViewController;
+    if (pvc.parentAlbumsShown) {
+        [pvc hideParentAlbums];
+    }
 }
 
 #pragma mark - Description view and Keyboard

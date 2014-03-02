@@ -18,4 +18,9 @@
 // full screen mode and it can only be done in this page view controller.
 @interface WSPhotoBrowserPVC : UIPageViewController
 
+@property (nonatomic) BOOL parentAlbumsShown; // if parent albums view is shown
+
+// hide parent albums view controller
+- (void)hideParentAlbums;
+
 @end

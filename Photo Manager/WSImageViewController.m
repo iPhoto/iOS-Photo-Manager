@@ -11,6 +11,7 @@
 #import "WSAppDelegate.h"
 #import "WSImageViewControllerView.h"
 #import "WSPhotoScrollView.h"
+#import "WSPhotoBrowserPVC.h"
 #import "UIIdentifierString.h"
 #import "DisplayString.h"
 
@@ -20,7 +21,6 @@
 
 @property (nonatomic, strong) WSImageViewControllerView *view;
 
-@property (nonatomic) BOOL keyboardOn; // if keyboard is on
 @property (nonatomic) CGRect keyboardFrame; // frame of keyboard if it's on screen
 
 @end
@@ -159,10 +159,16 @@
 - (void)singleTapped // public
 {
     if (self.keyboardOn) {
-#warning User taps on navigation bar will not dismiss keyboard.
-        [self.view dismissKeyboard];
+        [self dismissKeyboard];
         return;
     }
+    
+    WSPhotoBrowserPVC * parentPVC = (WSPhotoBrowserPVC *)self.parentViewController;
+    if (parentPVC.parentAlbumsShown) {
+        [parentPVC hideParentAlbums];
+        return;
+    }
+    
     if (self.navigationController.navigationBarHidden) {
         [self.navigationController setNavigationBarHidden:NO animated:YES];
         [self.navigationController setToolbarHidden:NO animated:YES];
@@ -213,6 +219,11 @@
 
 - (void)keyboardWillShow:(NSNotification *)notification
 {
+    WSPhotoBrowserPVC *pvc = (WSPhotoBrowserPVC *)self.parentViewController;
+    if (pvc.parentAlbumsShown) {
+        [pvc hideParentAlbums];
+    }
+    
     CGRect keyboardFrame = [[[notification userInfo] valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     keyboardFrame = [self frameOfCurrentOrientationFromFrame:keyboardFrame];
     NSTimeInterval keyboardDuration = [[[notification userInfo] valueForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
@@ -268,6 +279,11 @@
                            origFrame.size.width);
     }
     return frame;
+}
+
+- (void)dismissKeyboard
+{
+    [self.view dismissKeyboard];
 }
 
 @end

@@ -7,12 +7,14 @@
 //
 
 #import "WSPhotoBrowserPVC.h"
+#import "WSImageViewController.h"
 
 @interface WSPhotoBrowserPVC()
 
 @property (nonatomic, strong) UIButton *titleButton;
 @property (nonatomic, strong) UIViewController *parentAlbumsController;
-@property (nonatomic) BOOL parentAlbumsShown;
+@property (nonatomic, strong) UITapGestureRecognizer *tapNavigationBarRecognizer;
+@property (nonatomic, strong) UITapGestureRecognizer *tapToolBarRecognizer;
 
 @end
 
@@ -42,6 +44,30 @@
     return _parentAlbumsController;
 }
 
+- (UITapGestureRecognizer *)tapNavigationBarRecognizer
+{
+    if (!_tapNavigationBarRecognizer) {
+        _tapNavigationBarRecognizer = [[UITapGestureRecognizer alloc]
+                                       initWithTarget:self
+                                       action:@selector(navigationBarSingleTapped)];
+        _tapNavigationBarRecognizer.numberOfTapsRequired = 1;
+        _tapNavigationBarRecognizer.cancelsTouchesInView = NO;
+    }
+    return _tapNavigationBarRecognizer;
+}
+
+- (UITapGestureRecognizer *)tapToolBarRecognizer
+{
+    if (!_tapToolBarRecognizer) {
+        _tapToolBarRecognizer = [[UITapGestureRecognizer alloc]
+                                 initWithTarget:self
+                                 action:@selector(toolBarSingleTapped)];
+        _tapToolBarRecognizer.numberOfTapsRequired = 1;
+        _tapToolBarRecognizer.cancelsTouchesInView = NO;
+    }
+    return _tapToolBarRecognizer;
+}
+
 #pragma mark - Lifecycle
 
 - (void)viewDidLoad // Override
@@ -67,6 +93,10 @@
     [self.view addSubview:self.parentAlbumsController.view];
     [self.parentAlbumsController didMoveToParentViewController:self];
     self.parentAlbumsShown = NO;
+    
+    // gestures
+    [self.navigationController.navigationBar addGestureRecognizer:self.tapNavigationBarRecognizer];
+    [self.navigationController.toolbar addGestureRecognizer:self.tapToolBarRecognizer];
 }
 
 - (void)viewWillDisappear:(BOOL)animated // Override
@@ -88,21 +118,21 @@
     return self.navigationController.navigationBarHidden;
 }
 
-#pragma mark -
+#pragma mark - Parent albums view
 
 - (void)titleClicked
 {
     CGRect navigationBarFrame = self.navigationController.navigationBar.frame;
     CGFloat navigationBarBottom = navigationBarFrame.origin.y + navigationBarFrame.size.height;
     
+    WSImageViewController *currentPage = [[self viewControllers] lastObject];
+    if (currentPage.keyboardOn) {
+        [currentPage dismissKeyboard];
+    }
+    
     if (self.parentAlbumsShown) {
         // hide parent albums view controller
-        [UIView animateWithDuration:0.2 animations:^{
-            self.parentAlbumsController.view.frame = CGRectMake(0, self.parentAlbumsController.view.frame.origin.y,
-                                                                self.view.bounds.size.width, 0);
-        }];
-        
-        self.parentAlbumsShown = NO;
+        [self hideParentAlbums];
     } else {
         // get parent albums information from current page
         
@@ -117,6 +147,39 @@
         self.parentAlbumsShown = YES;
     }
 }
+
+- (void)hideParentAlbums // public
+{
+    [UIView animateWithDuration:0.2 animations:^{
+        self.parentAlbumsController.view.frame = CGRectMake(0, self.parentAlbumsController.view.frame.origin.y,
+                                                            self.view.bounds.size.width, 0);
+    }];
+    
+    self.parentAlbumsShown = NO;
+}
+
+#pragma mark - Gestures
+
+- (void)navigationBarSingleTapped
+{
+    WSImageViewController *currentPage = [[self viewControllers] lastObject];
+    if (currentPage.keyboardOn) {
+        [currentPage dismissKeyboard];
+    }
+    
+    if (self.parentAlbumsShown) {
+        [self hideParentAlbums];
+    }
+}
+
+- (void)toolBarSingleTapped
+{
+    if (self.parentAlbumsShown) {
+        [self hideParentAlbums];
+    }
+}
+
+#pragma mark - Rotation
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
                                 duration:(NSTimeInterval)duration

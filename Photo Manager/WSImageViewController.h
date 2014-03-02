@@ -14,6 +14,7 @@
 
 @property (nonatomic, strong) UIImage *image; // full resolution image of photo
 @property (nonatomic, strong) NSIndexPath *indexpath; // position of photo in parent collection view
+@property (nonatomic) BOOL keyboardOn; // if keyboard is on
 
 // Returns a instance of WSImageViewController that displays the photo represented by |asset|.
 //
@@ -50,5 +51,7 @@
 
 // Reset image to fit the screen and orientation.
 - (void)fitImageToView;
+
+- (void)dismissKeyboard;
 
 @end
