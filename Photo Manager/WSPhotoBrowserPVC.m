@@ -29,6 +29,7 @@
         [_titleButton setTitle:@"相册⇳" forState:UIControlStateNormal];
         [_titleButton.titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
         [_titleButton addTarget:self action:@selector(titleClicked) forControlEvents:UIControlEventTouchUpInside];
+        [_titleButton setTitleColor:_titleButton.tintColor forState:UIControlStateDisabled];
     }
     return _titleButton;
 }
@@ -130,10 +131,7 @@
         [currentPage dismissKeyboard];
     }
     
-    if (self.parentAlbumsShown) {
-        // hide parent albums view controller
-        [self hideParentAlbums];
-    } else {
+    if (!self.parentAlbumsShown) {
         // get parent albums information from current page
         
         // show parent albums view controller
@@ -145,6 +143,7 @@
         }];
         
         self.parentAlbumsShown = YES;
+        self.titleButton.enabled = NO;
     }
 }
 
@@ -156,6 +155,7 @@
     }];
     
     self.parentAlbumsShown = NO;
+    self.titleButton.enabled = YES;
 }
 
 #pragma mark - Gestures
