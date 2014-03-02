@@ -18,6 +18,7 @@
 @property (nonatomic) BOOL keyboardOn; // if keyboard is on
 @property (nonatomic) CGRect keyboardFrame; // frame of keyboard in the WSImageViewControllerView's coordinate system
 @property (nonatomic, strong) NSString *descriptionText; // text of description view
+@property (nonatomic, strong) NSString *timeLocationText;
 @property (nonatomic, strong) UIImage *image; // image of scroll view to display
 
 // Custom initialization method. Need to keep reference of controller to get toolbar

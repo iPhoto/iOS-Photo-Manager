@@ -44,6 +44,16 @@
     self.descriptionView.descriptionText = descriptionText;
 }
 
+- (NSString *)timeLocationText
+{
+    return self.timeLocationView.timeLocationText;
+}
+
+- (void)setTimeLocationText:(NSString *)timeLocationText
+{
+    self.timeLocationView.timeLocationText = timeLocationText;
+}
+
 - (UIImage *)image
 {
     return self.scrollView.image;
@@ -150,6 +160,7 @@
 
 - (void)layoutSubviews // Override
 {
+    [self.descriptionView fitBoundsToTextLength];
     CGFloat descriptionViewHeight = self.descriptionView.bounds.size.height;
     CGSize viewSize = self.bounds.size;
     
@@ -161,7 +172,6 @@
 #warning Using fixed numbers. This is because toobar height was not up-to-date sometimes.
         CGFloat toolbarHeight = UIInterfaceOrientationIsLandscape(self.controller.interfaceOrientation) ?
         WS_IMAGE_VIEW_CONTROLLER_TOOL_BAR_HEIGHT_LANDSCAPE : WS_IMAGE_VIEW_CONTROLLER_TOOL_BAR_HEIGHT_PORTRAIT;
-        
         self.descriptionView.frame = CGRectMake(0, viewSize.height - toolbarHeight - descriptionViewHeight,
                                                 viewSize.width, descriptionViewHeight);
     }

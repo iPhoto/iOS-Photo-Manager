@@ -45,4 +45,9 @@
 //
 // The results in the returning array is not guaranteed to be ordered.
 + (NSArray *)archivedPhotosInManagedObjectContext:(NSManagedObjectContext *)context;
+
+- (NSString *)stringOfTime;
+
+- (NSString *)stringOfLocation;
+
 @end

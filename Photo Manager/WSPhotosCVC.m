@@ -10,6 +10,7 @@
 
 #import "WSPhotoCollectionCell.h"
 #import "WSImageViewController.h"
+#import "WSPhotoBrowserPVC.h"
 
 #import "Photo+BasicOperations.h"
 
@@ -200,6 +201,15 @@ didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 - (void)pageViewController:(UIPageViewController *)pageViewController
 willTransitionToViewControllers:(NSArray *)pendingViewControllers
 {
+    WSImageViewController *pre = [[pageViewController viewControllers] lastObject];
+    if (pre.keyboardOn) {
+        [pre dismissKeyboard];
+    }
+    WSPhotoBrowserPVC *pvc = (WSPhotoBrowserPVC *)pre.parentViewController;
+    if (pvc.parentAlbumsShown) {
+        [pvc hideParentAlbums];
+    }
+    
     WSImageViewController *ivc = [pendingViewControllers lastObject];
     if (ivc.navigationController.navigationBarHidden) {
         ivc.view.backgroundColor = [UIColor blackColor];
@@ -215,11 +225,14 @@ willTransitionToViewControllers:(NSArray *)pendingViewControllers
 #warning This is not suggested. But I don't know other way to get oriented frame size before transition
     CGSize screenSize = [UIScreen mainScreen].bounds.size;
     if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation)) {
+        NSLog(@"landscape");
         ivc.view.frame = CGRectMake(0, 0, screenSize.height, screenSize.width);
     } else {
+        NSLog(@"portrait");
         ivc.view.frame = CGRectMake(0, 0, screenSize.width, screenSize.height);
     }
     [ivc fitImageToView];
+    [ivc.view layoutIfNeeded];
 }
 
 - (void)pageViewController:(UIPageViewController *)pageViewController

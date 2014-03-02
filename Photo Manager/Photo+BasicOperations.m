@@ -7,6 +7,7 @@
 //
 
 #import "Photo+BasicOperations.h"
+#import <CoreLocation/CoreLocation.h>
 
 @implementation Photo (BasicOperations)
 
@@ -106,6 +107,26 @@
     }
 
     return matches;
+}
+
+- (NSString *)stringOfTime
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateStyle = kCFDateFormatterLongStyle;
+    formatter.timeStyle = kCFDateFormatterNoStyle;
+    formatter.locale = [NSLocale autoupdatingCurrentLocale];
+    return [formatter stringFromDate:self.time];;
+}
+
+- (NSString *)stringOfLocation
+{
+    NSString *s = @"";
+    CLLocation *location = self.location;
+    if (location) {
+        s = [NSString stringWithFormat:@"%f %f", location.coordinate.latitude, location.coordinate.longitude];
+    }
+    NSLog(@"%@", s);
+    return s;
 }
 
 @end

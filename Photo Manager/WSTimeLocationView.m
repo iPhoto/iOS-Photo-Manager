@@ -13,7 +13,7 @@
 
 @interface WSTimeLocationView ()
 
-@property (strong, nonatomic) UILabel *lable;
+@property (strong, nonatomic) UITextView *lable;
 @property (nonatomic, strong) UIToolbar *blurBackgroundBar;
 
 @end
@@ -32,16 +32,20 @@
     self.lable.text = timeLocationText;
 }
 
-- (UILabel *)lable
+- (UITextView *)lable
 {
     if (!_lable) {
-        _lable = [[UILabel alloc] init];
+        _lable = [[UITextView alloc] init];
         
         _lable.backgroundColor = nil;
         
         _lable.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
         _lable.textColor = [UIColor whiteColor];
         
+        _lable.editable = NO;
+        _lable.selectable = NO;
+        
+        _lable.contentInset = UIEdgeInsetsZero;
     }
     return _lable;
 }
@@ -63,6 +67,7 @@
                                 colorWithAlphaComponent:WS_TIME_LOCATION_VIEW_BACKGROUND_COLOR_ALPHA];
         
         [self.layer insertSublayer:[self.blurBackgroundBar layer] atIndex:0];
+        [self addSubview:self.lable];
     }
     return self;
 }

@@ -94,22 +94,24 @@
     [self.view addSubview:self.parentAlbumsController.view];
     [self.parentAlbumsController didMoveToParentViewController:self];
     self.parentAlbumsShown = NO;
-    
-    // gestures
-    [self.navigationController.navigationBar addGestureRecognizer:self.tapNavigationBarRecognizer];
-    [self.navigationController.toolbar addGestureRecognizer:self.tapToolBarRecognizer];
 }
 
 - (void)viewWillDisappear:(BOOL)animated // Override
 {
     [super viewWillDisappear:animated];
     [self.navigationController setToolbarHidden:YES animated:animated];
+    // gestures
+    [self.navigationController.navigationBar removeGestureRecognizer:self.tapNavigationBarRecognizer];
+    [self.navigationController.toolbar removeGestureRecognizer:self.tapToolBarRecognizer];
 }
 
 - (void)viewWillAppear:(BOOL)animated // Override
 {
     [super viewWillAppear:animated];
     [self.navigationController setToolbarHidden:NO animated:animated];
+    // gestures
+    [self.navigationController.navigationBar addGestureRecognizer:self.tapNavigationBarRecognizer];
+    [self.navigationController.toolbar addGestureRecognizer:self.tapToolBarRecognizer];
 }
 
 #pragma mark - Status bar

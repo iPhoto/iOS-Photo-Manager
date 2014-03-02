@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#define WS_TIME_LOCATION_VIEW_HEIGHT 20
+#define WS_TIME_LOCATION_VIEW_HEIGHT 40
 
 @interface WSTimeLocationView : UIView
 

@@ -15,5 +15,5 @@
 
 // Notify text view to stop editing and dismiss keyboard.
 - (void)dismissKeyboard;
-
+- (void)fitBoundsToTextLength;
 @end

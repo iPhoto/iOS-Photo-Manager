@@ -14,6 +14,7 @@
 #import "WSPhotoBrowserPVC.h"
 #import "UIIdentifierString.h"
 #import "DisplayString.h"
+#import "Photo+BasicOperations.h"
 
 #import <AssetsLibrary/AssetsLibrary.h>
 
@@ -21,6 +22,8 @@
 
 @property (nonatomic, strong) WSImageViewControllerView *view;
 
+
+@property (strong, nonatomic) Photo *photo;
 @property (nonatomic) CGRect keyboardFrame; // frame of keyboard if it's on screen
 
 @end
@@ -42,6 +45,13 @@
 - (BOOL)keyboardOn
 {
     return self.view.keyboardOn;
+}
+
+- (void)setPhoto:(Photo *)photo
+{
+    _photo = photo;
+    self.view.descriptionText = photo.descriptionText;
+    self.view.timeLocationText = [NSString stringWithFormat:@"%@ %@", photo.stringOfTime, photo.stringOfLocation];
 }
 
 - (void)setKeyboardOn:(BOOL)keyboardOn
@@ -71,6 +81,8 @@
 {
     WSImageViewController *imageViewController = [[WSImageViewController alloc] initWithFrame:frame];
 
+    imageViewController.photo = [Photo photoOfALAsset:asset
+                               inManagedObjectContext:((WSAppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext];
     imageViewController.indexpath = indexpath;
     imageViewController.image =
         [UIImage imageWithCGImage:asset.defaultRepresentation.fullResolutionImage];
@@ -90,6 +102,8 @@
              resultBlock:^(ALAsset *asset) {
                  imageViewController.image =
                  [UIImage imageWithCGImage:asset.defaultRepresentation.fullResolutionImage];
+                 imageViewController.photo = [Photo photoOfALAsset:asset
+                                            inManagedObjectContext:((WSAppDelegate *)[UIApplication sharedApplication].delegate).managedObjectContext];
              }
             failureBlock:^(NSError *error) {
                 NSLog(@"WSImageViewController.imageViewControllerForAssetURL:indexPath:");
@@ -110,9 +124,6 @@
 
 - (void)viewWillAppear:(BOOL)animated // Override
 {
-#warning Using test description text.
-    self.view.descriptionText = @"照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述照片描述";
-
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
                                                  name:UIKeyboardWillShowNotification
@@ -253,6 +264,7 @@
 - (void)keyboardDidHide:(NSNotification *)notification
 {
     self.keyboardOn = NO;
+    self.photo.descriptionText = self.view.descriptionText;
 }
 
 - (void)keyboardDidChangeFrame:(NSNotification *)notification
